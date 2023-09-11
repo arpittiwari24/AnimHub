@@ -1,4 +1,6 @@
-import mongoose from "mongoose";
+const mongoose = require('mongoose');
+const mailSender = require("../utils/mailSender");
+const emailTemplate = require("../constants/signupmail");
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -14,8 +16,16 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
+  password: {
+    type: String,
+    required: true,
+  },
+  token:{
+    type: String,
+  },
   username: {
     type: String,
+    required: true,
     unique: true,
   },
   bio: {
@@ -36,7 +46,7 @@ const userSchema = new mongoose.Schema({
   components: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Component", // Assuming you have a 'Component' model
+      ref: "Component", 
     },
   ],
   followers: [
@@ -53,6 +63,29 @@ const userSchema = new mongoose.Schema({
   ],
 });
 
-const User = mongoose.model("User", userSchema);
+async function sendRegistrationMail(email, body) {
+	// Create a transporter to send emails
 
-export default User;
+	// Define the email options
+
+	// Send the email
+	try {
+		const mailResponse = await mailSender(
+			email,"Successful Registration",body
+		);
+		console.log("Email sent successfully: ", mailResponse.response);
+	} catch (error) {
+		console.log("Error occurred while sending email: ", error);
+		throw error;
+	}
+}
+
+userSchema.post("validate",async function (doc){
+        if(this.isNew){
+            let textBody = await emailTemplate();
+            let mailResponse = await sendRegistrationMail(this.email,textBody);
+            console.log("Email sent successfully");
+        }
+})
+
+ module.exports = mongoose.model("User", userSchema);

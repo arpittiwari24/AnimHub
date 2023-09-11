@@ -1,10 +1,10 @@
-exports.mail1 = (image,link,text) => {
+const signupmail = () => {
     return `<!DOCTYPE html>
     <html>
     
     <head>
         <meta charset="UTF-8">
-        <title>Mail1</title>
+        <title>Successful Registration</title>
         <style>
             body {
                 background-color: #ffffff;
@@ -41,11 +41,13 @@ exports.mail1 = (image,link,text) => {
     
     <body>
         <div class="container">
-           <img class="image" src=${image} href="image"/>
-           <p class="text">${text}</p>
-           <a href=${link}>click here</a>
+           <img class="image" src="https://live.staticflickr.com/3362/3614648188_2a3c34bf2f_z.jpg" href="image"/>
+           <p class="text">Thank you for registering to AnimHub</p>
+           <a href="https://gdsc.community.dev/dy-patil-college-of-engineering-pune/">click here</a>
         </div>
     </body>
     
     </html>`;
   };
+
+  module.exports = signupmail;
