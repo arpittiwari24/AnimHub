@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
+const cors = require('cors');
 
 require('dotenv').config();
 
@@ -9,12 +10,16 @@ const userRoutes = require('./routes/user');
 
 //importing db instance
 const {dbConnect} = require('./config/database');
-dbConnect();
+dbConnect();    
 
 
 // Parse incoming requests data (https://github.com/expressjs/body-parser)
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors({
+    origin: '*',
+    credentials: true,  
+}));
 
 app.use("/api/v1/auth",userRoutes);
 
