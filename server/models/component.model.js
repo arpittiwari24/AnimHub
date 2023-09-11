@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require('mongoose');
 
 const componentSchema = new mongoose.Schema({
   userId: {
@@ -44,6 +44,4 @@ const componentSchema = new mongoose.Schema({
   },
 });
 
-const Component = mongoose.model("Component", componentSchema);
-
-export default Component;
+module.exports = mongoose.model("Component", componentSchema);

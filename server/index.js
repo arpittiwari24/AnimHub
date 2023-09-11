@@ -1,76 +1,37 @@
-import express from "express";
-import bodyParser from "body-parser";
-import nodemailer from "nodemailer";
-
+const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
+const cors = require('cors');
+
+require('dotenv').config();
+
+//importing routes
+const userRoutes = require('./routes/user');
+
+//importing db instance
+const {dbConnect} = require('./config/database');
+dbConnect();    
+
+
 // Parse incoming requests data (https://github.com/expressjs/body-parser)
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors({
+    origin: '*',
+    credentials: true,  
+}));
 
-const route = express.Router();
+app.use("/api/v1/auth",userRoutes);
 
-const port = process.env.PORT || 5000;
-
-app.use("/v1", route);
-
-app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
+app.get('/',(req,res)=>{
+    return res.json({
+        success:true,
+        message:"server is running and up ...."
+    })
 });
 
-const transporter = nodemailer.createTransport({
-  port: 465,
-  host: "smtp.gmail.com",
-  auth: {
-    user: "youremail@gmail.com",
-    pass: "xxxxxxxxxx",
-  },
-  secure: true, // upgrades later with STARTTLS -- change this based on the PORT
-});
+const PORT = process.env.PORT || 8000;
 
-route.post("/text-mail", (req, res) => {
-  const { to, subject, text } = req.body;
-  const mailData = {
-    from: "youremail@gmail.com",
-    to,
-    subject,
-    text,
-    html: "<b>Hey there! </b><br> This is our first message sent with Nodemailer<br/>",
-  };
-
-  transporter.sendMail(mailData, (error, info) => {
-    if (error) {
-      return console.log(error);
-    }
-    res.status(200).send({ message: "Mail send", message_id: info.messageId });
-  });
-});
-
-route.post("/attachments-mail", (req, res) => {
-  const { to, subject, text } = req.body;
-  const mailData = {
-    from: "youremail@gmail.com",
-    to,
-    subject,
-    text,
-    html: "<b>Hey there! </b><br> This is our first message sent with Nodemailer<br/>",
-    attachments: [
-      {
-        // file on disk as an attachment
-        filename: "nodemailer.png",
-        path: "nodemailer.png",
-      },
-      {
-        // file on disk as an attachment
-        filename: "text_file.txt",
-        path: "text_file.txt",
-      },
-    ],
-  };
-
-  transporter.sendMail(mailData, (error, info) => {
-    if (error) {
-      return console.log(error);
-    }
-    res.status(200).send({ message: "Mail send", message_id: info.messageId });
-  });
-});
+app.listen(PORT,()=>{
+    console.log(`Port running on ${PORT}`);
+})
