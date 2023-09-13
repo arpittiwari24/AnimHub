@@ -172,3 +172,40 @@ exports.login = async (req, res) => {
     });
 }
 };
+
+exports.createUser = async (req,res)=>{
+    try {
+        let {name,username,email,password,profilePicUrl} = req.body;
+
+        if(!name||!username||!email||!password){
+            return res.status(409).json({
+                success:false,
+                message:'Please provide all the fields',
+            });
+        }
+
+        if(profilePicUrl === ""){
+            profilePicUrl=null;
+        }
+
+        const user = await User.create({
+            name,
+            username,
+            email,
+            password,
+            profilePicUrl,
+        });
+
+        return res.status(200).json({
+            success: true,
+            user,
+            message: "User created successfully in mongo",
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: `Unable to create user in mongo Please Try Again`,
+        });
+    }
+}

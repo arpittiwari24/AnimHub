@@ -7,6 +7,7 @@ require('dotenv').config();
 
 //importing routes
 const userRoutes = require('./routes/user');
+const componentRoutes = require('./routes/component');
 
 //importing db instance
 const {dbConnect} = require('./config/database');
@@ -22,6 +23,7 @@ app.use(cors({
 }));
 
 app.use("/api/v1/auth",userRoutes);
+app.use("/api/v1/component",componentRoutes);
 
 app.get('/',(req,res)=>{
     return res.json({

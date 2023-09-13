@@ -2,7 +2,9 @@ const express = require("express")
 const router = express.Router()
 
 
-const {login,signup} = require("../controllers/user");
+const {login,signup,createUser} = require("../controllers/user");
+
+
 
 
 // ********************************************************************************************************
@@ -14,5 +16,16 @@ router.post("/login", login)
 
 // Route for user signup
 router.post("/signup", signup)
+
+// Route for user creation
+router.post("/createUser",createUser);
+
+// ********************************************************************************************************
+//                                      Component routes
+// ********************************************************************************************************
+
+router.post("/createComponent")
+
+
 
 module.exports = router
