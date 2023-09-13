@@ -1,24 +1,17 @@
 const express = require("express")
 const router = express.Router()
 
-
-const {login,signup,createUser} = require("../controllers/user");
-
-
-
+const {createComponent,deleteComponent} = require("../controllers/components");
 
 // ********************************************************************************************************
-//                                      Authentication routes
+//                                      Component routes
 // ********************************************************************************************************
 
-// Route for user login
-router.post("/login", login)
+// Route for component creation
+router.post('/createComponent',createComponent)
 
-// Route for user signup
-router.post("/signup", signup)
-
-// Route for user creation
-router.post("/createUser",createUser);
+// Route for component deletion
+router.post('/deleteComponent',deleteComponent)
 
 
 module.exports = router
