@@ -20,12 +20,5 @@ router.post("/signup", signup)
 // Route for user creation
 router.post("/createUser",createUser);
 
-// ********************************************************************************************************
-//                                      Component routes
-// ********************************************************************************************************
-
-router.post("/createComponent")
-
-
 
 module.exports = router

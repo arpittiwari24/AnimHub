@@ -7,8 +7,10 @@ const {createComponent,deleteComponent} = require("../controllers/components");
 //                                      Component routes
 // ********************************************************************************************************
 
+// Route for component creation
 router.post('/createComponent',createComponent)
 
+// Route for component deletion
 router.post('/deleteComponent',deleteComponent)
 
 
