@@ -30,6 +30,14 @@ app.get('/',(req,res)=>{
     })
 });
 
+app.get('/dashboard',(req,res)=>{
+    console.log("dashboard");
+    return res.json({
+        success:true,
+        message:"dashboard is running and up ...."
+    })
+})
+
 const PORT = process.env.PORT || 8000;
 
 app.listen(PORT,()=>{

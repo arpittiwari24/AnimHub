@@ -2,10 +2,9 @@ import React, { useState } from 'react'
 import { auth } from '../../firebase/auth'
 import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const sendData = async (data) => {
-
-
   const userDetails = {
     username: data.username,
     name: data.name,
@@ -15,13 +14,17 @@ const sendData = async (data) => {
     // userId: createUser.user.uid
   }
   axios.post('http://localhost:8000/api/v1/auth/signup', userDetails)
-  .then((res) => { console.log("Success", res) })
+  .then((res) => { 
+    console.log("Success", res) 
+    
+  })
   .catch((err) => { console.log("Error", err) })
 }
 
 const Signup = () => {
   const [form, setForm] = useState({})
   const provider = new GoogleAuthProvider()
+  const navigate = useNavigate()
   const saveData = async (e) => {
     e.preventDefault()
     const createUser = await createUserWithEmailAndPassword(auth, form.email, form.password)
@@ -51,12 +54,17 @@ const Signup = () => {
       username: user.user.displayName,
       name: user.user.displayName,
       email: user.user.email,
-      password: user.user.uid,
+      password: " ",
       photoURL: user.user.photoURL,
       // userId: createUser.user.uid
     }
     sendData(data)
     console.log(user.user.photoURL, "User name here");
+  }
+
+  const change = (e) => {
+    e.preventDefault()
+    navigate("/login")
   }
 
   return (
@@ -69,6 +77,7 @@ const Signup = () => {
         <button type='submit'>Signup</button>
       </form>
       <button onClick={handleOAuth}>Google Signin</button>
+      <button onClick={change}>Login Button</button>
     </div>
   )
 }
