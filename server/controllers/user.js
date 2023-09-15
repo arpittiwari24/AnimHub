@@ -172,3 +172,47 @@ exports.login = async (req, res) => {
     });
 }
 };
+
+
+exports.createUser = async (req, res) => {
+    try {
+        // Extract user data from the request body
+        let { name, username, email, password, profilePicUrl } = req.body;
+
+        // Check if required fields are missing
+        if (!name || !username || !email || !password) {
+            return res.status(409).json({
+                success: false,
+                message: 'Please provide all the fields',
+            });
+        }
+
+        // Check if profilePicUrl is an empty string, and set it to null if it is
+        if (profilePicUrl === "") {
+            profilePicUrl = null;
+        }
+
+        // Create a new user document in the database
+        const user = await User.create({
+            name,
+            username,
+            email,
+            password,
+            profilePicUrl,
+        });
+
+        // Respond with a success message and the created user data
+        return res.status(200).json({
+            success: true,
+            user, // You can send the created user data in the response if needed
+            message: "User created successfully in MongoDB",
+        });
+
+    } catch (error) {
+        // Handle any errors that may occur during user creation
+        return res.status(500).json({
+            success: false,
+            message: `Unable to create user in MongoDB. Please try again.`,
+        });
+    }
+}

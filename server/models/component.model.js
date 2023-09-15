@@ -41,6 +41,7 @@ const componentSchema = new mongoose.Schema({
   ],
   verified: {
     type: Boolean,
+    default:false,
   },
 });
 
