@@ -73,7 +73,7 @@ async function sendRegistrationMail(email, body) {
 		const mailResponse = await mailSender(
 			email,"Successful Registration",body
 		);
-		console.log("Email sent successfully: ", mailResponse.response);
+		// console.log("Email sent successfully: ", mailResponse.response);
 	} catch (error) {
 		console.log("Error occurred while sending email: ", error);
 		throw error;
