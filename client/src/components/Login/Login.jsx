@@ -4,23 +4,23 @@ import axios from 'axios';
 import { GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 
-const sendData = async (data) => {
-    axios.post('http://localhost:8000/api/v1/auth/login', data)
-        .then((res) => { console.log("Success", res) })
-        .catch((err) => { console.log("Error", err) })
-}
 
 const Login = () => {
     const [form, setForm] = useState({})
     const provider = new GoogleAuthProvider()
     const navigate = useNavigate()
+    const sendData = async (data) => {
+        axios.post('http://localhost:8000/api/v1/auth/login', data)
+            .then((res) => { console.log("Success", res); navigate("/") })
+            .catch((err) => { console.log("Error", err) })
+    }
     const loginUser = async (e) => {
         e.preventDefault();
         const user = await signInWithEmailAndPassword(auth, e.target[0].value, e.target[1].value)
         if (user) {
             console.log(user);
             axios.post('http://localhost:8000/api/v1/auth/login', form)
-                .then((res) => { console.log("Success", res) })
+                .then((res) => { console.log("Success", res); navigate("/") })
                 .catch((err) => { console.log("Error", err) })
             console.log("User logged in");
         }

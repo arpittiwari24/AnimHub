@@ -5,6 +5,7 @@ import { Routes, Route, useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import { auth } from './firebase/auth'
 import Homepage from './components/Homepage/Homepage'
+import OnBoarding from './components/OnBoarding/OnBoarding'
 // import {useNavigate} from 'react-router-dom'
 
 function App() {
@@ -21,7 +22,7 @@ function App() {
     auth.onAuthStateChanged((user) => {
       if (user){
         console.log("User logged in ");
-        navigator("/")  
+        // navigator("/")  
       }
       else{
         console.log("User not logged in ");
@@ -36,6 +37,7 @@ function App() {
       <Route path="/signup" element={<Signup />} />
       {/* <Route path="/signup" element={<Signup />} /> */}
       <Route path="/" element={<Homepage />} />
+      <Route path="/createUser" element={<OnBoarding />} />
     </Routes>
     </>
   )

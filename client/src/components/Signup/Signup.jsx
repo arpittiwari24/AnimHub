@@ -4,27 +4,28 @@ import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } f
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
-const sendData = async (data) => {
-  const userDetails = {
-    username: data.username,
-    name: data.name,
-    email: data.email,
-    password: data.password,
-    photoURL: data.photoURL || '',
-    // userId: createUser.user.uid
-  }
-  axios.post('http://localhost:8000/api/v1/auth/signup', userDetails)
-  .then((res) => { 
-    console.log("Success", res) 
-    
-  })
-  .catch((err) => { console.log("Error", err) })
-}
 
 const Signup = () => {
   const [form, setForm] = useState({})
   const provider = new GoogleAuthProvider()
   const navigate = useNavigate()
+  const sendData = async (data) => {
+    const userDetails = {
+      username: data.username,
+      name: data.name,
+      email: data.email,
+      password: data.password,
+      photoURL: data.photoURL || '',
+      // userId: createUser.user.uid
+    }
+    axios.post('http://localhost:8000/api/v1/auth/signup', userDetails)
+    .then((res) => { 
+      console.log("Success", res) 
+      navigate("/createUser")
+      
+    })
+    .catch((err) => { console.log("Error", err) })
+  }
   const saveData = async (e) => {
     e.preventDefault()
     const createUser = await createUserWithEmailAndPassword(auth, form.email, form.password)
