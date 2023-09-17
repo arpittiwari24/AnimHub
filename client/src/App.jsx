@@ -1,9 +1,8 @@
-import Signup from "./components/Signup";
-import Login from "./components/Login";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { auth } from "./firebase/auth";
-import Homepage from "./components/Homepage";
+import { routesData } from "./routes";
+import { Navbar, Footer } from "./components";
 
 function App() {
   const navigator = useNavigate();
@@ -11,21 +10,27 @@ function App() {
     auth.onAuthStateChanged((user) => {
       if (user) {
         console.log("User logged in ");
-        navigator("/");
+        // navigator("/dashboard");
       } else {
         console.log("User not logged in ");
-        navigator("/login");
+        // navigator("/");
       }
     });
   }, []);
   return (
     <>
+      <Navbar />
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        {/* <Route path="/signup" element={<Signup />} /> */}
-        <Route path="/" element={<Homepage />} />
+        {routesData.map((route, index) => (
+          <Route
+            key={index}
+            path={route.path}
+            element={<route.component />}
+            exact={true}
+          />
+        ))}
       </Routes>
+      <Footer />
     </>
   );
 }
