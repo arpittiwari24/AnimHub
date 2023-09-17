@@ -85,7 +85,7 @@ exports.signup = async (req, res) => {
 
         if (!userExists) {
             user.save()
-            res.send.status(200).send(req.body);
+            res.status(200).send(req.body);
         }
         else {
             console.log("User already exists");
