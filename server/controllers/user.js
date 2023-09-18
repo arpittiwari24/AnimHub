@@ -80,12 +80,13 @@ exports.signup = async (req, res) => {
     // }
 
     try {
+        console.log(req.body);
         const user = new userModel(req.body);
         const userExists = await userModel.findOne({ email: req.body.email }).exec();
 
         if (!userExists) {
             user.save()
-            res.send.status(200).send(req.body);
+            res.status(200).send(req.body);
         }
         else {
             console.log("User already exists");
@@ -205,7 +206,7 @@ exports.createUser = async (req, res) => {
         }
 
         // Create a new user document in the database
-        const user = await User.create({
+        const user = await userModel.create({
             name,
             username,
             email,

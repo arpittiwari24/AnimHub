@@ -8,6 +8,7 @@ require('dotenv').config();
 //importing routes
 const userRoutes = require('./routes/user');
 const componentRoutes = require('./routes/component');
+const adminRoutes = require('./routes/admin');
 
 //importing db instance
 const {dbConnect} = require('./config/database');
@@ -24,6 +25,7 @@ app.use(cors({
 
 app.use("/api/v1/auth",userRoutes);
 app.use("/api/v1/component",componentRoutes);
+app.use("/api/v1/admin",adminRoutes);
 
 app.get('/',(req,res)=>{
     return res.json({
@@ -40,7 +42,7 @@ app.get('/dashboard',(req,res)=>{
     })
 })
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 6000;
 
 app.listen(PORT,()=>{
     console.log(`Port running on ${PORT}`);
