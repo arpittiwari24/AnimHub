@@ -91,9 +91,9 @@ const Navbar = () => {
           <div className=" w-[70%] flex justify-center items-center ">
             <div className="flex justify-center items-center gap-4">
               <button className=" flex flex-col gap-[0.3rem]">
-                <div className="bg-primary w-6 rounded h-[0.15rem]"></div>
-                <div className="bg-primary w-6 rounded h-[0.15rem]"></div>
-                <div className="bg-primary w-6 rounded h-[0.15rem]"></div>
+                <div className="bg-[#FFA31A] w-6 rounded h-[0.15rem]"></div>
+                <div className="bg-[#FFA31A] w-6 rounded h-[0.15rem]"></div>
+                <div className="bg-[#FFA31A] w-6 rounded h-[0.15rem]"></div>
               </button>
               <div className="">
                 <DarkLogo width="180px" />
@@ -139,7 +139,7 @@ const Navbar = () => {
             ))}
           </ul>
         </div>
-        <div className="flex gap-1 py-1 justify-center items-center bg-secondary">
+        <div className="flex gap-1 py-1 justify-center items-center bg-[#1b1b1b]">
           <PiWarningCircleFill className="text-[#c6c6c6] text-2xl" />
           <p className="">
             If you have anything for us or want to join us visit here
