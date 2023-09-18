@@ -13,7 +13,7 @@ const Button = ({
 
   return (
     <button
-      className={`border border-6 ${primary ? "bg-[#FFA31A]" : "bg-[#007bff]"}`}
+      className={`border border-6 ${primary ? "bg-primary" : "bg-[#007bff]"}`}
       style={buttonStyle}
       onClick={onClick}
       disabled={disabled}
