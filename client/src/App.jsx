@@ -18,7 +18,7 @@ function App() {
     });
   }, []);
   return (
-    <>
+    <div className="dark">
       <Navbar />
       <Routes>
         {routesData.map((route, index) => (
@@ -31,7 +31,7 @@ function App() {
         ))}
       </Routes>
       <Footer />
-    </>
+    </div>
   );
 }
 

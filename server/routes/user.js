@@ -19,7 +19,6 @@ router.post("/signup", signup)
 router.post("/createUser",createUser);
 
 
-
 // Route for user login
 router.post("/login", login)
 

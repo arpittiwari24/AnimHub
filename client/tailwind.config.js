@@ -1,8 +1,14 @@
 /** @type {import('tailwindcss').Config} */
-export default {
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+// eslint-disable-next-line no-undef
+module.exports = {
+  darkMode: 'class',
+  content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    extend: {},
+    colors: {
+      primary: "#FFA31A",
+      secondary: "#1B1B1B",
+      contrast: "#808080",
+    },
   },
   plugins: [],
 };
