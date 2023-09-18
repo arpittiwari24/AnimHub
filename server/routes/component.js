@@ -1,11 +1,14 @@
 const express = require("express")
 const router = express.Router()
 
-const {createComponent,updateComponent,deleteComponent,likeComponent,unlikeComponent} = require("../controllers/components");
+const {getAllComponents,createComponent,updateComponent,deleteComponent,likeComponent,unlikeComponent} = require("../controllers/components");
 
 // ********************************************************************************************************
 //                                      Component routes
 // ********************************************************************************************************
+
+//Route for getting all the components
+router.get('/getAllComponents',getAllComponents);
 
 // Route for component creation
 router.post('/createComponent',createComponent)

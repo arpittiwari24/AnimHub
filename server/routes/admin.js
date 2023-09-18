@@ -1,13 +1,13 @@
 const express = require("express")
 const router = express.Router()
 
-const {} = require("../controllers/admin");
+const {verifyComponent} = require("../controllers/admin");
 
 // ********************************************************************************************************
 //                                     Admin routes
 // ********************************************************************************************************
 
-
+router.post("/verifyComponent",verifyComponent);
 
 
 module.exports = router;
