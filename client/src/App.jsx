@@ -1,9 +1,10 @@
 import { Routes, Route, useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { auth } from "./firebase/auth";
 import { routesData } from "./routes";
 import { Navbar, Footer } from "./components";
 import AuthContextProvider from "./context/AuthContextProviders";
+import Layout from "./components/Popup/Layout";
 
 function App() {
   const navigator = useNavigate();

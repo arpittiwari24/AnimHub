@@ -127,7 +127,7 @@ const Footer = () => {
             </ul>
           </div>
         </div>
-        <div className=" pb-2 font-normal text-[#969696] pb-8">Language:</div>
+        <div className="font-normal text-[#969696] pb-8">Language:</div>
       </div>
       <div className="h-auto w-full bg-black flex justify-between items-center  px-[10vw] py-4">
         <div className="flex gap-4">
