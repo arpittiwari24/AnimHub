@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { DarkLogo } from "../../assets/logos/Logo";
 import { BiSearch } from "react-icons/bi";
 import { BsPlusCircleFill } from "react-icons/bs";
+import { PiYoutubeLogoFill } from "react-icons/pi";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { PiWarningCircleFill } from "react-icons/pi";
 import LeftSidebar from "./LeftSidebar";
@@ -11,14 +12,6 @@ import { navLinks, subNavLinks } from "./constants";
 const Navbar = () => {
   const [isLeftSidebarOpen, setIsLeftSidebarOpen] = useState(false);
   const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(false);
-  const openLeftSidebar = () => {
-    console.log("left");
-    setIsLeftSidebarOpen(!isLeftSidebarOpen);
-  };
-  const openRightSidebar = () => {
-    console.log("right");
-    setIsRightSidebarOpen(!isRightSidebarOpen);
-  };
 
   return (
     <>
@@ -55,7 +48,7 @@ const Navbar = () => {
                 <BsPlusCircleFill className="text-[#c6c6c6] text-3xl" />
               </button>
               <button className="">
-                <BsPlusCircleFill className="text-[#c6c6c6] text-3xl" />
+                <PiYoutubeLogoFill className="text-[#c4302b] text-4xl" />
               </button>
             </div>
           </div>
@@ -71,7 +64,7 @@ const Navbar = () => {
           <ul className="grid grid-cols-8 justify-items-center w-full h-full items-center mx-auto">
             {navLinks.map((link) => (
               <li className="group grid w-full h-auto  text-[#fff] font-bold ">
-                <a className="group-hover:bg-[#7b7b7b8e] group-hover:border-[1px]">
+                <a className="group-hover:bg-[#333333] group-hover:border-[#363636] border-[1px] border-[transparent]">
                   <span className="flex flex-col justify-center items-center">
                     <span className="inline-block text-center align-top">
                       {link.name}{" "}

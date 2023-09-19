@@ -1,5 +1,6 @@
 import { BsFillGrid1X2Fill } from "react-icons/bs";
-
+import { MdExplore } from "react-icons/md";
+import { BiSolidCategoryAlt } from "react-icons/bi";
 export const navLinks = [
   {
     name: "Home",
@@ -32,6 +33,7 @@ export const navLinks = [
   {
     name: "Tags",
     link: "/",
+    content: "bye bye",
   },
   {
     name: "About",
@@ -40,11 +42,11 @@ export const navLinks = [
 ];
 export const subNavLinks = [
   {
-    name: "Home",
+    name: "Spotlight",
     link: "/",
   },
   {
-    name: "Home",
+    name: "Feedback",
     link: "/",
   },
   {
@@ -72,38 +74,41 @@ export const subNavLinks = [
     link: "/",
   },
 ];
-export const dropdownItems = [
+export const dropdownItemsLeftSidebar = [
   {
     title: "Components",
-    icon: <BsFillGrid1X2Fill />,
+    icon: BsFillGrid1X2Fill,
     subItems: [
       {
         title: "Subitem 1",
-        icon: <BsFillGrid1X2Fill />,
+        icon: BsFillGrid1X2Fill,
       },
       {
         title: "Subitem 2",
-        icon: <BsFillGrid1X2Fill />,
+        icon: BsFillGrid1X2Fill,
       },
     ],
   },
   {
-    title: "Components",
+    title: "Explore",
+    icon: MdExplore,
+  },
+  {
+    title: "Categories",
+    icon: BiSolidCategoryAlt,
+    subItems: [
+      {
+        title: "Subitem 1",
+      },
+      {
+        title: "Subitem 2",
+      },
+    ],
   },
   {
     title: "Item 2",
   },
-  {
-    title: "Nested Dropdown 1",
-    subItems: [
-      {
-        title: "Subitem 1",
-      },
-      {
-        title: "Subitem 2",
-      },
-    ],
-  },
+
   {
     title: "Nested Dropdown 2",
     subItems: [
@@ -127,7 +132,102 @@ export const dropdownItems = [
     ],
   },
   {
-    title: "Item 3",
+    title: "Join GDSC DYPCOE",
+    special: true,
+  },
+
+  // Add more dropdown items here
+];
+export const dropdownColumnsLeftSidebar = [
+  {
+    title: "Explore",
+    icon: MdExplore,
+  },
+
+  {
+    title: "Explore",
+    icon: MdExplore,
+  },
+
+  {
+    title: "Explore",
+    icon: MdExplore,
+  },
+
+  {
+    title: "Explore",
+    icon: MdExplore,
+  },
+
+  {
+    title: "Explore",
+    icon: MdExplore,
+  },
+  {
+    title: "Explore",
+    icon: MdExplore,
+  },
+
+  // Add more dropdown items here
+];
+export const dropdownItemsRightSidebar = [
+  {
+    title: "Components",
+    icon: BsFillGrid1X2Fill,
+  },
+  // {
+  //   title: "Explore",
+  //   icon: MdExplore,
+  // },
+  // {
+  //   title: "Categories",
+  //   icon: BiSolidCategoryAlt,
+  // },
+  // {
+  //   title: "Item 2",
+  // },
+
+  // {
+  //   title: "Nested Dropdown 2",
+  // },
+  // {
+  //   title: "Nested Dropdown 3",
+  // },
+  // {
+  //   title: "Join GDSC DYPCOE",
+  //   special: true,
+  // },
+
+  // Add more dropdown items here
+];
+export const dropdownColumnsRightSidebar = [
+  {
+    title: "Explore",
+    icon: MdExplore,
+  },
+
+  {
+    title: "Explore",
+    icon: MdExplore,
+  },
+
+  {
+    title: "Explore",
+    icon: MdExplore,
+  },
+
+  {
+    title: "Explore",
+    icon: MdExplore,
+  },
+
+  {
+    title: "Explore",
+    icon: MdExplore,
+  },
+  {
+    title: "Explore",
+    icon: MdExplore,
   },
 
   // Add more dropdown items here

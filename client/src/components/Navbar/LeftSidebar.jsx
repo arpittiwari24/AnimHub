@@ -1,5 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import { dropdownItems } from "./constants";
+import {
+  dropdownItemsLeftSidebar,
+  dropdownColumnsLeftSidebar,
+} from "./constants";
+import { IoMdArrowDropdown, IoMdArrowDropup } from "react-icons/io";
 
 function LeftSidebar({ isLeftSidebarOpen, setIsLeftSidebarOpen }) {
   // const [isParentOpen, setIsParentOpen] = useState(isLeftSidebarOpen);
@@ -59,28 +63,49 @@ function LeftSidebar({ isLeftSidebarOpen, setIsLeftSidebarOpen }) {
           style={parentDropdownStyle}
         >
           <ul className="flex flex-col gap-2">
-            {dropdownItems.map((item, index) => (
+            {dropdownItemsLeftSidebar.map((item, index) => (
               <li
                 key={index}
-                className="bg-[#151515] font-bold flex flex-col justify-start items-center gap-2 relative  p-4 hover:bg-gray-100 rounded-xl"
+                className={`${
+                  item.special ? "bg-[#4285F4]" : "bg-[#151515]"
+                } font-bold flex flex-col justify-start items-center gap-2 relative rounded-xl ${
+                  nestedDropdowns[index] ? "pb-2" : ""
+                }`}
               >
                 {item.subItems ? (
                   <>
                     <button
                       onClick={() => toggleNestedDropdown(index)}
-                      className="w-full flex justify-start items-center gap-2 text-left focus:outline-none"
+                      className={`w-full ${
+                        item.special
+                          ? "hover:bg-[#5a93ee]"
+                          : "hover:bg-[#2b2b2b]"
+                      } p-4 ${
+                        nestedDropdowns[index] ? "rounded-t-xl" : "rounded-xl"
+                      }  flex justify-start items-center gap-6 text-left focus:outline-none`}
                     >
-                      {item.icon && item.icon}
+                      {item.icon && <item.icon className="text-2xl" />}
                       {item.title}
+                      {item.subItems && (
+                        <span className="ml-auto">
+                          {nestedDropdowns[index] ? (
+                            <IoMdArrowDropup className="text-2xl" />
+                          ) : (
+                            <IoMdArrowDropdown className="text-2xl" />
+                          )}
+                        </span>
+                      )}
                     </button>
                     {nestedDropdowns[index] && (
-                      <ul className="w-full flex flex-col justify-center items-center">
+                      <ul className="w-full flex flex-col justify-center px-4 py-0 items-center">
                         {item.subItems.map((subItem, index) => (
                           <li
                             key={index}
-                            className="w-full flex justify-start items-center gap-2 p-4 hover:bg-gray-100"
+                            className="w-full hover:bg-[#2b2b2b] rounded-xl flex justify-start items-center gap-6 p-4 hover:bg-gray-100"
                           >
-                            {subItem.icon && subItem.icon}
+                            {subItem.icon && (
+                              <subItem.icon className="text-2xl" />
+                            )}
                             {subItem.title}
                           </li>
                         ))}
@@ -88,13 +113,32 @@ function LeftSidebar({ isLeftSidebarOpen, setIsLeftSidebarOpen }) {
                     )}
                   </>
                 ) : (
-                  <button className="w-full flex justify-start items-center gap-2 text-left focus:outline-none">
-                    {item.icon && item.icon}
+                  <button
+                    className={`w-full ${
+                      item.special ? "hover:bg-[#5a93ee]" : "hover:bg-[#2b2b2b]"
+                    } p-4 rounded-xl flex justify-start items-center gap-6 text-left focus:outline-none`}
+                  >
+                    {item.icon && <item.icon className="text-2xl" />}
                     {item.title}
                   </button>
                 )}
               </li>
             ))}
+            <div className="flex flex-wrap justify-center items-center gap-2">
+              {dropdownColumnsLeftSidebar.map((column, index) => (
+                <li
+                  key={index}
+                  className="bg-[#151515] hover:bg-[#2b2b2b] font-bold flex flex-col justify-start items-center gap-2 px-3 py-0 relative rounded-xl"
+                >
+                  <button
+                    className={`w-full p-4 rounded-xl flex flex-col justify-start items-start gap-2 text-left focus:outline-none`}
+                  >
+                    {column.icon && <column.icon className="text-2xl" />}
+                    {column.title}
+                  </button>
+                </li>
+              ))}
+            </div>
           </ul>
         </div>
       )}
