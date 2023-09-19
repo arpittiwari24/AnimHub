@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { dropdownItems } from "./constants";
 
 function LeftSidebar({ isLeftSidebarOpen, setIsLeftSidebarOpen }) {
   // const [isParentOpen, setIsParentOpen] = useState(isLeftSidebarOpen);
@@ -54,71 +55,46 @@ function LeftSidebar({ isLeftSidebarOpen, setIsLeftSidebarOpen }) {
       </button>
       {isLeftSidebarOpen && (
         <div
-          className="absolute w-56 bg-blue-500 border border-gray-300 rounded-md shadow-lg overflow-y-auto"
+          className="absolute top-[45px] left-[30px] w-[17rem] bg-[#0e0e0e] p-4 rounded-lg shadow-lg overflow-y-auto"
           style={parentDropdownStyle}
         >
-          <ul>
-            <li className="px-4 py-2 hover:bg-gray-100">Item 1</li>
-            <li className="px-4 py-2 hover:bg-gray-100">Item 2</li>
-            <li className="relative px-4 py-2 hover:bg-gray-100">
-              <button
-                onClick={() => toggleNestedDropdown(0)}
-                className="w-full text-left focus:outline-none"
+          <ul className="flex flex-col gap-2">
+            {dropdownItems.map((item, index) => (
+              <li
+                key={index}
+                className="bg-[#151515] font-bold flex flex-col justify-start items-center gap-2 relative  p-4 hover:bg-gray-100 rounded-xl"
               >
-                Nested Dropdown 0
-              </button>
-              {nestedDropdowns[0] && (
-                <ul>
-                  <li className="px-4 py-2 hover:bg-gray-100">Subitem 1</li>
-                  <li className="px-4 py-2 hover:bg-gray-100">Subitem 2</li>
-                </ul>
-              )}
-            </li>
-            <li className="relative px-4 py-2 hover:bg-gray-100">
-              <button
-                onClick={() => toggleNestedDropdown(1)}
-                className="w-full text-left focus:outline-none"
-              >
-                Nested Dropdown 1
-              </button>
-              {nestedDropdowns[1] && (
-                <ul>
-                  <li className="px-4 py-2 hover:bg-gray-100">Subitem 1</li>
-                  <li className="px-4 py-2 hover:bg-gray-100">Subitem 2</li>
-                </ul>
-              )}
-            </li>
-            <li className="relative px-4 py-2 hover:bg-gray-100">
-              <button
-                onClick={() => toggleNestedDropdown(2)}
-                className="w-full text-left focus:outline-none"
-              >
-                Nested Dropdown 2
-              </button>
-              {nestedDropdowns[2] && (
-                <ul>
-                  <li className="px-4 py-2 hover:bg-gray-100">Subitem 1</li>
-                  <li className="px-4 py-2 hover:bg-gray-100">Subitem 2</li>
-                </ul>
-              )}
-            </li>
-            <li className="relative px-4 py-2 hover:bg-gray-100">
-              <button
-                onClick={() => toggleNestedDropdown(3)}
-                className="w-full text-left focus:outline-none"
-              >
-                Nested Dropdown 3
-              </button>
-              {nestedDropdowns[3] && (
-                <ul>
-                  <li className="px-4 py-2 hover:bg-gray-100">Subitem 1</li>
-                  <li className="px-4 py-2 hover:bg-gray-100">Subitem 2</li>
-                </ul>
-              )}
-            </li>
-            {/* Add more nested dropdowns here */}
-            {/* ... */}
-            <li className="px-4 py-2 hover-bg-gray-100">Item 3</li>
+                {item.subItems ? (
+                  <>
+                    <button
+                      onClick={() => toggleNestedDropdown(index)}
+                      className="w-full flex justify-start items-center gap-2 text-left focus:outline-none"
+                    >
+                      {item.icon && item.icon}
+                      {item.title}
+                    </button>
+                    {nestedDropdowns[index] && (
+                      <ul className="w-full flex flex-col justify-center items-center">
+                        {item.subItems.map((subItem, index) => (
+                          <li
+                            key={index}
+                            className="w-full flex justify-start items-center gap-2 p-4 hover:bg-gray-100"
+                          >
+                            {subItem.icon && subItem.icon}
+                            {subItem.title}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </>
+                ) : (
+                  <button className="w-full flex justify-start items-center gap-2 text-left focus:outline-none">
+                    {item.icon && item.icon}
+                    {item.title}
+                  </button>
+                )}
+              </li>
+            ))}
           </ul>
         </div>
       )}

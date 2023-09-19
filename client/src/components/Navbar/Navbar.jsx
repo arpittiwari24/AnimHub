@@ -2,82 +2,11 @@ import React, { useState } from "react";
 import { DarkLogo } from "../../assets/logos/Logo";
 import { BiSearch } from "react-icons/bi";
 import { BsPlusCircleFill } from "react-icons/bs";
-import { FaCircleUser } from "react-icons/fa6";
 import { IoMdArrowDropdown } from "react-icons/io";
 import { PiWarningCircleFill } from "react-icons/pi";
 import LeftSidebar from "./LeftSidebar";
 import RightSidebar from "./RightSidebar";
-
-const navLinks = [
-  {
-    name: "Home",
-    link: "/",
-    content: "Hello",
-  },
-  {
-    name: "Home",
-    link: "/",
-    content: "bye bye",
-  },
-  {
-    name: "Home",
-    link: "/",
-  },
-  {
-    name: "Home",
-    link: "/",
-  },
-  {
-    name: "Home",
-    link: "/",
-  },
-  {
-    name: "Home",
-    link: "/",
-  },
-  {
-    name: "Home",
-    link: "/",
-  },
-  {
-    name: "Home",
-    link: "/",
-  },
-];
-const subNavLinks = [
-  {
-    name: "Home",
-    link: "/",
-  },
-  {
-    name: "Home",
-    link: "/",
-  },
-  {
-    name: "Home",
-    link: "/",
-  },
-  {
-    name: "Home",
-    link: "/",
-  },
-  {
-    name: "Home",
-    link: "/",
-  },
-  {
-    name: "Home",
-    link: "/",
-  },
-  {
-    name: "Home",
-    link: "/",
-  },
-  {
-    name: "Home",
-    link: "/",
-  },
-];
+import { navLinks, subNavLinks } from "./constants";
 
 const Navbar = () => {
   const [isLeftSidebarOpen, setIsLeftSidebarOpen] = useState(false);
@@ -146,14 +75,18 @@ const Navbar = () => {
                   <span className="flex flex-col justify-center items-center">
                     <span className="inline-block text-center align-top">
                       {link.name}{" "}
-                      <IoMdArrowDropdown className="inline-block text-[#fff] text-2xl" />
+                      {link.content && (
+                        <IoMdArrowDropdown className="inline-block text-[#fff] text-2xl" />
+                      )}
                     </span>
                     <span className="w-full h-[1.5px] mx-auto bg-yellow-600 group-hover:block group-hover:opacity-100 opacity-0 relative top-0"></span>
                   </span>
                 </a>
-                <div className="absolute top-[127px] left-0 w-full bg-black text-white hidden group-hover:flex flex-col p-4 shadow-md z-50 border-x-0 border-b-[0.05px] animate-fadeIn">
-                  {link.content}
-                </div>
+                {link.content && (
+                  <div className="absolute top-[127px] left-0 w-full bg-black text-white hidden group-hover:flex flex-col p-4 shadow-md z-50 border-x-0 border-b-[0.05px] animate-fadeIn">
+                    {link.content}
+                  </div>
+                )}
               </li>
             ))}
           </ul>

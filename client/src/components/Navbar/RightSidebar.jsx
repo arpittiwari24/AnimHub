@@ -3,6 +3,7 @@ import { FaCircleUser } from "react-icons/fa6";
 
 const RightSidebar = ({ isRightSidebarOpen, setIsRightSidebarOpen }) => {
   //   const [isOpen, setIsOpen] = useState(isRightSidebarOpen);
+  const auth = true;
   const dropdownRef = useRef(null);
 
   const toggleDropdown = () => {
@@ -34,29 +35,30 @@ const RightSidebar = ({ isRightSidebarOpen, setIsRightSidebarOpen }) => {
       </button>
 
       {isRightSidebarOpen && (
-        <div className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-          {/* Dropdown content goes here */}
-          <div className="py-2">
-            <a
-              href="#"
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-100"
-            >
-              Item 1
-            </a>
-            <a
-              href="#"
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-100"
-            >
-              Item 2
-            </a>
-            <a
-              href="#"
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-100"
-            >
-              Item 3
-            </a>
+        <>
+          <div className="bg-[#151515] origin-top-right absolute right-0 mt-2 w-24 rounded-md shadow-lg border-[#151515] border-2 ">
+            {auth ? (
+              <>
+                <div className="p-2 flex flex-col items-right justify-center "></div>
+              </>
+            ) : (
+              <div className="py-2 flex flex-col items-right justify-center ">
+                <a
+                  href="#"
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-100"
+                >
+                  Login
+                </a>
+                <a
+                  href="#"
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-100"
+                >
+                  Signup
+                </a>
+              </div>
+            )}
           </div>
-        </div>
+        </>
       )}
     </div>
   );
