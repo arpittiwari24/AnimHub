@@ -76,8 +76,8 @@ const Navbar = () => {
                   </span>
                 </a>
                 {link.content && (
-                  <div className="absolute top-[127px] left-0 w-full bg-black text-white hidden group-hover:flex flex-col p-4 shadow-md z-50 border-x-0 border-b-[0.05px] animate-fadeIn">
-                    {link.content}
+                  <div className="absolute top-[126px] left-0 w-full h-auto bg-[#000] text-white hidden group-hover:flex flex-col shadow-md z-50 border-x-0 border-y-[0.05px] border-[#606060] animate-fadeIn">
+                    {<link.content />}
                   </div>
                 )}
               </li>

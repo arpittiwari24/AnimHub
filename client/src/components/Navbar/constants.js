@@ -1,6 +1,7 @@
 import { BsFillGrid1X2Fill } from "react-icons/bs";
 import { MdExplore } from "react-icons/md";
 import { BiSolidCategoryAlt } from "react-icons/bi";
+import { Categories, Languages, Tags, TopUsers, Trending } from "./NavSections";
 export const navLinks = [
   {
     name: "Home",
@@ -9,22 +10,22 @@ export const navLinks = [
   {
     name: "Categories",
     link: "/",
-    content: "bye bye",
+    content: Categories,
   },
   {
     name: "Languages",
     link: "/",
-    content: "Hello",
+    content: Languages,
   },
   {
     name: "Top Users",
     link: "/",
-    content: "Hello",
+    content: TopUsers,
   },
   {
     name: "Trending",
     link: "/",
-    content: "Hello",
+    content: Trending,
   },
   {
     name: "Blogs",
@@ -33,7 +34,7 @@ export const navLinks = [
   {
     name: "Tags",
     link: "/",
-    content: "bye bye",
+    content: Tags,
   },
   {
     name: "About",
