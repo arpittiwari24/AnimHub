@@ -4,6 +4,7 @@ import { getAuth } from "firebase/auth";
 
 
 console.log(import.meta.env.VITE_REACT_APP_apiKey);
+
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_REACT_APP_apiKey,
   authDomain: import.meta.env.VITE_REACT_APP_authDomain,
