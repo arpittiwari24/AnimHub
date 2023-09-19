@@ -8,6 +8,7 @@ import { PiWarningCircleFill } from "react-icons/pi";
 import LeftSidebar from "./LeftSidebar";
 import RightSidebar from "./RightSidebar";
 import { navLinks, subNavLinks } from "./constants";
+import PromoStrip from "./PromoStrip";
 
 const Navbar = () => {
   const [isLeftSidebarOpen, setIsLeftSidebarOpen] = useState(false);
@@ -90,6 +91,7 @@ const Navbar = () => {
             If you have anything for us or want to join us visit here
           </p>
         </div>
+        <PromoStrip />
       </div>
     </>
   );

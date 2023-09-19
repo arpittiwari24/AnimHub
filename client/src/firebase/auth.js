@@ -2,8 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 
-
-console.log(import.meta.env.VITE_REACT_APP_apiKey);
+// console.log(import.meta.env.VITE_REACT_APP_apiKey);
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_REACT_APP_apiKey,
@@ -14,9 +13,6 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_REACT_APP_appId,
   measurementId: import.meta.env.VITE_REACT_APP_measurementId,
 };
-
-
-
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);

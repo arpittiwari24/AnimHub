@@ -1,93 +1,102 @@
-import React, { useContext, useState } from "react";
-import { auth } from "../firebase/auth";
-import axios from "axios";
-import {
-  GoogleAuthProvider,
-  signInWithPopup,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
-import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../context/AuthContextProviders";
+import React, { useRef, useEffect, useState } from "react";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
-const sendData = async (data) => {
-  axios
-  .post("http://localhost:8000/api/v1/auth/login", data)
-    .then((res) => {
-      console.log("Success", res);
-    })
-    .catch((err) => {
-      console.log("Error", err);
-    });
-  };
-  
 const Home = () => {
-  const userContext = useContext(AuthContext);
-  console.log(userContext);
-  const [form, setForm] = useState({});
-  const provider = new GoogleAuthProvider();
-  const navigate = useNavigate();
-  const loginUser = async (e) => {
-    e.preventDefault();
-    const user = await signInWithEmailAndPassword(
-      auth,
-      e.target[0].value,
-      e.target[1].value
-    );
-    if (user) {
-      console.log(user);
-      axios
-        .post("http://localhost:8000/api/v1/auth/login", form)
-        .then((res) => {
-          console.log("Success", res);
-        })
-        .catch((err) => {
-          console.log("Error", err);
-        });
-      console.log("User logged in");
-    }
-    console.log("User not logged in");
-  };
+  // Reference to the ul container
+  const ulContainerRef = useRef(null);
 
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
+  // State to track whether the arrows should be visible
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(false);
+
+  // Function to scroll the ul container left
+  const scrollLeft = () => {
+    ulContainerRef.current.scrollTo({
+      left: ulContainerRef.current.scrollLeft - 500, // Adjust the scroll distance as needed
+      behavior: "smooth", // Add smooth scrolling
     });
   };
 
-  const handleOAuth = async () => {
-    const user = await signInWithPopup(auth, provider);
-    const data = {
-      email: user.user.email,
-      password: user.user.uid,
+  // Function to scroll the ul container right
+  const scrollRight = () => {
+    ulContainerRef.current.scrollTo({
+      left: ulContainerRef.current.scrollLeft + 500, // Adjust the scroll distance as needed
+      behavior: "smooth", // Add smooth scrolling
+    });
+  };
+
+  // Check if there's content to scroll on mount and when the scroll position changes
+  useEffect(() => {
+    const container = ulContainerRef.current;
+
+    const handleScroll = () => {
+      setShowLeftArrow(container.scrollLeft > 0);
+      setShowRightArrow(
+        container.scrollLeft < container.scrollWidth - container.clientWidth
+      );
     };
-    sendData(data);
-    console.log(user.user.photoURL, "User name here");
+
+    container.addEventListener("scroll", handleScroll);
+    handleScroll(); // Check on mount
+
+    return () => {
+      container.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  // Function to temporarily disable the scrollbar during scrolling
+  const disableScrollbar = () => {
+    ulContainerRef.current.style.overflow = "hidden";
+    setTimeout(() => {
+      ulContainerRef.current.style.overflow = "scroll";
+    }, 1000); // Adjust the delay as needed
   };
-  const change = (e) => {
-    e.preventDefault();
-    navigate("/signup");
-  };
+
   return (
-    <div>
-      <form onSubmit={loginUser}>
-        <input
-          type="text"
-          placeholder="Email"
-          name="email"
-          onChange={handleChange}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          name="password"
-          onChange={handleChange}
-        />
-        <button type="submit">Login</button>
-      </form>
-      <button onClick={handleOAuth}>Google</button>
-      <button onClick={change}>Signup Button</button>
-    </div>
+    <>
+      <div className="w-full h-[100vh] flex flex-col justify-start items-start px-12">
+        <h1 className="text-xl font-bold">Explore all the components</h1>
+        <div
+          className="relative hide-scrollbar mt-2"
+          onScroll={disableScrollbar}
+        >
+          {showLeftArrow && (
+            <button
+              className="absolute left-0 top-1/2 transform -translate-y-1/2 rounded-full bg-[#1a1a1a] hover:bg-[#343434] backdrop-blur-md shadow-arrow p-3"
+              onClick={scrollLeft}
+            >
+              <FaChevronLeft />
+            </button>
+          )}
+          <ul
+            ref={ulContainerRef}
+            className="flex items-center space-x-2 no-scrollbar" // Removed justify-center
+            style={{
+              width: "90vw",
+              scrollBehavior: "smooth", // Add smooth scrolling to the ul container
+              overflowX: "scroll", // Enable horizontal scrolling
+            }}
+          >
+            {Array.from({ length: 30 }, (_, index) => (
+              <li
+                key={index}
+                className="bg-[#151515] hover:bg-[#2b2b2b] border-2 border-[#212121] px-6 py-2 rounded-full"
+              >
+                Tags{index + 1}
+              </li>
+            ))}
+          </ul>
+          {showRightArrow && (
+            <button
+              className="absolute right-0 top-1/2 transform -translate-y-1/2 rounded-full bg-[#1a1a1a] hover:bg-[#343434] backdrop-blur-md shadow-arrow p-3"
+              onClick={scrollRight}
+            >
+              <FaChevronRight />
+            </button>
+          )}
+        </div>
+      </div>
+    </>
   );
 };
 
