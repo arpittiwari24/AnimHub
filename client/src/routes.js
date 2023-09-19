@@ -10,6 +10,7 @@ import {
   Contact,
   Testing,
 } from "./pages";
+import Confirm from "./components/popup/Confirm";
 
 export const routesData = [
   {
@@ -52,9 +53,9 @@ export const routesData = [
     path: "/testing",
     component: Testing,
   },
-  // {
-    // path: "/login",
-    // component: Login,
-  // },
+  {
+    path: "/confirm",
+    component: Confirm,
+  },
 ];
 export default routesData;

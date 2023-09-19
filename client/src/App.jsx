@@ -19,22 +19,20 @@ function App() {
     });
   }, []);
   return (
-    <>
-      {/* <AuthContextProvider> */}
-        <Navbar />
-        <Routes>
-          {routesData.map((route, index) => (
-            <Route
-              key={index}
-              path={route.path}
-              element={<route.component />}
-              exact={true}
-            />
-          ))}
-        </Routes>
-        <Footer />
-      {/* </AuthContextProvider> */}
-    </>
+    <div className="dark">
+      <Navbar />
+      <Routes>
+        {routesData.map((route, index) => (
+          <Route
+            key={index}
+            path={route.path}
+            element={<route.component />}
+            exact={true}
+          />
+        ))}
+      </Routes>
+      <Footer />
+    </div>
   );
 }
 

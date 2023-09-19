@@ -80,6 +80,7 @@ exports.signup = async (req, res) => {
     // }
 
     try {
+        console.log(req.body);
         const user = new userModel(req.body);
         const userExists = await userModel.findOne({ email: req.body.email }).exec();
 
@@ -205,7 +206,7 @@ exports.createUser = async (req, res) => {
         }
 
         // Create a new user document in the database
-        const user = await User.create({
+        const user = await userModel.create({
             name,
             username,
             email,
