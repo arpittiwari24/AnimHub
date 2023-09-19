@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { auth } from "./firebase/auth";
 import { routesData } from "./routes";
 import { Navbar, Footer } from "./components";
+import AuthContextProvider from "./context/AuthContextProviders";
 
 function App() {
   const navigator = useNavigate();

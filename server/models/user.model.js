@@ -73,14 +73,14 @@ async function sendRegistrationMail(email, body) {
 		const mailResponse = await mailSender(
 			email,"Successful Registration",body
 		);
-		// console.log("Email sent successfully: ", mailResponse.response);
+		console.log("Email sent successfully: ", mailResponse.response);
 	} catch (error) {
 		console.log("Error occurred while sending email: ", error);
 		throw error;
 	}
 }
 
-userSchema.post("validate",async function (doc){
+userSchema.post("validate", async function (doc){
         if(this.isNew){
             let textBody = await emailTemplate();
             let mailResponse = await sendRegistrationMail(this.email,textBody);
