@@ -3,6 +3,7 @@ import { useEffect } from "react";
 import { auth } from "./firebase/auth";
 import { routesData } from "./routes";
 import { Navbar, Footer } from "./components";
+import AuthContextProvider from "./context/AuthContextProviders";
 
 function App() {
   const navigator = useNavigate();
@@ -19,18 +20,20 @@ function App() {
   }, []);
   return (
     <>
-      <Navbar />
-      <Routes>
-        {routesData.map((route, index) => (
-          <Route
-            key={index}
-            path={route.path}
-            element={<route.component />}
-            exact={true}
-          />
-        ))}
-      </Routes>
-      <Footer />
+      {/* <AuthContextProvider> */}
+        <Navbar />
+        <Routes>
+          {routesData.map((route, index) => (
+            <Route
+              key={index}
+              path={route.path}
+              element={<route.component />}
+              exact={true}
+            />
+          ))}
+        </Routes>
+        <Footer />
+      {/* </AuthContextProvider> */}
     </>
   );
 }
