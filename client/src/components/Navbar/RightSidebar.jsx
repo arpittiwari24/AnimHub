@@ -57,7 +57,7 @@ const RightSidebar = ({ isRightSidebarOpen, setIsRightSidebarOpen }) => {
         {isRightSidebarOpen && (
           <>
             <div
-              className={`bg-[#151515] origin-top-right absolute right-0 mt-2 ${
+              className={`bg-[#151515] origin-top-right absolute z-10 right-0 mt-2 ${
                 auth ? "w-[17.5rem]" : "w-24"
               } rounded-md shadow-lg border-[#151515] border-2 `}
             >

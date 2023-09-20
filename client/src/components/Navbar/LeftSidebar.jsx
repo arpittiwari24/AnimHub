@@ -59,7 +59,7 @@ function LeftSidebar({ isLeftSidebarOpen, setIsLeftSidebarOpen }) {
       </button>
       {isLeftSidebarOpen && (
         <div
-          className="absolute top-[45px] left-[30px] w-[17rem] bg-[#0e0e0e] p-4 rounded-lg shadow-lg overflow-y-auto"
+          className="absolute z-10 top-[43px] left-[30px] w-[17rem] bg-[#0e0e0e] p-4 rounded-lg shadow-lg overflow-y-auto"
           style={parentDropdownStyle}
         >
           <ul className="flex flex-col gap-2">
@@ -101,7 +101,7 @@ function LeftSidebar({ isLeftSidebarOpen, setIsLeftSidebarOpen }) {
                         {item.subItems.map((subItem, index) => (
                           <li
                             key={index}
-                            className="w-full hover:bg-[#2b2b2b] rounded-xl flex justify-start items-center gap-6 p-4 hover:bg-gray-100"
+                            className="w-full hover:bg-[#2b2b2b] rounded-xl flex justify-start items-center gap-6 p-4 "
                           >
                             {subItem.icon && (
                               <subItem.icon className="text-2xl" />
