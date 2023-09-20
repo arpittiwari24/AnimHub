@@ -41,8 +41,12 @@ const componentSchema = new mongoose.Schema({
   ],
   verified: {
     type: Boolean,
-    default:false,
+    default: false,
   },
-});
+},
+  {
+    timestamps: true,
+  }
+);
 
 module.exports = mongoose.model("Component", componentSchema);
