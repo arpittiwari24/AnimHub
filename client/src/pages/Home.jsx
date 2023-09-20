@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import ComponentCard from "../components/common/ComponentCard";
 
 const Home = () => {
   // Reference to the ul container
@@ -54,46 +55,54 @@ const Home = () => {
 
   return (
     <>
-      <div className="w-full h-[100vh] flex flex-col justify-start items-start px-12">
-        <h1 className="text-xl font-bold">Explore all the components</h1>
-        <div
-          className="relative hide-scrollbar mt-2"
-          onScroll={disableScrollbar}
-        >
-          {showLeftArrow && (
-            <button
-              className="absolute left-0 top-1/2 transform -translate-y-1/2 rounded-full bg-[#1a1a1a] hover:bg-[#343434] backdrop-blur-md shadow-arrow p-3"
-              onClick={scrollLeft}
-            >
-              <FaChevronLeft />
-            </button>
-          )}
-          <ul
-            ref={ulContainerRef}
-            className="flex items-center space-x-2 no-scrollbar" // Removed justify-center
-            style={{
-              width: "90vw",
-              scrollBehavior: "smooth", // Add smooth scrolling to the ul container
-              overflowX: "scroll", // Enable horizontal scrolling
-            }}
+      <div className="w-full flex flex-col justify-start items-start px-12">
+        <div className="w-full auto flex flex-col justify-start items-start ">
+          <h1 className="text-xl font-bold">Explore all the components</h1>
+          <div
+            className="relative hide-scrollbar mt-2"
+            onScroll={disableScrollbar}
           >
-            {Array.from({ length: 30 }, (_, index) => (
-              <li
-                key={index}
-                className="bg-[#151515] hover:bg-[#2b2b2b] border-2 border-[#212121] px-6 py-2 rounded-full"
+            {showLeftArrow && (
+              <button
+                className="absolute left-0 top-1/2 transform -translate-y-1/2 rounded-full bg-[#1a1a1a] hover:bg-[#343434] backdrop-blur-md shadow-arrow p-3"
+                onClick={scrollLeft}
               >
-                Tags{index + 1}
-              </li>
-            ))}
-          </ul>
-          {showRightArrow && (
-            <button
-              className="absolute right-0 top-1/2 transform -translate-y-1/2 rounded-full bg-[#1a1a1a] hover:bg-[#343434] backdrop-blur-md shadow-arrow p-3"
-              onClick={scrollRight}
+                <FaChevronLeft />
+              </button>
+            )}
+            <ul
+              ref={ulContainerRef}
+              className="flex items-center space-x-2 no-scrollbar" // Removed justify-center
+              style={{
+                width: "90vw",
+                scrollBehavior: "smooth", // Add smooth scrolling to the ul container
+                overflowX: "scroll", // Enable horizontal scrolling
+              }}
             >
-              <FaChevronRight />
-            </button>
-          )}
+              {Array.from({ length: 30 }, (_, index) => (
+                <li
+                  key={index}
+                  className="bg-[#151515] hover:bg-[#2b2b2b] border-2 border-[#212121] px-6 py-2 rounded-full"
+                >
+                  Tags{index + 1}
+                </li>
+              ))}
+            </ul>
+            {showRightArrow && (
+              <button
+                className="absolute right-0 top-1/2 transform -translate-y-1/2 rounded-full bg-[#1a1a1a] hover:bg-[#343434] backdrop-blur-md shadow-arrow p-3"
+                onClick={scrollRight}
+              >
+                <FaChevronRight />
+              </button>
+            )}
+          </div>
+        </div>
+        <div className="w-full h-auto flex flex-wrap gap-8 my-10 justify-start items-center">
+          {/* cards */}
+          {Array.from({ length: 12 }, (_, index) => (
+            <ComponentCard />
+          ))}
         </div>
       </div>
     </>
