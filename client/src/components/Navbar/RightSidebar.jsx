@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { RxCross2 } from "react-icons/rx";
 import { FaCircleUser } from "react-icons/fa6";
 import {
   dropdownItemsRightSidebar,
@@ -12,13 +13,17 @@ const RightSidebar = ({ isRightSidebarOpen, setIsRightSidebarOpen }) => {
   const { isOpen, popupContent, openPopup, closePopup } = usePopupContext();
   const handleOpenPopup = (popup) => {
     const content = (
-      <div className="fixed top-0 left-0 h-screen w-screen backdrop-blur z-[5] p-6">
-        <div className="flex justify-center items-center h-full w-full flex-col gap-4">
-          {popup === "signup" && <Signup />}
-          {popup === "login" && <Login />}
-          <button onClick={closePopup}>Close</button>
+      <>
+        <div className="fixed flex justify-center items-center top-0 left-0 h-screen w-screen bg-[#00000070] z-20 p-6">
+          <div className="relative flex justify-center items-center bg-[#151515]  h-auto w-auto flex-col gap-4">
+            {popup === "signup" && <Signup />}
+            {popup === "login" && <Login />}
+            <button className="absolute top-2 right-2" onClick={closePopup}>
+              <RxCross2 />
+            </button>
+          </div>
         </div>
-      </div>
+      </>
     );
     openPopup(content);
   };
@@ -132,7 +137,7 @@ const RightSidebar = ({ isRightSidebarOpen, setIsRightSidebarOpen }) => {
       </div>
       {isOpen && (
         <div className="popup">
-          <button onClick={closePopup}>Close</button>
+          {/* <button onClick={closePopup}>Close</button> */}
           {popupContent}
         </div>
       )}
