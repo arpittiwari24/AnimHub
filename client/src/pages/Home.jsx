@@ -1,8 +1,16 @@
 import React, { useRef, useEffect, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import ComponentCard from "../components/common/ComponentCard";
+import { Pagination } from "../components/common";
 
 const Home = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = 100; // Replace with the actual total number of pages
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    // You can also load data for the selected page here
+  };
   // Reference to the ul container
   const ulContainerRef = useRef(null);
 
@@ -103,6 +111,13 @@ const Home = () => {
           {Array.from({ length: 12 }, (_, index) => (
             <ComponentCard />
           ))}
+        </div>
+        <div className="w-full px-12 mt-2 flex justify-center items-center">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
         </div>
       </div>
     </>
