@@ -2,24 +2,32 @@ const express = require("express")
 const router = express.Router()
 
 
-const { login, signup,createUser } = require("../controllers/user");
+const {updateProfile,getProfileData,followUser,unFollowUser,getFollowers,getFollowings} = require("../controllers/user");
 
 
 // const userModel = require("../models/user.model");
 
 
 // ********************************************************************************************************
-//                                      Authentication routes
+//                                      User routes
 // ********************************************************************************************************
 
-// Route for user signup
-router.post("/signup", signup)
+//route for profile updation
+router.post("/updateProfile",updateProfile)
 
-// Route for user creation
-router.post("/createUser",createUser);
+//route for profile fetching
+router.post("/getProfileData",getProfileData)
 
+//route for Following user
+router.post("/followUser",followUser)
 
-// Route for user login
-router.post("/login", login)
+//route for unFollowing user
+router.post("/unFollowUser",unFollowUser)
+
+//route for fetching Follower's of an user
+router.post("/getFollowers",getFollowers)
+
+//route for fetching Following's of an user
+router.post("/getFollowings",getFollowings)
 
 module.exports = router
