@@ -5,13 +5,13 @@ const userModel = require('../models/user.model');
 exports.createComponent = async (req, res) => {
     try {
         // Extract data from the request body
-        const { userId, html, css, js, react, tags } = req.body;
+        const { userId, html, css, js, react, category, tags } = req.body;
 
         // Check if userId is provided
-        if (!userId) {
+        if (!userId || !category) {
             return res.status(403).send({
                 success: false,
-                message: "userId is required",
+                message: "userId and category is required",
             });
         }
 
@@ -27,6 +27,7 @@ exports.createComponent = async (req, res) => {
         const component = await Component.create({
             userId,
             code,
+            category,
             tags,
         });
 
@@ -52,7 +53,7 @@ exports.createComponent = async (req, res) => {
 };
 
 //Get all components
-exports.getAllComponents = async (req,res) => {
+exports.getAllComponents = async (req, res) => {
     try {
         const componentArray = await Component.find({}).populate('userId').exec();
 
@@ -94,7 +95,7 @@ exports.updateComponent = async (req, res) => {
             });
         }
 
-        const user = await userModel.findById({_id:userId}).exec();
+        const user = await userModel.findById({ _id: userId }).exec();
 
         // Check if the user is authorized to delete the component
         if (String(component.userId) === userId || user.isAdmin === true) {
@@ -157,7 +158,7 @@ exports.deleteComponent = async (req, res) => {
             });
         }
 
-        const user = await userModel.findById({_id:userId}).exec();
+        const user = await userModel.findById({ _id: userId }).exec();
 
         // Check if the user is authorized to delete the component
         if (String(component.userId) === userId || user.isAdmin === true) {
@@ -166,7 +167,7 @@ exports.deleteComponent = async (req, res) => {
 
             //pop the componentId in the component array of the user
             await userModel.findByIdAndUpdate({ _id: userId }, {
-                $pull:{components:componentId}
+                $pull: { components: componentId }
             }).exec();
 
 
@@ -192,7 +193,7 @@ exports.deleteComponent = async (req, res) => {
 }
 
 //like a component
-exports.likeComponent = async (req,res) => {
+exports.likeComponent = async (req, res) => {
     try {
         // Extract data from the request body
         const { userId, componentId } = req.body;
@@ -217,7 +218,7 @@ exports.likeComponent = async (req,res) => {
         }
 
         //update the component with the like
-        component.likeCounter+=1;
+        component.likeCounter += 1;
         component.likedUsers.push(userId);
 
         await component.save();
@@ -237,7 +238,7 @@ exports.likeComponent = async (req,res) => {
 }
 
 //unlike a component
-exports.unlikeComponent = async (req,res) => {
+exports.unlikeComponent = async (req, res) => {
     try {
         // Extract data from the request body
         const { userId, componentId } = req.body;
@@ -262,9 +263,9 @@ exports.unlikeComponent = async (req,res) => {
         }
 
         //update the component with the like
-        component.likeCounter-=1;
+        component.likeCounter -= 1;
         let index = component.likedUsers.indexOf(userId);
-        component.likedUsers.splice(index,1);
+        component.likedUsers.splice(index, 1);
 
         await component.save();
 
@@ -281,4 +282,153 @@ exports.unlikeComponent = async (req,res) => {
         });
     }
 }
+
+//trendingComponents controller for fetching trending components
+exports.trendingComponents = async (req, res) => {
+    try {
+        // Fetch the top 10 components based on 'likeCounter'
+        let trendingComponents = await Component.find({}).sort({ 'likeCounter': -1 }).limit(10).exec();
+
+        // Return the trending components and a success message
+        return res.status(200).json({
+            trendingComponents,
+            success: true,
+            message: 'Trending components sent successfully'
+        })
+    } catch (error) {
+        // Return an error response if there's an exception
+        return res.status(400).json({
+            success: false,
+            message: "Error occurred while fetching trending components"
+        })
+    }
+}
+
+// Controller to fetch components based on category
+exports.getCategoryComponents = async (req, res) => {
+    try {
+        const { category } = req.body;
+
+        // Check if the category is provided
+        if (!category) {
+            return res.status(400).json({
+                success: false,
+                message: "Please send a valid category" // Error if category is missing
+            });
+        }
+
+        // Fetch components based on the specified category
+        let components = await Component.find({ category: category }).exec();
+
+        // Check if components were found
+        if (!components) {
+            return res.status(404).json({
+                success: false,
+                message: "Invalid category or category not found" // Error if category is invalid or not found
+            });
+        }
+
+        // Return components and a success message
+        return res.status(200).json({
+            components,
+            success: true,
+            message: "Components based on category sent successfully"
+        });
+    } catch (error) {
+        // Return an error response if there's an exception
+        return res.status(400).json({
+            success: false,
+            message: "Error occurred while fetching components based on category"
+        });
+    }
+};
+
+// Controller to fetch components based on tags
+exports.getTagsComponents = async (req, res) => {
+    try {
+        const { tags } = req.body;
+
+        // Check if tags are provided
+        if (!tags) {
+            return res.status(400).json({
+                success: false,
+                message: "Please send tags" // Error if tags are missing
+            });
+        }
+
+        // Fetch components based on the specified tags
+        let components = await Component.find({ tags: { $in: tags } }).exec();
+
+        // Check if components were found
+        if (!components) {
+            return res.status(404).json({
+                success: false,
+                message: "Invalid tags or tags not found" // Error if tags are invalid or not found
+            });
+        }
+
+        // Return components and a success message
+        return res.status(200).json({
+            components,
+            success: true,
+            message: "Components based on tags sent successfully"
+        });
+    } catch (error) {
+        // Return an error response if there's an exception
+        return res.status(400).json({
+            success: false,
+            message: "Error occurred while fetching components based on tags"
+        });
+    }
+};
+
+// Controller to fetch components based on languages
+exports.getLanguageComponents = async (req, res) => {
+    try {
+        const { languages } = req.body;
+
+        // Check if languages are provided and is an array
+        if (!languages || !Array.isArray(languages)) {
+            return res.status(400).json({
+                success: false,
+                message: "Please provide an array of languages" // Error if languages are missing or not an array
+            });
+        }
+
+        // Construct conditions for each language to check if the code is not null for that language
+        const languageConditions = languages.map(language => ({
+            [`code.${language}`]: { $ne: "" }
+        }));
+
+        // Fetch components based on the constructed conditions
+        const components = await Component.find({
+            $or: languageConditions
+        });
+
+        // Check if components were found
+        if (!components) {
+            return res.status(404).json({
+                success: false,
+                message: "Invalid languages or languages not found" // Error if languages are invalid or not found
+            });
+        }
+
+        // Return components and a success message
+        return res.status(200).json({
+            components,
+            success: true,
+            message: "Components based on languages sent successfully"
+        });
+    } catch (error) {
+        // Return an error response if there's an exception
+        return res.status(400).json({
+            success: false,
+            message: "Error occurred while fetching components based on languages"
+        });
+    }
+};
+
+
+
+
 

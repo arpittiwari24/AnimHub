@@ -1,231 +1,309 @@
-const bcrypt = require("bcrypt");
 const userModel = require("../models/user.model");
-const jwt = require("jsonwebtoken");
 
-require("dotenv").config();
-
-// Signup Controller for Registering USers
-
-exports.signup = async (req, res) => {
-
-    // try {
-    //     // Destructure fields from the request body
-    //     const {
-    //         name,
-    //         username,
-    //         email,
-    //         password,
-    //         confirmPassword,
-    //     } = req.body;
-    //     // Check if All Details are there or not
-    //     if (
-    //         !name ||
-    //         !username ||
-    //         !email ||
-    //         !password ||
-    //         !confirmPassword
-    //     ) {
-    //         return res.status(403).send({
-    //             success: false,
-    //             message: "All Fields are required",
-    //         });
-    //     }
-    //     // Check if password and confirm password match
-    //     if (password !== confirmPassword) {
-    //         return res.status(400).json({
-    //             success: false,
-    //             message:
-    //                 "Password and Confirm Password do not match. Please try again.",
-    //         });
-    //     }
-    //     // Check if user already exists
-    //     const existingUser = await User.findOne({ email });
-    //     if (existingUser) {
-    //         return res.status(400).json({
-    //             success: false,
-    //             message: "User already exists. Please Log in to continue.",
-    //         });
-    //     }
-    //     // Check if username already exists
-    //     const existingUsername = await User.findOne({ username });
-    //     if (existingUser) {
-    //         return res.status(400).json({
-    //             success: false,
-    //             message: "Username already exists. Please Log in to continue.",
-    //         });
-    //     }
-    //     // Hash the password
-    //     const hashedPassword = await bcrypt.hash(password, 10);
-    //     // Create the Additional Profile For User
-    //     // {
-    //     //    this is to be coded soon...  
-    //     // }
-    //     const user = await User.create({
-    //         name,
-    //         username,
-    //         email,
-    //         password: hashedPassword,
-    //     });
-    //     return res.status(200).json({
-    //         success: true,
-    //         user,
-    //         message: "User registered successfully",
-    //     });
-    // } catch (error) {
-    //     console.error(error);
-    //     return res.status(500).json({
-    //         success: false,
-    //         message: "User cannot be registered. Please try again.",
-    //     });
-    // }
-
+//updateProfile controller for updating the user profile
+exports.updateProfile = async (req, res) => {
     try {
-        console.log(req.body);
-        const user = new userModel(req.body);
-        const userExists = await userModel.findOne({ email: req.body.email }).exec();
+        // Extract data from the request body
+        const { userId, name, bio, country, profilePicUrl, gradientBg, socialLinks } = req.body;
 
-        if (!userExists) {
-            user.save()
-            res.status(200).send(req.body);
-        }
-        else {
-            console.log("User already exists");
-            return res.json({
+        // Check if userId is provided
+        if (!userId) {
+            return res.status(400).json({
                 success: false,
-                error: "User already exists",
-                message: "User already exists",
-            })
+                message: 'userId is not present',
+            });
         }
-    }
-    catch (error) {
-        console.error(error);
-        return res.status(500).json({
-            success: false,
-            message: "User cannot be registered. Please try again.",
-        });
 
-    }
-};
+        // Check if other fields are provided
+        if (
+            !name ||
+            !bio ||
+            !country ||
+            !profilePicUrl ||
+            !gradientBg ||
+            !socialLinks
+        ) {
+            return res.status(403).send({
+                success: false,
+                message: "All Fields are required",
+            });
+        }
 
-// Login controller for authenticating users
-exports.login = async (req, res) => {
-    try {
-        // Get email and password from request body
-        const { email, password } = req.body;
+        // Find the user in the database
+        const user = await userModel.findOne({ _id: userId }).exec();
 
-        console.log("Email Pass", email, password);
-        // Find user with provided email
-        const user = await userModel.findOne({ email });
-        console.log("User", user);
-
-        // If user not found with provided email
+        // If no such user is found
         if (!user) {
-            // Return 401 Unauthorized status code with error message
-            return res.status(401).json({
+            return res.status(400).json({
                 success: false,
-                message: `User is not Registered with Us Please SignUp to Continue`,
+                message: "No such user found"
             });
         }
 
-        // Generate JWT token and Compare Password
-        // if (await bcrypt.compare(password, user.password)) {
-        //     const token = jwt.sign(
-        //         { email: user.email, id: user._id, isAdmin: user.isAdmin },
-        //         process.env.JWT_SECRET,
-        //         {
-        //             expiresIn: "24h",
-        //         }
-        //     );
+        //update the user
+        user.name = name;
+        user.bio = bio;
+        user.country = country;
+        user.profilePicUrl = profilePicUrl;
+        user.gradientBg = gradientBg;
+        user.socialLinks = socialLinks;
 
-            // Save token to user document in database
-            // const userAfterUpdation = await User.findOneAndUpdate(
-            //     { email: user.email },
-            //     { $set: { token: token } },
-            //     { new: true },
-            // );
+        await user.save();
 
-            //set user password to undefined , before sending the data to the frontend
-            // userAfterUpdation.password = undefined;
-
-            //The following code can be implemented if we want to use cookies for
-            //transferring the token to the frontend
-
-            // Set cookie for token and return success response
-
-            // const options = {
-            //     expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
-            //     httpOnly: true,
-            // };
-            // res.cookie("token", token, options).status(200).json({
-            //     success: true,
-            //     token,
-            //     user,
-            //     message: `User Login Success`,
-            // });
-        if (user){
-            res.status(200).json({
-                success: true,
-                // token,
-                // userAfterUpdation,
-                message: `User Login Success`,
-            });
-
-        } else {
-            return res.status(401).json({
-                success: false,
-                message: `Password is incorrect`,
-            });
-        }
-    } catch (error) {
-        console.error(error);
-        // Return 500 Internal Server Error status code with error message
-        return res.status(500).json({
-            success: false,
-            message: `Login Failure Please Try Again`,
-        });
-    }
-};
-
-
-exports.createUser = async (req, res) => {
-    try {
-        // Extract user data from the request body
-        let { name, username, email, password, profilePicUrl } = req.body;
-
-        // Check if required fields are missing
-        if (!name || !username || !email || !password) {
-            return res.status(409).json({
-                success: false,
-                message: 'Please provide all the fields',
-            });
-        }
-
-        // Check if profilePicUrl is an empty string, and set it to null if it is
-        if (profilePicUrl === "") {
-            profilePicUrl = null;
-        }
-
-        // Create a new user document in the database
-        const user = await userModel.create({
-            name,
-            username,
-            email,
-            password,
-            profilePicUrl,
-        });
-
-        // Respond with a success message and the created user data
         return res.status(200).json({
+            user,
             success: true,
-            user, // You can send the created user data in the response if needed
-            message: "User created successfully in MongoDB",
-        });
-
+            message: "Profile updated successfully"
+        })
     } catch (error) {
-        // Handle any errors that may occur during user creation
-        return res.status(500).json({
+        res.status(400).json({
             success: false,
-            message: `Unable to create user in MongoDB. Please try again.`,
+            message: 'Unable to update the user, please try again',
         });
     }
 }
+
+//getProfileData controller for fetching profile data of an user
+exports.getProfileData = async (req, res) => {
+    try {
+        // Extract userId from the request body
+        const { userId } = req.body;
+    
+        // Check if userId is provided
+        if (!userId) {
+            // Return a response indicating an invalid userId
+            return res.status(400).json({
+                success: false,
+                message: 'Please send a valid userId'
+            })
+        }
+    
+        // Find the user by the provided userId
+        const user = await userModel.findById({ _id: userId }).exec();
+    
+        // Check if the user is not found
+        if (!user) {
+            // Return a response indicating that the user was not found
+            return res.status(404).json({
+                success: false,
+                message: 'User not found'
+            })
+        }
+    
+        // Prepare the profile data from the user information
+        let profileData = {
+            name: user.name,
+            username: user.username,
+            email: user.email,
+            profilePicUrl: user.profilePicUrl,
+            bio: user.bio,
+            country: user.country,
+            gradientBg: user.gradientBg,
+            socialLinks: user.socialLinks,
+        }
+    
+        // Return the profile data and a success message
+        return res.status(200).json({
+            profileData,
+            success: true,
+            message: 'Profile data of user is sent successfully'
+        })
+    } catch (error) {
+        // Return an error message if there's an exception
+        return res.status(400).json({
+            success: false,
+            message: 'Profile data of the user could not be processed, try again'
+        })
+    }
+}
+
+//followUser controller for following a specific user
+exports.followUser = async (req, res) => {
+    try {
+        // Extract data from the request body
+        const { userId, toBeFollowedId } = req.body;
+
+        // Check if userId and toBeFollowedId are provided
+        if (!userId || !toBeFollowedId) {
+            return res.status(400).json({
+                success: false,
+                message: 'Please send userId and toBeFollwedId',
+            });
+        }
+
+        // Find both the user's in the database
+        const user = await userModel.findOne({ _id: userId }).exec();
+        const toBeFollweduser = await userModel.findOne({ _id: toBeFollowedId }).exec();
+
+        // If either is not found
+        if (!user || !toBeFollweduser) {
+            return res.status(400).json({
+                success: false,
+                message: "Either of the two user's or both of them are not found"
+            });
+        }
+
+        //update the user's with the Follow
+        user.following.push(toBeFollowedId);
+        toBeFollweduser.followers.push(userId);
+
+        await user.save();
+        await toBeFollweduser.save();
+
+
+        return res.status(200).json({
+            success: true,
+            message: 'user followed the given user successfully',
+        });
+
+    } catch (error) {
+        // Handle any errors during liking the component
+        res.status(400).json({
+            success: false,
+            message: 'Unable to process the follow request, please try again',
+        });
+    }
+}
+
+//unfollowUser controller for unfollowing a specific user
+exports.unFollowUser = async (req, res) => {
+    try {
+        // Extract data from the request body
+        const { userId, toBeUnFollowedId } = req.body;
+
+        // Check if userId and toBeFollowedId are provided
+        if (!userId || !toBeUnFollowedId) {
+            return res.status(400).json({
+                success: false,
+                message: 'Please send userId and toBeFollwedId',
+            });
+        }
+
+        // Find both the user's in the database
+        const user = await userModel.findOne({ _id: userId }).exec();
+        const toBeUnFollweduser = await userModel.findOne({ _id: toBeUnFollowedId }).exec();
+
+        // If either is not found
+        if (!user || !toBeUnFollweduser) {
+            return res.status(400).json({
+                success: false,
+                message: "Either of the two user's or both of them are not found"
+            });
+        }
+
+        //update the user's with the unFollow
+        let index1 = user.following.indexOf(toBeUnFollowedId);
+        user.following.splice(index1, 1);
+        let index2 = toBeUnFollweduser.followers.indexOf(userId);
+        toBeUnFollweduser.followers.splice(index2, 1);
+
+        await user.save();
+        await toBeUnFollweduser.save();
+
+
+        return res.status(200).json({
+            success: true,
+            message: 'user unfollowed the given user successfully',
+        });
+
+    } catch (error) {
+        // Handle any errors during liking the component
+        res.status(400).json({
+            success: false,
+            message: 'Unable to process the unfollow request, please try again',
+        });
+    }
+}
+
+//getFollowers controller for fetching follower's of an user
+exports.getFollowers = async (req, res) => {
+    try {
+        // Extract userId from the request body
+        const { userId } = req.body;
+
+        // Check if userId is provided
+        if (!userId) {
+            return res.status(400).json({
+                success: false,
+                message: "please provide a valid userId"
+            })
+        }
+
+        // Find the user by the provided userId
+        const user = await userModel.findById({ _id: userId }).exec();
+
+        // Check if the user is not found
+        if (!user) {
+            return res.status(400).json({
+                success: false,
+                message: "User not found"
+            })
+        }
+
+        // Get the followers array of the user
+        const followersArray = user.followers;
+
+        // Return followers array and success message
+        return res.status(200).json({
+            followersArray,
+            success: true,
+            message: 'All the followers sent successfully'
+        })
+    } catch (error) {
+        // Return an error message if there's an exception
+        return res.status(400).json({
+            success: false,
+            message: 'Unable to get the followers'
+        })
+    }
+
+}
+
+//getFollowing controller for fetching all the user's that are followed
+exports.getFollowings = async (req, res) => {
+    try {
+        // Extract userId from the request body
+        const { userId } = req.body;
+
+        // Check if userId is provided
+        if (!userId) {
+            // Return a response indicating an invalid userId
+            return res.status(400).json({
+                success: false,
+                message: "please provide a valid userId"
+            })
+        }
+
+        // Find the user by the provided userId
+        const user = await userModel.findById({ _id: userId }).exec();
+
+        // Check if the user is not found
+        if (!user) {
+            // Return a response indicating that the user was not found
+            return res.status(400).json({
+                success: false,
+                message: "User not found"
+            })
+        }
+
+        // Get the array of users that are being followed
+        const followingArray = user.following;
+
+        // Return the array of users being followed and a success message
+        return res.status(200).json({
+            followingArray,
+            success: true,
+            message: 'All the users that are followed, sent successfully'
+        })
+    } catch (error) {
+        // Return an error message if there's an exception
+        return res.status(400).json({
+            success: false,
+            message: 'Unable to get the users that are followed'
+        })
+    }
+
+}
+
+
+
