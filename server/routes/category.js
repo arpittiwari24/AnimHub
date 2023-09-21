@@ -2,19 +2,23 @@ const express = require("express")
 const router = express.Router()
 
 
-const {signup} = require("../controllers/auth");
+const { createCategory, updateCategory, getAllCategories } = require("../controllers/category");
 
 
 // const userModel = require("../models/user.model");
 
 
 // ********************************************************************************************************
-//                                      Authentication routes
+//                                    Category routes
 // ********************************************************************************************************
 
 // Route for user signup
-router.post("/signup", signup)
+router.post("/createCategory", createCategory)
 
+// Route for user login
+router.post("/updateCategory", updateCategory)
+
+router.get("/getAllCategories", getAllCategories)
 
 
 module.exports = router

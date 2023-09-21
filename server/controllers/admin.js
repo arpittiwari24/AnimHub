@@ -42,13 +42,13 @@ exports.verifyComponent = async (req, res) => {
         await component.save();
 
         //find the email of the craetor of the component
-        let userMail = await userModel.findById({_id:component.userId}).then((doc)=>{
+        let userMail = await userModel.findById({ _id: component.userId }).then((doc) => {
             return doc.email;
-        }).exec();
+        });
 
         let verificationMailTemplate = verificationMail();
         //send the creator , a successful verification email
-        let mailResponse = await mailsender(userMail,"Successfull verification of component",verificationMailTemplate);
+        let mailResponse = await mailsender(userMail, "Successfull verification of component", verificationMailTemplate);
 
         // Respond with success message
         return res.status(200).json({
@@ -57,7 +57,8 @@ exports.verifyComponent = async (req, res) => {
         });
     } catch (error) {
         // Handle any errors during component verification
-       return res.status(400).json({
+        return res.status(400).json({
+            error: error.message,
             success: false,
             message: 'Unable to verify the component, please try again',
         });
