@@ -1,3 +1,4 @@
+import { Confirm } from "./components/Popup";
 import {
   Home,
   About,
@@ -10,7 +11,7 @@ import {
   Contact,
   Testing,
 } from "./pages";
-import Confirm from "./components/popup/Confirm";
+// import Confirm from "./components/popup/Confirm";
 
 export const routesData = [
   {
