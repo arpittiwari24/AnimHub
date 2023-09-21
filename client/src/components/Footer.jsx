@@ -39,7 +39,22 @@ const social = [
 
 const Footer = () => {
   return (
-    <footer>
+    <footer className="h-auto w-full flex flex-col justify-center items-start mt-[28rem]">
+      <p className="text-center text-[12px] text-[#969696] leading-4 px-28 mb-12">
+        At Animhub, our team is always busy, tinkering away like mad scientists,
+        crafting and animating the wildest components for your web adventures.
+        It's all here, and it's all 100% free, just like your favorite Saturday
+        morning cartoons. We've got an enormous collection of animated wonders
+        that you can use to make your websites dance and sing. Animhub is the
+        most complete and revolutionary animation component playground around.
+        We offer animations that'll make your buttons boogie, your input fields
+        twirl, and your cards do the cha-cha. Plus, we've got a community that's
+        livelier than a cartoon character on caffeine! We're on a mission to
+        keep adding more features that will keep your love for animations alive
+        and kicking. So, stay tuned for more animated fun and surprises! Got any
+        ideas or feedback? Don't hesitate to drop us a line. We're all ears,
+        just like Mickey Mouse!
+      </p>
       <div className="h-auto w-full bg-[#151515] flex flex-col justify-center items-start py-0 px-[10vw]">
         <div className="flex w-full justify-between py-8 flex-wrap">
           <div className="flex flex-col">
