@@ -40,7 +40,7 @@ const Navbar = () => {
               <div className=" w-[70%] flex justify-center items-center bg-[#252525] px-4 py-[0.4rem] rounded-full">
                 <BiSearch className="text-[#fff] text-2xl" />
                 <input
-                  className="appearance-none all-none w-full bg-[#252525] text-[#fff] text-sm h-8 px-2 py-1  "
+                  className="appearance-none focus:outline-none all-none w-full bg-[#252525] text-[#fff] text-sm h-8 px-2 py-1  "
                   type="text"
                   placeholder="Search Animated Components"
                 />
