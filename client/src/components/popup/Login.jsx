@@ -7,17 +7,18 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { sendData } from "../../api";
 
-const sendData = async (data) => {
-  axios
-    .post("http://localhost:8000/api/v1/auth/login", data)
-    .then((res) => {
-      console.log("Success", res);
-    })
-    .catch((err) => {
-      console.log("Error", err);
-    });
-};
+// const sendData = async (data) => {
+// axios
+//   .post("/api/v1/auth/login", data)
+//   .then((res) => {
+//     console.log("Success", res);
+//   })
+//   .catch((err) => {
+//     console.log("Error", err);
+//   });
+// };
 
 const Login = () => {
   const [form, setForm] = useState({});
@@ -32,14 +33,7 @@ const Login = () => {
     );
     if (user) {
       console.log(user);
-      axios
-        .post("http://localhost:8000/api/v1/auth/login", form)
-        .then((res) => {
-          console.log("Success", res);
-        })
-        .catch((err) => {
-          console.log("Error", err);
-        });
+      await sendData("/api/v1/auth/login", form)
       console.log("User logged in");
     }
     console.log("User not logged in");
@@ -58,8 +52,7 @@ const Login = () => {
       email: user.user.email,
       password: user.user.uid,
     };
-    sendData(data);
-    console.log(user.user.photoURL, "User name here");
+    await sendData("/api/v1/auth/login", data);
   };
   const change = (e) => {
     e.preventDefault();
