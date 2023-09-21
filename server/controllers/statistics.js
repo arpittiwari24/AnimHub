@@ -63,24 +63,24 @@ exports.topUsersWithLikes = async (req,res) => {
             {
                 $limit: 10
             },
-            // {
-            //     $lookup: {
-            //         from: 'users', // The name of the users collection
-            //         localField: '_id',
-            //         foreignField: '_id',
-            //         as: 'user'
-            //     }
-            // },
-            // {
-            //     $unwind: '$user'
-            // },
-            // {
-            //     $project: {
-            //         _id: '$user._id',
-            //         name: '$user.name',
-            //         totalLikes: 1
-            //     }
-            // }
+            {
+                $lookup: {
+                    from: 'users', // The name of the users collection
+                    localField: '_id',
+                    foreignField: '_id',
+                    as: 'user'
+                }
+            },
+            {
+                $unwind: '$user'
+            },
+            {
+                $project: {
+                    _id: '$user._id',
+                    name: '$user.name',
+                    totalLikes: 1
+                }
+            }
         ]);
 
         return res.status(200).json({
@@ -93,6 +93,40 @@ exports.topUsersWithLikes = async (req,res) => {
             success: false,
             message: "Unable to find top users with most likes"
         })
+    }
+}
+
+exports.totalUsers = async (req,res) => {
+    try {
+        const totalUsers = await userModel.countDocuments();
+
+        return res.status(200).json({
+            totalUsers:totalUsers.toString(),
+            success: true,
+            message: "Total users on the website sent successfully"
+        })
+    } catch (error) {
+       return res.status(400).json({
+        success:false,
+        message: "Unable to find total users"
+       }) 
+    }
+}
+
+exports.totalComponents = async (req,res) => {
+    try {
+        const totalComponents= await Component.countDocuments();
+
+        return res.status(200).json({
+            totalComponents:totalComponents.toString(),
+            success: true,
+            message: "Total Components on the website sent successfully"
+        })
+    } catch (error) {
+       return res.status(400).json({
+        success:false,
+        message: "Unable to find total Components"
+       }) 
     }
 }
 

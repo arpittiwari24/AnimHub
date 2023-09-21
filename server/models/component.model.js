@@ -7,8 +7,16 @@ const componentSchema = new mongoose.Schema({
     required: true,
   },
   category: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Category',
+    required: true
   },
+  tags: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Tag',
+    },
+  ],
   code: {
     html: {
       type: String,
@@ -32,11 +40,6 @@ const componentSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-    },
-  ],
-  tags: [
-    {
-      type: String,
     },
   ],
   verified: {

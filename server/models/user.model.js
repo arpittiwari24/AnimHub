@@ -16,13 +16,10 @@ const userSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  password: {
-    type: String,
-    required: true,
-  },
-  token: {
-    type: String,
-  },
+  // password: {
+  //   type: String,
+  //   required: true,
+  // },
   username: {
     type: String,
     required: true,
@@ -86,8 +83,8 @@ async function sendRegistrationMail(email, body) {
 
 userSchema.post("validate", async function (doc) {
   if (this.isNew) {
-    let textBody = await emailTemplate();
-    let mailResponse = await sendRegistrationMail(this.email, textBody);
+    let textBody = emailTemplate();
+    await sendRegistrationMail(this.email, textBody);
     console.log("Email sent successfully");
   }
 })
