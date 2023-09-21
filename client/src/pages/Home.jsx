@@ -106,7 +106,7 @@ const Home = () => {
             )}
           </div>
         </div>
-        <div className="w-full h-auto flex flex-wrap gap-8 my-10 justify-start items-center">
+        <div className="w-full h-auto flex flex-wrap gap-8 my-10 justify-between items-center">
           {/* cards */}
           {Array.from({ length: 12 }, (_, index) => (
             <ComponentCard />

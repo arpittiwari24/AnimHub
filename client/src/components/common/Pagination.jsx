@@ -35,10 +35,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
       <ul className="flex justify-center items-center pagination">
         <li
           className={`${
-            currentPage === 1
-              ? "bg-[##0e0e0e] cursor-not-allowed text-[#2f2f2f]"
-              : "bg-primary hover:bg-[#ffb647] text-black"
-          }  text-2xl font-semibold rounded-md px-8 py-2 flex justify-center items-center mx-1`}
+            currentPage === 1 ? "" : "bg-primary hborderover:bg-[#"
+          } bg-[#0e0e0e] text-[#2f2f2f] text-xl font-bold rounded-md px-8 py-3 flex justify-center items-center mx-2`}
           onClick={() => {
             if (currentPage !== 1) {
               onPageChange(currentPage - 1);
@@ -49,14 +47,14 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         </li>
         {startPage > 1 && (
           <li
-            className="bg-gray-200 text-white rounded-full h-10 w-10 flex justify-center items-center mx-1 cursor-pointer"
+            className="bg-[#0e0e0e] text-[#fff] font-bold text-xl rounded-sm h-12 w-12 flex justify-center items-center mx-2 cursor-pointer"
             onClick={() => onPageChange(1)}
           >
             1
           </li>
         )}
         {startPage > 2 && (
-          <li className="bg-gray-200 text-white rounded-full h-10 w-10 flex justify-center items-center mx-1 cursor-pointer">
+          <li className="bg-[#0e0e0e] text-[#fff] font-bold text-xl rounded-full h-12 w-12 flex justify-center items-center mx-2 cursor-pointer">
             ...
           </li>
         )}
@@ -64,23 +62,21 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
           <li
             key={pageNumber}
             className={`${
-              pageNumber === currentPage
-                ? "bg-blue-500 text-white"
-                : "bg-gray-200"
-            } hover:bg-blue-500 hover:text-white cursor-pointer rounded-full h-10 w-10 flex justify-center items-center mx-1`}
+              pageNumber === currentPage ? "border-2 border-primary" : ""
+            } bg-[#0e0e0e] text-[#fff] font-bold text-xl hover:bg-[#2f2f2f] hover:text-white cursor-pointer rounded-sm h-12 w-12 flex justify-center items-center mx-2`}
             onClick={() => onPageChange(pageNumber)}
           >
             {pageNumber}
           </li>
         ))}
         {endPage < totalPages - 1 && (
-          <li className="bg-gray-200 text-white rounded-full h-10 w-10 flex justify-center items-center mx-1 cursor-pointer">
+          <li className="bg-[#0e0e0e] hover:bg-[#2f2f2f] text-[#fff] font-bold text-xl rounded-sm h-12 w-12 flex justify-center items-center mx-2 cursor-pointer">
             ...
           </li>
         )}
         {endPage < totalPages && (
           <li
-            className="bg-gray-200 text-white rounded-full h-10 w-10 flex justify-center items-center mx-1 cursor-pointer"
+            className="bg-[#0e0e0e] text-[#fff] font-bold text-xl rounded-sm h-12 w-12 flex justify-center items-center mx-2 cursor-pointer"
             onClick={() => onPageChange(totalPages)}
           >
             {totalPages}
@@ -88,10 +84,8 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         )}
         <li
           className={`${
-            currentPage === totalPages
-              ? "bg-[##0e0e0e] cursor-not-allowed text-[#2f2f2f]"
-              : "bg-primary hover:bg-[#ffb647] text-black"
-          }  text-2xl font-semibold rounded-md px-8 py-2 flex justify-center items-center mx-1`}
+            currentPage === totalPages ? "" : "bg-primary hborderover:bg-[#"
+          } bg-[#0e0e0e]  text-[#2f2f2f] text-xl font-bold rounded-md px-8 py-3 flex justify-center items-center mx-2`}
           onClick={() => {
             if (currentPage !== totalPages) {
               onPageChange(currentPage + 1);
