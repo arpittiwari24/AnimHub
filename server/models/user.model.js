@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  token:{
+  token: {
     type: String,
   },
   username: {
@@ -46,7 +46,7 @@ const userSchema = new mongoose.Schema({
   components: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Component", 
+      ref: "Component",
     },
   ],
   followers: [
@@ -61,31 +61,35 @@ const userSchema = new mongoose.Schema({
       ref: "User",
     },
   ],
-});
+},
+  {
+    timestamps: true,
+  }
+);
 
 async function sendRegistrationMail(email, body) {
-	// Create a transporter to send emails
+  // Create a transporter to send emails
 
-	// Define the email options
+  // Define the email options
 
-	// Send the email
-	try {
-		const mailResponse = await mailSender(
-			email,"Successful Registration",body
-		);
-		console.log("Email sent successfully: ", mailResponse.response);
-	} catch (error) {
-		console.log("Error occurred while sending email: ", error);
-		throw error;
-	}
+  // Send the email
+  try {
+    const mailResponse = await mailSender(
+      email, "Successful Registration", body
+    );
+    console.log("Email sent successfully: ", mailResponse.response);
+  } catch (error) {
+    console.log("Error occurred while sending email: ", error);
+    throw error;
+  }
 }
 
-userSchema.post("validate", async function (doc){
-        if(this.isNew){
-            let textBody = await emailTemplate();
-            let mailResponse = await sendRegistrationMail(this.email,textBody);
-            console.log("Email sent successfully");
-        }
+userSchema.post("validate", async function (doc) {
+  if (this.isNew) {
+    let textBody = await emailTemplate();
+    let mailResponse = await sendRegistrationMail(this.email, textBody);
+    console.log("Email sent successfully");
+  }
 })
 
- module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.model("User", userSchema);

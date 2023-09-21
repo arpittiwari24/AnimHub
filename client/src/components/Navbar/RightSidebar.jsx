@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { RxCross2 } from "react-icons/rx";
 import { FaCircleUser } from "react-icons/fa6";
 import {
@@ -7,10 +7,15 @@ import {
 } from "./constants";
 import { Login, Signup } from "../Popup/";
 import { usePopupContext } from "../../context/PopupContextProvider";
+import { AuthContext } from "../../context/AuthContextProviders"
+import { auth } from "../../firebase/auth";
+import { signOut } from "firebase/auth";
+
 
 const RightSidebar = ({ isRightSidebarOpen, setIsRightSidebarOpen }) => {
   //   const [isOpen, setIsOpen] = useState(isRightSidebarOpen);
   const { isOpen, popupContent, openPopup, closePopup } = usePopupContext();
+  const [auth1, setAuth] = useState(false);
   const handleOpenPopup = (popup) => {
     const content = (
       <>
@@ -27,7 +32,11 @@ const RightSidebar = ({ isRightSidebarOpen, setIsRightSidebarOpen }) => {
     );
     openPopup(content);
   };
-  const auth = false;
+  const userAuth = useContext(AuthContext)
+  useEffect(() => {
+    setAuth(userAuth.user ? true : false)
+    console.log(userAuth.user, "\nAUth in Login", auth1);
+  }, [userAuth])
   const dropdownRef = useRef(null);
 
   const toggleDropdown = () => {
@@ -62,12 +71,12 @@ const RightSidebar = ({ isRightSidebarOpen, setIsRightSidebarOpen }) => {
         {isRightSidebarOpen && (
           <>
             <div
-              className={`bg-[#151515] origin-top-right absolute z-10 right-0 mt-2 ${
-                auth ? "w-[17.5rem]" : "w-24"
-              } rounded-md shadow-lg border-[#151515] border-2 `}
+              className={`bg-[#151515] origin-top-right absolute z-10 right-0 mt-2 ${auth1 ? "w-[17.5rem]" : "w-24"
+                } rounded-md shadow-lg border-[#151515] border-2 `}
             >
-              {auth ? (
+              {auth1 ? (
                 <>
+                  <button onClick={() => { signOut(auth) }}>SignOut</button>
                   <div className="px-4 py-2 flex flex-col items-left justify-start ">
                     <h1 className="text-white text-xl font-bold">Username</h1>
                     <h3 className="text-white text-sm font-bold">
@@ -82,11 +91,10 @@ const RightSidebar = ({ isRightSidebarOpen, setIsRightSidebarOpen }) => {
                           className={`bg-[#151515] pb-2 font-bold flex flex-col justify-start items-center gap-2 relative rounded-xl `}
                         >
                           <button
-                            className={`w-full ${
-                              item.special
-                                ? "hover:bg-[#5a93ee]"
-                                : "hover:bg-[#2b2b2b]"
-                            } p-4 rounded-xl flex justify-start items-center gap-6 text-left focus:outline-none`}
+                            className={`w-full ${item.special
+                              ? "hover:bg-[#5a93ee]"
+                              : "hover:bg-[#2b2b2b]"
+                              } p-4 rounded-xl flex justify-start items-center gap-6 text-left focus:outline-none`}
                           >
                             {item.icon && <item.icon className="text-2xl" />}
                             {item.title}

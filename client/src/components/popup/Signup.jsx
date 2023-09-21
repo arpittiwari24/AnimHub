@@ -14,25 +14,8 @@ import {
 } from "firebase/auth";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { sendData } from "../../api";
 
-const sendData = async (data) => {
-  const userDetails = {
-    username: data.username,
-    name: data.name,
-    email: data.email,
-    password: data.password,
-    photoURL: data.photoURL || "",
-    // userId: createUser.user.uid
-  };
-  axios
-    .post("http://localhost:8000/api/v1/auth/signup", userDetails)
-    .then((res) => {
-      console.log("Success", res);
-    })
-    .catch((err) => {
-      console.log("Error", err);
-    });
-};
 
 const Signup = () => {
   const [form, setForm] = useState({});
@@ -44,13 +27,21 @@ const Signup = () => {
       auth,
       form.email,
       form.password
-    );
-    console.log(createUser, typeof createUser);
-    createUser.user.displayName = form.username;
-    console.log(createUser.user.displayName, "User name here");
-    if (createUser) {
-      sendData(form);
-    }
+      );
+      console.log(createUser, typeof createUser);
+      createUser.user.displayName = form.username;
+      console.log(createUser.user.displayName, "User name here");
+      if (createUser) {
+        const userDetails = {
+          username: data.username,
+          name: data.name,
+          email: data.email,
+          password: data.password,
+          photoURL: data.photoURL || "",
+        };
+        await sendData("/api/v1/auth/signup", userDetails);
+        // };
+      }
     console.log(createUser);
     console.log("saveData");
   };
@@ -65,7 +56,6 @@ const Signup = () => {
 
   const handleOAuth = async () => {
     const user = await signInWithPopup(auth, provider);
-
     const data = {
       username: user.user.displayName,
       name: user.user.displayName,
@@ -74,7 +64,7 @@ const Signup = () => {
       photoURL: user.user.photoURL,
       // userId: createUser.user.uid
     };
-    sendData(data);
+    await sendData("/api/v1/auth/signup", data);
     console.log(user.user.photoURL, "User name here");
   };
 
