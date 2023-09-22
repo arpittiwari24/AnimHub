@@ -1,17 +1,18 @@
 const Component = require('../models/component.model');
 const userModel = require('../models/user.model');
+const categoryModel = require('../models/category.model');
 
 // Create a new component
 exports.createComponent = async (req, res) => {
     try {
         // Extract data from the request body
-        const { userId, html, css, js, react, category, tags } = req.body;
+        const { userId, html, css, js, react, categoryId, tags } = req.body;
 
         // Check if userId is provided
-        if (!userId || !category) {
+        if (!userId || !categoryId) {
             return res.status(403).send({
                 success: false,
-                message: "userId and category is required",
+                message: "userId and categoryId is required",
             });
         }
 
@@ -27,12 +28,16 @@ exports.createComponent = async (req, res) => {
         const component = await Component.create({
             userId,
             code,
-            category,
+            category: [categoryId],
             tags,
         });
 
         //push the component in the component array of the user
         await userModel.findByIdAndUpdate({ _id: userId }, {
+            $push: { components: component._id }
+        }).exec();
+
+        await categoryModel.findByIdAndUpdate({ _id: categoryId }, {
             $push: { components: component._id }
         }).exec();
 
@@ -46,6 +51,7 @@ exports.createComponent = async (req, res) => {
     } catch (error) {
         // Handle any errors during component creation
         res.status(400).json({
+            error: error.message,
             success: false,
             message: 'Unable to create the component, please try again',
         });
@@ -74,7 +80,7 @@ exports.getAllComponents = async (req, res) => {
 exports.updateComponent = async (req, res) => {
     try {
         // Extract data from the request body
-        const { userId, componentId, html, css, js, react, tags } = req.body;
+        const { userId, componentId, html, css, js, react, categoryId, tags } = req.body;
 
         // Check if userId and componentId are provided
         if (!userId || !componentId) {
@@ -108,7 +114,12 @@ exports.updateComponent = async (req, res) => {
             }
 
             component.code = code;
+            component.category = categoryId;
             component.tags = tags;
+
+            await categoryModel.findByIdAndUpdate({ _id: categoryId }, {
+                $push: { components: component._id }
+            }).exec();
 
             await component.save();
 
@@ -167,6 +178,10 @@ exports.deleteComponent = async (req, res) => {
 
             //pop the componentId in the component array of the user
             await userModel.findByIdAndUpdate({ _id: userId }, {
+                $pull: { components: componentId }
+            }).exec();
+
+            await categoryModel.findByIdAndUpdate({ _id: component.category }, {
                 $pull: { components: componentId }
             }).exec();
 
@@ -307,10 +322,10 @@ exports.trendingComponents = async (req, res) => {
 // Controller to fetch components based on category
 exports.getCategoryComponents = async (req, res) => {
     try {
-        const { category } = req.body;
+        const { categoryId } = req.body;
 
         // Check if the category is provided
-        if (!category) {
+        if (!categoryId) {
             return res.status(400).json({
                 success: false,
                 message: "Please send a valid category" // Error if category is missing
@@ -318,15 +333,18 @@ exports.getCategoryComponents = async (req, res) => {
         }
 
         // Fetch components based on the specified category
-        let components = await Component.find({ category: category }).exec();
+        let category = await categoryModel.findById({ _id: categoryId }).populate('components').exec();
+
 
         // Check if components were found
-        if (!components) {
+        if (!category) {
             return res.status(404).json({
                 success: false,
                 message: "Invalid category or category not found" // Error if category is invalid or not found
             });
         }
+
+        const components = category.components;
 
         // Return components and a success message
         return res.status(200).json({
