@@ -87,7 +87,7 @@ const Login = () => {
               />
               <IoMdCheckmark className="text-[green] text-2xl" />
             </div>
-            <div className="flex justify-between bg-[#212121] border-[#333333] min-w-[400px] items-center p-2 rounded-sm pl-4">
+            {/* <div className="flex justify-between bg-[#212121] border-[#333333] min-w-[400px] items-center p-2 rounded-sm pl-4">
               <input
                 type="text"
                 name="username"
@@ -96,7 +96,7 @@ const Login = () => {
                 className=" appearance-none  bg-[#212121] w-full focus:outline-none"
               />
               <IoMdCheckmark className="text-[green] text-2xl" />
-            </div>
+            </div> */}
             <div className="flex justify-between bg-[#212121] border-[#333333] min-w-[400px] items-center p-2 rounded-sm pl-4">
               <input
                 type="password"
@@ -125,7 +125,7 @@ const Login = () => {
             </div>
             <button
               className="flex justify-center items-center rounded-sm px-6 py-3 font-semibold text-black bg-primary disabled:bg-[#2f2f2f] disabled:text-[#969696] mt-4 disabled:cursor-not-allowed"
-              disabled={!form.email || !form.username || !form.password}
+              disabled={!form.email || !form.password}
               type="submit"
             >
               Sign In
