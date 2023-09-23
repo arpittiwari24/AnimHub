@@ -9,10 +9,10 @@ import { IoMdCheckmark } from "react-icons/io";
 import temp from "./tempbg.jpeg";
 import {
   createUserWithEmailAndPassword,
+  deleteUser,
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { sendData } from "../../api";
 
@@ -23,25 +23,45 @@ const Signup = () => {
   const navigate = useNavigate();
   const saveData = async (e) => {
     e.preventDefault();
+    console.log("Vefore User Creating");
     const createUser = await createUserWithEmailAndPassword(
       auth,
       form.email,
       form.password
-      );
-      console.log(createUser, typeof createUser);
-      createUser.user.displayName = form.username;
-      console.log(createUser.user.displayName, "User name here");
-      if (createUser) {
-        const userDetails = {
-          username: data.username,
-          name: data.name,
-          email: data.email,
-          password: data.password,
-          photoURL: data.photoURL || "",
-        };
-        await sendData("/api/v1/auth/signup", userDetails);
-        // };
+    );
+    console.log("After User Creating");
+    createUser.user.displayName = form.username;
+    if (createUser) {
+      console.log("User created before sending data 1");
+      const userDetails = {
+        username: form.username,
+        name: form.name || "Test Name",
+        email: form.email,
+        password: form.password,
+        photoURL: "",
+      };
+      const resData = await sendData("/api/v1/auth/signup", userDetails)
+        .then((response) => {
+          console.log("Successfull response from server", response);
+          return response;
+        })
+        .catch((error) => {
+          console.log("Error from server", error)
+          const currentUser = auth.currentUser
+          deleteUser(currentUser)
+            .then(() => {
+              console.log("User Deleted")
+            })
+            .catch((error) => {
+              console.log("Error while deleting user", error)
+            })
+          return error;
+        })
+      console.log("User signed up again ", resData);
+      if (resData) {
+        navigate("/")
       }
+    }
     console.log(createUser);
     console.log("saveData");
   };
@@ -51,7 +71,6 @@ const Signup = () => {
       ...form,
       [e.target.name]: e.target.value,
     });
-    // console.log(form)
   };
 
   const handleOAuth = async () => {
@@ -64,8 +83,8 @@ const Signup = () => {
       photoURL: user.user.photoURL,
       // userId: createUser.user.uid
     };
-    await sendData("/api/v1/auth/signup", data);
-    console.log(user.user.photoURL, "User name here");
+    const res1 = await sendData("/api/v1/auth/signup", data)
+    console.log("User Signed Up ");
   };
 
   const change = (e) => {
