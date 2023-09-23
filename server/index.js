@@ -13,6 +13,7 @@ const userRoutes = require("./routes/user");
 const statsRoutes = require("./routes/statistics");
 const categoryRoutes = require("./routes/category");
 const tagRoutes = require("./routes/tag");
+const contactRoutes = require("./routes/contact");
 
 //importing db instance
 const { dbConnect } = require("./config/database");
@@ -35,6 +36,7 @@ app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/stats", statsRoutes);
 app.use("/api/v1/category", categoryRoutes);
 app.use("/api/v1/tag", tagRoutes);
+app.use("/api/v1/contact",contactRoutes);
 
 app.get("/", (req, res) => {
   return res.json({
