@@ -3,8 +3,6 @@ import { auth } from "../../firebase/auth";
 import { DarkLogo } from "../../assets/logos/Logo";
 import { IoMdCheckmark } from "react-icons/io";
 import { FcGoogle } from "react-icons/fc";
-
-import axios from "axios";
 import {
   GoogleAuthProvider,
   signInWithPopup,
@@ -12,17 +10,6 @@ import {
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { sendData } from "../../api";
-
-// const sendData = async (data) => {
-// axios
-//   .post("/api/v1/auth/login", data)
-//   .then((res) => {
-//     console.log("Success", res);
-//   })
-//   .catch((err) => {
-//     console.log("Error", err);
-//   });
-// };
 
 const Login = () => {
   const [form, setForm] = useState({});

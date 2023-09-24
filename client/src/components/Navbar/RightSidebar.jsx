@@ -10,9 +10,11 @@ import { usePopupContext } from "../../context/PopupContextProvider";
 import { AuthContext } from "../../context/AuthContextProviders"
 import { auth } from "../../firebase/auth";
 import { signOut } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 
 const RightSidebar = ({ isRightSidebarOpen, setIsRightSidebarOpen }) => {
+  const navigate = useNavigate()
   //   const [isOpen, setIsOpen] = useState(isRightSidebarOpen);
   const { isOpen, popupContent, openPopup, closePopup } = usePopupContext();
   const [auth1, setAuth] = useState(false);
@@ -21,7 +23,7 @@ const RightSidebar = ({ isRightSidebarOpen, setIsRightSidebarOpen }) => {
       <>
         <div className="fixed flex justify-center items-center top-0 left-0 h-screen w-screen bg-[#00000070] z-20 p-6">
           <div className="relative flex justify-center items-center bg-[#151515]  h-auto w-auto flex-col gap-4 rounded-md">
-            {popup === "signup" && <Signup />}
+            {popup === "signup" && <Signup closePopup={closePopup}/>}
             {popup === "login" && <Login />}
             <button className="absolute top-2 right-2" onClick={closePopup}>
               <RxCross2 className="text-3xl text-[#6a6a6a]" />
@@ -76,7 +78,7 @@ const RightSidebar = ({ isRightSidebarOpen, setIsRightSidebarOpen }) => {
             >
               {auth1 ? (
                 <>
-                  <button onClick={() => { signOut(auth) }}>SignOut</button>
+                  <button onClick={() => { signOut(auth); navigate("/") }}>SignOut</button>
                   <div className="px-4 py-2 flex flex-col items-left justify-start ">
                     <h1 className="text-white text-xl font-bold">Username</h1>
                     <h3 className="text-white text-sm font-bold">

@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 import { sendData } from "../../api";
 
 
-const Signup = () => {
+const Signup = ({closePopup}) => {
   const [form, setForm] = useState({});
   const provider = new GoogleAuthProvider();
   const navigate = useNavigate();
@@ -43,6 +43,8 @@ const Signup = () => {
       const resData = await sendData("/api/v1/auth/signup", userDetails)
         .then((response) => {
           console.log("Successfull response from server", response);
+          closePopup()
+          navigate("/onboarding")
           return response;
         })
         .catch((error) => {
@@ -57,23 +59,23 @@ const Signup = () => {
             })
           return error;
         })
-      console.log("User signed up again ", resData);
-      if (resData) {
-        navigate("/")
+        console.log("User signed up again ", resData);
+        if (resData) {
+          navigate("/")
+        }
       }
-    }
-    console.log(createUser);
-    console.log("saveData");
-  };
-
-  const handledata = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleOAuth = async () => {
+      console.log(createUser);
+      console.log("saveData");
+    };
+    
+    const handledata = (e) => {
+      setForm({
+        ...form,
+        [e.target.name]: e.target.value,
+      });
+    };
+    
+    const handleOAuth = async () => {
     const user = await signInWithPopup(auth, provider);
     const data = {
       username: user.user.displayName,
@@ -84,9 +86,20 @@ const Signup = () => {
       // userId: createUser.user.uid
     };
     const res1 = await sendData("/api/v1/auth/signup", data)
+    .then(() => {
+      closePopup()
+      navigate("/onboarding")
+    })
+    .catch((error) => {
+      console.log("User Already Exists", error);
+      closePopup()
+      navigate("/dashboard")
+    })
+    localStorage.setItem("user", JSON.stringify(data));
+    // navigate("/onboarding")
     console.log("User Signed Up ");
   };
-
+  
   const change = (e) => {
     e.preventDefault();
     navigate("/login");
@@ -171,8 +184,8 @@ const Signup = () => {
             <div className="flex justify-between bg-[#212121] border-[#333333] min-w-[400px] items-center p-2 rounded-sm pl-4">
               <input
                 type="text"
-                name="username"
-                placeholder="Username"
+                name="name"
+                placeholder="Name"
                 onChange={handledata}
                 className=" appearance-none  bg-[#212121] w-full focus:outline-none"
               />
@@ -188,9 +201,9 @@ const Signup = () => {
               />
               <IoMdCheckmark className="text-[green] text-2xl" />
             </div>
-            <button
+            <button 
               className="flex justify-center items-center rounded-sm px-6 py-3 font-semibold text-black bg-primary disabled:bg-[#2f2f2f] disabled:text-[#969696] mt-4 disabled:cursor-not-allowed"
-              disabled={!form.email || !form.username || !form.password}
+              disabled={!form.email || !form.name || !form.password}
               type="submit"
             >
               Sign Up

@@ -4,33 +4,13 @@ const userModel = require("../models/user.model");
 exports.updateProfile = async (req, res) => {
     try {
         // Extract data from the request body
-        const { userId, name, bio, country, profilePicUrl, gradientBg, socialLinks } = req.body;
+        console.log("req.body 1", req.body);
+        const { profilePicUrl, username, name, country, email, github, linkedin, insta, gradientBg, bio} = req.body;
 
         // Check if userId is provided
-        if (!userId) {
-            return res.status(400).json({
-                success: false,
-                message: 'userId is not present',
-            });
-        }
-
-        // Check if other fields are provided
-        if (
-            !name ||
-            !bio ||
-            !country ||
-            !profilePicUrl ||
-            !gradientBg ||
-            !socialLinks
-        ) {
-            return res.status(403).send({
-                success: false,
-                message: "All Fields are required",
-            });
-        }
-
+    
         // Find the user in the database
-        const user = await userModel.findOne({ _id: userId }).exec();
+        const user = await userModel.findOne({ email: email }).exec();
 
         // If no such user is found
         if (!user) {
@@ -40,13 +20,17 @@ exports.updateProfile = async (req, res) => {
             });
         }
 
+        console.log("userInfo");
         //update the user
+        console.log(user);
         user.name = name;
+        user.username = username;
         user.bio = bio;
         user.country = country;
         user.profilePicUrl = profilePicUrl;
         user.gradientBg = gradientBg;
-        user.socialLinks = socialLinks;
+        user.socialLinks = [github, linkedin, insta];
+
 
         await user.save();
 
@@ -56,11 +40,14 @@ exports.updateProfile = async (req, res) => {
             message: "Profile updated successfully"
         })
     } catch (error) {
+        console.log("Error happened", error);
         res.status(400).json({
             success: false,
             message: 'Unable to update the user, please try again',
         });
     }
+    // console.log("req.body", req.body);
+    // return res.send("Recieved")
 }
 
 //getProfileData controller for fetching profile data of an user
