@@ -2,6 +2,9 @@ import React, { useState, useEffect, useRef } from "react";
 import { AiFillEye, AiFillLike } from "react-icons/ai";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { abbreviateNumber } from "../../utils/numberAbbreviation";
+import {SharePopup} from '../Popup/'
+import { usePopupContext } from "../../context/PopupContextProvider";
+import { RxCross2 } from "react-icons/rx";
 
 const ComponentCard = ({
   username = "usernameusername",
@@ -18,6 +21,7 @@ const ComponentCard = ({
   }, [like, view]);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const { isOpen, popupContent, openPopup, closePopup } = usePopupContext();
 
   const toggleDropdown = () => {
     setDropdownOpen(!isDropdownOpen);
@@ -39,6 +43,25 @@ const ComponentCard = ({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
+  const handleOpenPopup = () => {
+    const content = (
+      <>
+        <div className="fixed flex justify-center items-center top-0 left-0 h-screen w-screen bg-[#00000070] z-20 p-6">
+          <div className="relative flex justify-center items-center bg-[#151515]  h-auto w-auto flex-col gap-4 rounded-md">
+            {<SharePopup/>}
+            <button className="absolute top-2 right-2" onClick={closePopup}>
+              <RxCross2 className="text-3xl text-[#6a6a6a]" />
+            </button>
+          </div>
+        </div>
+      </>
+    );
+    console.log('clicked');
+    openPopup(content);
+  };
+
+  
 
   return (
     <>
@@ -98,7 +121,7 @@ const ComponentCard = ({
                     <AiFillEye />
                     Show Code
                   </li>
-                  <li className="px-4 py-2 text-lg font-semibold flex justify-start items-center gap-2">
+                  <li onClick={handleOpenPopup} className="px-4 py-2 text-lg font-semibold flex justify-start items-center gap-2">
                     <AiFillEye />
                     Download Code
                   </li>
