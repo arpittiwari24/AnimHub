@@ -5,13 +5,6 @@ exports.signup = async (req, res) => {
     try {
         const {email,name} = req.body;
 
-        if(!email || !name){
-            return res.status(400).json({
-                success: false,
-                message: "Please provide email and name"
-            })
-        }
-
         const userExists = await userModel.findOne({ email: email }).exec();
 
         if (userExists) {
@@ -34,6 +27,7 @@ exports.signup = async (req, res) => {
         
     }
     catch (error) {
+        console.log("Error happened", error);
         return res.status(500).json({
             error:error.message,
             success: false,

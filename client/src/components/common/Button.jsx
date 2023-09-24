@@ -1,19 +1,23 @@
 import React from "react";
 
 const Button = ({
+  padx,
+  pady,
   children,
-
   disabled,
   label,
   onClick,
-  color = "#007bff",
+  fontSize,
+  color = "#000",
   primary = true,
 }) => {
-  const buttonStyle = {};
+  const buttonStyle = {
+  };
 
   return (
     <button
-      className={`border border-6 ${primary ? "bg-[#FFA31A]" : "bg-[#007bff]"}`}
+      className={`${primary ? "bg-[#FFA31A]" : "bg-[#007bff]"}
+      px-[${padx}] py-[${pady}] text-[${color}] font-[700] text-[${fontSize}] rounded-md`}
       style={buttonStyle}
       onClick={onClick}
       disabled={disabled}

@@ -9,52 +9,73 @@ import { IoMdCheckmark } from "react-icons/io";
 import temp from "./tempbg.jpeg";
 import {
   createUserWithEmailAndPassword,
+  deleteUser,
   GoogleAuthProvider,
   signInWithPopup,
 } from "firebase/auth";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { sendData } from "../../api";
 
 
-const Signup = () => {
+const Signup = ({closePopup}) => {
   const [form, setForm] = useState({});
   const provider = new GoogleAuthProvider();
   const navigate = useNavigate();
   const saveData = async (e) => {
     e.preventDefault();
+    console.log("Vefore User Creating");
     const createUser = await createUserWithEmailAndPassword(
       auth,
       form.email,
       form.password
-      );
-      console.log(createUser, typeof createUser);
-      createUser.user.displayName = form.username;
-      console.log(createUser.user.displayName, "User name here");
-      if (createUser) {
-        const userDetails = {
-          username: data.username,
-          name: data.name,
-          email: data.email,
-          password: data.password,
-          photoURL: data.photoURL || "",
-        };
-        await sendData("/api/v1/auth/signup", userDetails);
-        // };
+    );
+    console.log("After User Creating");
+    createUser.user.displayName = form.username;
+    if (createUser) {
+      console.log("User created before sending data 1");
+      const userDetails = {
+        username: form.username,
+        name: form.name || "Test Name",
+        email: form.email,
+        password: form.password,
+        photoURL: "",
+      };
+      const resData = await sendData("/api/v1/auth/signup", userDetails)
+        .then((response) => {
+          console.log("Successfull response from server", response);
+          closePopup()
+          navigate("/onboarding")
+          return response;
+        })
+        .catch((error) => {
+          console.log("Error from server", error)
+          const currentUser = auth.currentUser
+          deleteUser(currentUser)
+            .then(() => {
+              console.log("User Deleted")
+            })
+            .catch((error) => {
+              console.log("Error while deleting user", error)
+            })
+          return error;
+        })
+        console.log("User signed up again ", resData);
+        if (resData) {
+          navigate("/")
+        }
       }
-    console.log(createUser);
-    console.log("saveData");
-  };
-
-  const handledata = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-    // console.log(form)
-  };
-
-  const handleOAuth = async () => {
+      console.log(createUser);
+      console.log("saveData");
+    };
+    
+    const handledata = (e) => {
+      setForm({
+        ...form,
+        [e.target.name]: e.target.value,
+      });
+    };
+    
+    const handleOAuth = async () => {
     const user = await signInWithPopup(auth, provider);
     const data = {
       username: user.user.displayName,
@@ -64,10 +85,21 @@ const Signup = () => {
       photoURL: user.user.photoURL,
       // userId: createUser.user.uid
     };
-    await sendData("/api/v1/auth/signup", data);
-    console.log(user.user.photoURL, "User name here");
+    const res1 = await sendData("/api/v1/auth/signup", data)
+    .then(() => {
+      closePopup()
+      navigate("/onboarding")
+    })
+    .catch((error) => {
+      console.log("User Already Exists", error);
+      closePopup()
+      navigate("/dashboard")
+    })
+    localStorage.setItem("user", JSON.stringify(data));
+    // navigate("/onboarding")
+    console.log("User Signed Up ");
   };
-
+  
   const change = (e) => {
     e.preventDefault();
     navigate("/login");
@@ -152,8 +184,8 @@ const Signup = () => {
             <div className="flex justify-between bg-[#212121] border-[#333333] min-w-[400px] items-center p-2 rounded-sm pl-4">
               <input
                 type="text"
-                name="username"
-                placeholder="Username"
+                name="name"
+                placeholder="Name"
                 onChange={handledata}
                 className=" appearance-none  bg-[#212121] w-full focus:outline-none"
               />
@@ -169,9 +201,9 @@ const Signup = () => {
               />
               <IoMdCheckmark className="text-[green] text-2xl" />
             </div>
-            <button
+            <button 
               className="flex justify-center items-center rounded-sm px-6 py-3 font-semibold text-black bg-primary disabled:bg-[#2f2f2f] disabled:text-[#969696] mt-4 disabled:cursor-not-allowed"
-              disabled={!form.email || !form.username || !form.password}
+              disabled={!form.email || !form.name || !form.password}
               type="submit"
             >
               Sign Up

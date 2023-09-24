@@ -3,6 +3,7 @@ const router = express.Router()
 
 
 const {signup} = require("../controllers/auth");
+const { createTestAccount } = require("nodemailer");
 
 
 // const userModel = require("../models/user.model");

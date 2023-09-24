@@ -3,7 +3,7 @@ import inspiration from "../assets/inspiration.svg";
 import tutorial from "../assets/tutorial.svg";
 import community from "../assets/community.svg";
 import tile from "../assets/tile.svg";
-import {GrYoutube} from 'react-icons/gr'
+import { AiFillYoutube } from "react-icons/ai";
 
 const About = () => {
   return (
@@ -94,7 +94,7 @@ const About = () => {
          <p className="text-white font-bold text-4xl ">Join Our YouTube Community</p>
          <p className="text-center text-[#C6C6C6] font-normal text-lg">&quot;Join our YouTube community and embark on a journey into the world of animation and interactive design! 🚀 Subscribe now to stay inspired, learn, and connect with fellow creators. Let's make the digital world more vibrant together! 💫 #AnimHubCommunity&quot;</p>
          <div className="bg-white p-4 flex justify-center items-center gap-4 rounded-md">
-          <GrYoutube fill="red" className="w-10 h-10"/>
+          <AiFillYoutube fill="red" className="w-10 h-10"/>
           <p className="text-black font-bold text-xl">Youtube</p>
          </div>
         </div>

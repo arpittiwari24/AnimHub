@@ -12,10 +12,16 @@ const AuthContextProvider = ({children}) => {
     const [authloading, setAuthLoading] = useState(true);
 
     useEffect(() => {
+        if (localStorage.getItem("user")) {
+            setUser(JSON.parse(localStorage.getItem("user")));
+            console.log("User Logged from Local Storage");
+        }
         const unsubscribe = auth.onAuthStateChanged((user) => {
             if (user) {
                 setUser(user);
+                localStorage.setItem("user", JSON.stringify(user));
             } else {
+                localStorage.removeItem("user");
                 setUser(null);
             }
             setAuthLoading(false);
