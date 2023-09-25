@@ -11,7 +11,7 @@ import {
   Testing,
   ComingSoon,
 } from "./pages";
-import { Confirm, OnBoarding } from "./components/Popup";
+// import { Confirm, OnBoarding } from "./components/Popup";
 export const routesData = [
   {
     path: "/",
@@ -53,17 +53,17 @@ export const routesData = [
     path: "/testing",
     component: Testing,
   },
-  {
-    path: "/confirm",
-    component: Confirm,
-  },
+  // {
+  //   path: "/confirm",
+  //   component: Confirm,
+  // },
   {
     path: "/blogs",
     component: ComingSoon,
   },
-  {
-    path: "/onboarding",
-    component: OnBoarding,
-  },
+  // {
+  //   path: "/onboarding",
+  //   component: OnBoarding,
+  // },
 ];
 export default routesData;
