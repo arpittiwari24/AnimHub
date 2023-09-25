@@ -11,10 +11,7 @@ import {
   Testing,
   ComingSoon,
 } from "./pages";
-import {
-  Confirm, 
-  OnBoarding,
-} from './components/popup'
+import { Confirm, OnBoarding } from "./components/Popup";
 export const routesData = [
   {
     path: "/",
