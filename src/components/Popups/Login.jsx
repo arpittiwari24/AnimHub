@@ -10,10 +10,17 @@ import {
 } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { sendData } from "../../api";
+import { deleteUser } from "firebase/auth";
+import axios from "axios";
 
 const Login = ({ closePopup }) => {
   const [form, setForm] = useState({});
+  const [checked, setChecked] = useState(false)
   const [errorMsg, setErrorMsg] = useState("");
+  const errorCodes = {
+    "auth/user-not-found": "Invalid Email",
+    "auth/wrong-password": "Invalid Password"
+  }
   const provider = new GoogleAuthProvider();
   const navigate = useNavigate();
   const loginUser = async (e) => {
@@ -24,13 +31,10 @@ const Login = ({ closePopup }) => {
       e.target[1].value
     )
       .catch((error) => {
-        console.log("Error Code", error.code);
+        setErrorMsg(errorCodes[error.code])
       })
     console.log("Code reached herer", user);
     if (user) {
-      console.log(user);
-      // await sendData("/api/v1/auth/login", form)
-      // .then(() => {
       closePopup()
       navigate("/dashboard")
       // })
@@ -45,12 +49,57 @@ const Login = ({ closePopup }) => {
       ...form,
       [e.target.name]: e.target.value,
     });
+
   };
 
   const handleOAuth = async () => {
-    const user = await signInWithPopup(auth, provider)
-    closePopup()
-    navigate("/dashboard")
+    console.log("Await");
+    const { user } = await signInWithPopup(auth, provider)
+
+    console.log("User", user);
+    if (user) {
+      const details = {
+        name: user.displayName,
+        email: user.email,
+      }
+      console.log(Date.now() - user.metadata.createdAt);
+      if(Date.now() - user.metadata.createdAt <= 1000){
+        closePopup()
+        navigate("/onboarding")
+      }
+      else{
+        closePopup()
+        navigate("/dashboard")
+      }
+      // console.log("detaila", details);
+      // await sendData("/api/v1/auth/signup", details)
+      // .then((res) => {
+      //   console.log("Response", res);
+
+      // })
+      // .catch(() => {
+      //   console.log("Error from server");
+      // })
+      // .then(() => {
+      //   closePopup()
+      //   navigate("/dashboard")
+      //   return 
+      // })
+      // .catch((error) => {
+
+      //   console.log("Error from server", error)
+      //   const currentUser = auth.currentUser
+      //   deleteUser(currentUser)
+      //   .then(() => {
+      //     console.log("User Deleted")
+      //   })
+      //   .catch((error) => {
+      //     console.log("Error while deleting user", error)
+      //   })
+      // console.log("HEerer");
+      // })
+    }
+      // .then(() => {
     // await sendData("/api/v1/auth/login", data);
   };
 
@@ -69,6 +118,7 @@ const Login = ({ closePopup }) => {
             className="w-full flex flex-col justify-center items-center gap-4 my-2"
             onSubmit={loginUser}
           >
+            <p className="text-sm text-[#f00]">{errorMsg}</p>
             <div className="flex justify-between bg-[#212121] border-[#333333] min-w-[400px] items-center p-2 rounded-sm pl-4">
               <input
                 type="email"
@@ -103,8 +153,8 @@ const Login = ({ closePopup }) => {
               <input
                 type="checkbox"
                 name="checkbox"
-                // onChange={handleChange}
-                className=" "
+                onChange={() => { setChecked(!checked) }}
+              // onClick={}
               />
               <div>
                 <p className="text-[#c6c6c6] font-semibold leading-[14px]">
@@ -117,7 +167,7 @@ const Login = ({ closePopup }) => {
             </div>
             <button
               className="flex justify-center items-center rounded-sm px-6 py-3 font-semibold text-black bg-primary disabled:bg-[#2f2f2f] disabled:text-[#969696] mt-4 disabled:cursor-not-allowed"
-              disabled={!form.email || !form.password}
+              disabled={!form.email || !form.password || !checked}
               type="submit"
             >
               Sign In

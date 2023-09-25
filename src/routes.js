@@ -15,7 +15,7 @@ import {
 
 import {
   Confirm, 
-} from './components/popup'
+} from './components/Popups'
 
 export const routesData = [
   {

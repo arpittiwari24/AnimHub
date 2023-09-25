@@ -5,7 +5,7 @@ import {
   dropdownItemsRightSidebar,
   dropdownColumnsRightSidebar,
 } from "./constants";
-import { Login, Signup } from "../Popup/";
+import { Login, Signup } from "../Popups/";
 import { usePopupContext } from "../../context/PopupContextProvider";
 import { AuthContext } from "../../context/AuthContextProviders"
 import { auth } from "../../firebase/auth";
@@ -24,7 +24,7 @@ const RightSidebar = ({ isRightSidebarOpen, setIsRightSidebarOpen }) => {
         <div className="fixed flex justify-center items-center top-0 left-0 h-screen w-screen bg-[#00000070] z-20 p-6">
           <div className="relative flex justify-center items-center bg-[#151515]  h-auto w-auto flex-col gap-4 rounded-md">
             {popup === "signup" && <Signup closePopup={closePopup}/>}
-            {popup === "login" && <Login />}
+            {popup === "login" && <Login closePopup={closePopup}/>}
             <button className="absolute top-2 right-2" onClick={closePopup}>
               <RxCross2 className="text-3xl text-[#6a6a6a]" />
             </button>
