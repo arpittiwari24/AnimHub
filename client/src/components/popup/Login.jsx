@@ -11,8 +11,9 @@ import {
 import { useNavigate } from "react-router-dom";
 import { sendData } from "../../api";
 
-const Login = () => {
+const Login = ({ closePopup }) => {
   const [form, setForm] = useState({});
+  const [errorMsg, setErrorMsg] = useState("");
   const provider = new GoogleAuthProvider();
   const navigate = useNavigate();
   const loginUser = async (e) => {
@@ -21,11 +22,20 @@ const Login = () => {
       auth,
       e.target[0].value,
       e.target[1].value
-    );
+    )
+      .catch((error) => {
+        console.log("Error Code", error.code);
+      })
+    console.log("Code reached herer", user);
     if (user) {
       console.log(user);
-      await sendData("/api/v1/auth/login", form);
-      console.log("User logged in");
+      // await sendData("/api/v1/auth/login", form)
+      // .then(() => {
+      closePopup()
+      navigate("/dashboard")
+      // })
+      // .catch();
+      // console.log("User logged in");
     }
     console.log("User not logged in");
   };
@@ -38,17 +48,12 @@ const Login = () => {
   };
 
   const handleOAuth = async () => {
-    const user = await signInWithPopup(auth, provider);
-    const data = {
-      email: user.user.email,
-      password: user.user.uid,
-    };
-    await sendData("/api/v1/auth/login", data);
+    const user = await signInWithPopup(auth, provider)
+    closePopup()
+    navigate("/dashboard")
+    // await sendData("/api/v1/auth/login", data);
   };
-  const change = (e) => {
-    e.preventDefault();
-    navigate("/signup");
-  };
+
   return (
     <>
       <div className="w-[30vw] h-full flex justify-center items-end rounded-md">

@@ -87,6 +87,7 @@ const Signup = ({closePopup}) => {
     };
     const res1 = await sendData("/api/v1/auth/signup", data)
     .then(() => {
+      console.log("User Signed Up response got");
       closePopup()
       navigate("/onboarding")
     })

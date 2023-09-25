@@ -12,7 +12,7 @@ import { usePopupContext } from '../../context/PopupContextProvider'
 import { AuthContext } from '../../context/AuthContextProviders'
 import {useNavigate} from 'react-router-dom'
 
-const OnBoarding = ({ isOnboardingOpen, setIsOnboardingOpen }) => {
+const OnBoarding = () => {
 
 
     // const { isOpen, popupContent, openPopup, closePopup } = usePopupContext();
@@ -99,7 +99,7 @@ const OnBoarding = ({ isOnboardingOpen, setIsOnboardingOpen }) => {
                     </div>
                     <div className='w-full flex justify-between'>
                         <select placeholder='Country' defaultValue="India" name='country' defaultChecked="false" className={`${halfStyle} pr-4`} onChange={changeHandler}>
-                            {countries.map((country) => <option>{country}</option>)}
+                            {countries.map((country, idx) => <option key={idx}>{country}</option>)}
                         </select>
                         <input type='email' placeholder='Email' value={form.email} name='email' disabled={true} title="Email Once set cannot be changed" className={`${halfStyle}`} />
                     </div>

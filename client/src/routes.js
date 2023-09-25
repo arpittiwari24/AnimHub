@@ -10,11 +10,13 @@ import {
   Contact,
   Testing,
   ComingSoon,
+  OnBoardingPage,
 } from "./pages";
+
 import {
   Confirm, 
-  OnBoarding,
 } from './components/popup'
+
 export const routesData = [
   {
     path: "/",
@@ -66,7 +68,7 @@ export const routesData = [
   },
   {
     path: "/onboarding",
-    component: OnBoarding,
+    component: OnBoardingPage,
   },
 ];
 export default routesData;
