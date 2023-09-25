@@ -9,3 +9,4 @@ export { default as Policy } from "./Policy";
 export { default as Contact } from "./Contact";
 export { default as Testing } from "./Testing";
 export {default as ComingSoon} from "./ComingSoon";
+export {default as OnBoardingPage} from "./OnBoardingPage";

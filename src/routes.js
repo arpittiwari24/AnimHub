@@ -10,8 +10,13 @@ import {
   Contact,
   Testing,
   ComingSoon,
+  OnBoardingPage,
 } from "./pages";
-import { Confirm, OnBoarding } from "./components/Popups";
+
+import {
+  Confirm, 
+} from './components/Popups'
+
 export const routesData = [
   {
     path: "/",
@@ -63,7 +68,7 @@ export const routesData = [
   },
   {
     path: "/onboarding",
-    component: OnBoarding,
+    component: OnBoardingPage,
   },
 ];
 export default routesData;

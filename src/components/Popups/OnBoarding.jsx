@@ -1,43 +1,15 @@
-// Make this an a popup element
-// Use PopContext for it
-
 import React, { useContext, useEffect } from 'react'
 import { Button } from '../common'
-import dummyImage from '../../assets/dummyImage.jpg'
 import countries from './Countries'
 import { useState } from 'react'
 import { sendData } from '../../api'
-import { auth } from "../../firebase/auth"
-import { usePopupContext } from '../../context/PopupContextProvider'
 import { AuthContext } from '../../context/AuthContextProviders'
 import {useNavigate} from 'react-router-dom'
 
-const OnBoarding = ({ isOnboardingOpen, setIsOnboardingOpen }) => {
+const OnBoarding = () => {
 
-
-    // const { isOpen, popupContent, openPopup, closePopup } = usePopupContext();
-    // const handlOpenPupup = (popup) => {
-    //     const content = (
-    //         <>
-    //             <div className="fixed flex justify-center items-center top-0 left-0 h-screen w-screen bg-[#00000070] z-20 p-6">
-    //                 <div className="relative flex justify-center items-center bg-[#151515]  h-auto w-auto flex-col gap-4 rounded-md">
-    //                     {popup === "onboarding" && <OnBoarding />}
-    //                     <button className="absolute top-2 right-2" onClick={closePopup}>
-    //                         <RxCross2 className="text-3xl text-[#6a6a6a]" />
-    //                     </button>
-    //                 </div>
-    //             </div>
-    //         </>
-
-    //     )
-
-
-    // }
-
-
-    // console.log(userEmail);
-    const currentUser = useContext(AuthContext).user;
     const navigate = useNavigate()
+    const currentUser = useContext(AuthContext).user;
     const [form, setForm] = useState({
         profilePicUrl: currentUser.photoURL || "https://wallpapers.com/images/featured/dark-profile-pictures-gvfjo9dys52qj75q.jpg",
         gradientBg: "gradient Colors",
@@ -64,18 +36,18 @@ const OnBoarding = ({ isOnboardingOpen, setIsOnboardingOpen }) => {
             setErrorMsg("Please Enter a Username")
             return
         }
-        const dataRes = await sendData("/api/v1/user/updateProfile", form)
+        console.log(form);
+        const dataRes = await sendData("/api/v1/auth/signup", form)
             .then((res) => {
                 console.log(res);
                 navigate("/dashboard")
+                return
                 // setIsOnboardingOpen(false)
             })
             .catch((error) => {
                 console.log(error);
-                setErrorMsg(error.message)
+                setErrorMsg(`${error.response.data.message} - Please try Github Username`)
             })
-        console.log(dataRes);
-        console.log('Data Submitted')
     }
     const changeHandler = (e) => {
         setErrorMsg("")
@@ -99,7 +71,7 @@ const OnBoarding = ({ isOnboardingOpen, setIsOnboardingOpen }) => {
                     </div>
                     <div className='w-full flex justify-between'>
                         <select placeholder='Country' defaultValue="India" name='country' defaultChecked="false" className={`${halfStyle} pr-4`} onChange={changeHandler}>
-                            {countries.map((country) => <option>{country}</option>)}
+                            {countries.map((country, idx) => <option key={idx}>{country}</option>)}
                         </select>
                         <input type='email' placeholder='Email' value={form.email} name='email' disabled={true} title="Email Once set cannot be changed" className={`${halfStyle}`} />
                     </div>

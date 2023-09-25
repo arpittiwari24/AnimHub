@@ -5,15 +5,16 @@ import {
   dropdownItemsRightSidebar,
   dropdownColumnsRightSidebar,
 } from "./constants";
-import { Login, Signup } from "../Popups";
+import { Login, Signup } from "../Popups/";
 import { usePopupContext } from "../../context/PopupContextProvider";
-import { AuthContext } from "../../context/AuthContextProviders";
+import { AuthContext } from "../../context/AuthContextProviders"
 import { auth } from "../../firebase/auth";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
+
 const RightSidebar = ({ isRightSidebarOpen, setIsRightSidebarOpen }) => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   //   const [isOpen, setIsOpen] = useState(isRightSidebarOpen);
   const { isOpen, popupContent, openPopup, closePopup } = usePopupContext();
   const [auth1, setAuth] = useState(false);
@@ -22,8 +23,8 @@ const RightSidebar = ({ isRightSidebarOpen, setIsRightSidebarOpen }) => {
       <>
         <div className="fixed flex justify-center items-center top-0 left-0 h-screen w-screen bg-[#00000070] z-20 p-6">
           <div className="relative flex justify-center items-center bg-[#151515]  h-auto w-auto flex-col gap-4 rounded-md">
-            {popup === "signup" && <Signup closePopup={closePopup} />}
-            {popup === "login" && <Login />}
+            {popup === "signup" && <Signup closePopup={closePopup}/>}
+            {popup === "login" && <Login closePopup={closePopup}/>}
             <button className="absolute top-2 right-2" onClick={closePopup}>
               <RxCross2 className="text-3xl text-[#6a6a6a]" />
             </button>
@@ -33,11 +34,11 @@ const RightSidebar = ({ isRightSidebarOpen, setIsRightSidebarOpen }) => {
     );
     openPopup(content);
   };
-  const userAuth = useContext(AuthContext);
+  const userAuth = useContext(AuthContext)
   useEffect(() => {
-    setAuth(userAuth.user ? true : false);
+    setAuth(userAuth.user ? true : false)
     console.log(userAuth.user, "\nAUth in Login", auth1);
-  }, [userAuth]);
+  }, [userAuth])
   const dropdownRef = useRef(null);
 
   const toggleDropdown = () => {
@@ -72,20 +73,12 @@ const RightSidebar = ({ isRightSidebarOpen, setIsRightSidebarOpen }) => {
         {isRightSidebarOpen && (
           <>
             <div
-              className={`bg-[#151515] origin-top-right absolute z-10 right-0 mt-2 ${
-                auth1 ? "w-[17.5rem]" : "w-24"
-              } rounded-md shadow-lg border-[#151515] border-2 `}
+              className={`bg-[#151515] origin-top-right absolute z-10 right-0 mt-2 ${auth1 ? "w-[17.5rem]" : "w-24"
+                } rounded-md shadow-lg border-[#151515] border-2 `}
             >
               {auth1 ? (
                 <>
-                  <button
-                    onClick={() => {
-                      signOut(auth);
-                      navigate("/");
-                    }}
-                  >
-                    SignOut
-                  </button>
+                  <button onClick={() => { signOut(auth); navigate("/") }}>SignOut</button>
                   <div className="px-4 py-2 flex flex-col items-left justify-start ">
                     <h1 className="text-white text-xl font-bold">Username</h1>
                     <h3 className="text-white text-sm font-bold">
@@ -100,11 +93,10 @@ const RightSidebar = ({ isRightSidebarOpen, setIsRightSidebarOpen }) => {
                           className={`bg-[#151515] pb-2 font-bold flex flex-col justify-start items-center gap-2 relative rounded-xl `}
                         >
                           <button
-                            className={`w-full ${
-                              item.special
-                                ? "hover:bg-[#5a93ee]"
-                                : "hover:bg-[#2b2b2b]"
-                            } p-4 rounded-xl flex justify-start items-center gap-6 text-left focus:outline-none`}
+                            className={`w-full ${item.special
+                              ? "hover:bg-[#5a93ee]"
+                              : "hover:bg-[#2b2b2b]"
+                              } p-4 rounded-xl flex justify-start items-center gap-6 text-left focus:outline-none`}
                           >
                             {item.icon && <item.icon className="text-2xl" />}
                             {item.title}

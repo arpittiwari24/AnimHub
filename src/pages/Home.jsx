@@ -4,6 +4,20 @@ import ComponentCard from "../components/common/ComponentCard";
 import { Pagination } from "../components/common";
 
 const Home = () => {
+  function handle() {
+    alert("Are you sure you want to leave the page?")
+    return
+  } 
+  useEffect(() => {
+    window.addEventListener("beforeunload", handle);
+  }, []);
+
+  // return () => {
+    // window.removeEventListener("beforeunload", (e) => {
+      // e.preventDefault();
+      // return "Are you sure you want to leave the page?";
+    // });
+  // };
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = 100; // Replace with the actual total number of pages
 
