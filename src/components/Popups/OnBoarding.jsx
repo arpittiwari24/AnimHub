@@ -16,7 +16,7 @@ const OnBoarding = () => {
     profilePicUrl: "https://wallpapers.com/images/featured/dark-profile-pictures-gvfjo9dys52qj75q.jpg",
     gradientBg: "gradient Colors",
     country: "India",
-    email: "onkarwaghmode58@gmail.com",
+    email: "",
     name: "",
     bio: "",
     github: "",
@@ -31,7 +31,7 @@ const OnBoarding = () => {
 
       setForm({
         ...form,
-        email: currentUser.email || "onkarwaghmode58@gmail.com",
+        email: currentUser.email || "",
         name: currentUser.displayName || "",
         profilePicUrl: currentUser.photoURL || "https://wallpapers.com/images/featured/dark-profile-pictures-gvfjo9dys52qj75q.jpg",
       })
