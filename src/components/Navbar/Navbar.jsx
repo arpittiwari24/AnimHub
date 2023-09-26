@@ -17,13 +17,13 @@ const Navbar = () => {
   return (
     <>
       <div className="w-full flex flex-col ">
-        <div className="flex justify-center items-center">
+        {/* <div className="flex justify-center items-center">
           <ul className=" w-full flex justify-center items-center gap-4 py-1 bg-black">
             {subNavLinks.map((link) => (
               <li className=" text-[#969696]">{link.name}</li>
             ))}
           </ul>
-        </div>
+        </div> */}
 
         <div className="px-12 py-1 flex justify-between items-center bg-[#0e0e0e]">
           <div className=" w-[70%] flex justify-center items-center ">
@@ -32,8 +32,9 @@ const Navbar = () => {
                 isLeftSidebarOpen={isLeftSidebarOpen}
                 setIsLeftSidebarOpen={setIsLeftSidebarOpen}
               />
-              <div className="">
-                <DarkLogo width="180px" />
+              <div className=" text-bold text-2xl text-white">
+                {/* <DarkLogo width="180px" /> */}
+                Curator
               </div>
             </div>
             <div className="w-full flex justify-center items-center gap-2">
@@ -42,7 +43,7 @@ const Navbar = () => {
                 <input
                   className="appearance-none focus:outline-none all-none w-full bg-[#252525] text-[#fff] text-sm h-8 px-2 py-1  "
                   type="text"
-                  placeholder="Search Animated Components"
+                  placeholder="Search Awesome Courses"
                 />
               </div>
               <button className="">
@@ -61,7 +62,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        <div className="px-12 py-1 pb-0 flex justify-between items-center  bg-[#0e0e0e]">
+        {/* <div className="px-12 py-1 pb-0 flex justify-between items-center  bg-[#0e0e0e]">
           <ul className="grid grid-cols-8 justify-items-center w-full h-full items-center mx-auto">
             {navLinks.map((link) => (
               <li className="group grid w-full h-auto  text-[#fff] font-bold ">
@@ -90,8 +91,8 @@ const Navbar = () => {
           <p className="">
             If you have anything for us or want to join us visit here
           </p>
-        </div>
-        <PromoStrip />
+        </div> */}
+        {/* <PromoStrip /> */}
       </div>
     </>
   );

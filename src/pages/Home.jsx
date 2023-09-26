@@ -4,80 +4,80 @@ import ComponentCard from "../components/common/ComponentCard";
 import { Pagination } from "../components/common";
 
 const Home = () => {
-  function handle() {
-    alert("Are you sure you want to leave the page?")
-    return
-  } 
-  useEffect(() => {
-    window.addEventListener("beforeunload", handle);
-  }, []);
+  // function handle() {
+  //   alert("Are you sure you want to leave the page?");
+  //   return;
+  // }
+  // useEffect(() => {
+  //   window.addEventListener("beforeunload", handle);
+  // }, []);
 
-  // return () => {
-    // window.removeEventListener("beforeunload", (e) => {
-      // e.preventDefault();
-      // return "Are you sure you want to leave the page?";
-    // });
+  // // return () => {
+  // // window.removeEventListener("beforeunload", (e) => {
+  // // e.preventDefault();
+  // // return "Are you sure you want to leave the page?";
+  // // });
+  // // };
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const totalPages = 100; // Replace with the actual total number of pages
+
+  // const handlePageChange = (pageNumber) => {
+  //   setCurrentPage(pageNumber);
+  //   // You can also load data for the selected page here
   // };
-  const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 100; // Replace with the actual total number of pages
+  // // Reference to the ul container
+  // const ulContainerRef = useRef(null);
 
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-    // You can also load data for the selected page here
-  };
-  // Reference to the ul container
-  const ulContainerRef = useRef(null);
+  // // State to track whether the arrows should be visible
+  // const [showLeftArrow, setShowLeftArrow] = useState(false);
+  // const [showRightArrow, setShowRightArrow] = useState(false);
 
-  // State to track whether the arrows should be visible
-  const [showLeftArrow, setShowLeftArrow] = useState(false);
-  const [showRightArrow, setShowRightArrow] = useState(false);
+  // // Function to scroll the ul container left
+  // const scrollLeft = () => {
+  //   ulContainerRef.current.scrollTo({
+  //     left: ulContainerRef.current.scrollLeft - 500, // Adjust the scroll distance as needed
+  //     behavior: "smooth", // Add smooth scrolling
+  //   });
+  // };
 
-  // Function to scroll the ul container left
-  const scrollLeft = () => {
-    ulContainerRef.current.scrollTo({
-      left: ulContainerRef.current.scrollLeft - 500, // Adjust the scroll distance as needed
-      behavior: "smooth", // Add smooth scrolling
-    });
-  };
+  // // Function to scroll the ul container right
+  // const scrollRight = () => {
+  //   ulContainerRef.current.scrollTo({
+  //     left: ulContainerRef.current.scrollLeft + 500, // Adjust the scroll distance as needed
+  //     behavior: "smooth", // Add smooth scrolling
+  //   });
+  // };
 
-  // Function to scroll the ul container right
-  const scrollRight = () => {
-    ulContainerRef.current.scrollTo({
-      left: ulContainerRef.current.scrollLeft + 500, // Adjust the scroll distance as needed
-      behavior: "smooth", // Add smooth scrolling
-    });
-  };
+  // // Check if there's content to scroll on mount and when the scroll position changes
+  // useEffect(() => {
+  //   const container = ulContainerRef.current;
 
-  // Check if there's content to scroll on mount and when the scroll position changes
-  useEffect(() => {
-    const container = ulContainerRef.current;
+  //   const handleScroll = () => {
+  //     setShowLeftArrow(container.scrollLeft > 0);
+  //     setShowRightArrow(
+  //       container.scrollLeft < container.scrollWidth - container.clientWidth
+  //     );
+  //   };
 
-    const handleScroll = () => {
-      setShowLeftArrow(container.scrollLeft > 0);
-      setShowRightArrow(
-        container.scrollLeft < container.scrollWidth - container.clientWidth
-      );
-    };
+  //   container.addEventListener("scroll", handleScroll);
+  //   handleScroll(); // Check on mount
 
-    container.addEventListener("scroll", handleScroll);
-    handleScroll(); // Check on mount
+  //   return () => {
+  //     container.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, []);
 
-    return () => {
-      container.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  // Function to temporarily disable the scrollbar during scrolling
-  const disableScrollbar = () => {
-    ulContainerRef.current.style.overflow = "hidden";
-    setTimeout(() => {
-      ulContainerRef.current.style.overflow = "scroll";
-    }, 1000); // Adjust the delay as needed
-  };
+  // // Function to temporarily disable the scrollbar during scrolling
+  // const disableScrollbar = () => {
+  //   ulContainerRef.current.style.overflow = "hidden";
+  //   setTimeout(() => {
+  //     ulContainerRef.current.style.overflow = "scroll";
+  //   }, 1000); // Adjust the delay as needed
+  // };
 
   return (
     <>
-      <div className="w-full flex flex-col justify-start items-start px-12">
+      {/* <div className="w-full flex flex-col justify-start items-start px-12">
         <div className="w-full auto flex flex-col justify-start items-start ">
           <h1 className="text-xl font-bold">Explore all the components</h1>
           <div
@@ -121,7 +121,7 @@ const Home = () => {
           </div>
         </div>
         <div className="w-full h-auto flex flex-wrap gap-8 my-10 justify-between items-center">
-          {/* cards */}
+
           {Array.from({ length: 12 }, (_, index) => (
             <ComponentCard />
           ))}
@@ -133,7 +133,7 @@ const Home = () => {
             onPageChange={handlePageChange}
           />
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

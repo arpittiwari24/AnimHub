@@ -16,7 +16,6 @@ import {
 import { useNavigate } from "react-router-dom";
 import { sendData } from "../../api";
 
-
 const Signup = ({ closePopup }) => {
   const [form, setForm] = useState({});
   const provider = new GoogleAuthProvider();
@@ -33,8 +32,8 @@ const Signup = ({ closePopup }) => {
     createUser.user.displayName = form.name;
     if (createUser) {
       closePopup();
-      navigate("/onboarding")
-      return
+      navigate("/onboarding");
+      return;
     }
     console.log("User Not Created");
   };
@@ -50,12 +49,11 @@ const Signup = ({ closePopup }) => {
     const { user } = await signInWithPopup(auth, provider);
     if (user) {
       closePopup();
-      navigate("/onboarding")
-      return
+      navigate("/onboarding");
+      return;
     }
     console.log("User Not Created");
   };
-
 
   return (
     <>
@@ -92,7 +90,7 @@ const Signup = ({ closePopup }) => {
           </div>
         </div>
         <div className="w-[55%] h-full flex flex-col justify-start items-center gap-2 px-8 py-4">
-          <DarkLogo width="180px" height="60px" />
+          {/* <DarkLogo width="180px" height="60px" /> */}
           <h1 className="flex justify-center text-white text-4xl font-bold items-center">
             Sign Up for Free
           </h1>

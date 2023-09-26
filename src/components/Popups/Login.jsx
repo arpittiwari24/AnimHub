@@ -15,12 +15,12 @@ import axios from "axios";
 
 const Login = ({ closePopup }) => {
   const [form, setForm] = useState({});
-  const [checked, setChecked] = useState(false)
+  const [checked, setChecked] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const errorCodes = {
     "auth/user-not-found": "Invalid Email",
-    "auth/wrong-password": "Invalid Password"
-  }
+    "auth/wrong-password": "Invalid Password",
+  };
   const provider = new GoogleAuthProvider();
   const navigate = useNavigate();
   const loginUser = async (e) => {
@@ -29,14 +29,13 @@ const Login = ({ closePopup }) => {
       auth,
       e.target[0].value,
       e.target[1].value
-    )
-      .catch((error) => {
-        setErrorMsg(errorCodes[error.code])
-      })
+    ).catch((error) => {
+      setErrorMsg(errorCodes[error.code]);
+    });
     console.log("Code reached herer", user);
     if (user) {
-      closePopup()
-      navigate("/dashboard")
+      closePopup();
+      navigate("/dashboard");
       // })
       // .catch();
       // console.log("User logged in");
@@ -49,27 +48,25 @@ const Login = ({ closePopup }) => {
       ...form,
       [e.target.name]: e.target.value,
     });
-
   };
 
   const handleOAuth = async () => {
     console.log("Await");
-    const { user } = await signInWithPopup(auth, provider)
+    const { user } = await signInWithPopup(auth, provider);
 
     console.log("User", user);
     if (user) {
       const details = {
         name: user.displayName,
         email: user.email,
-      }
+      };
       console.log(Date.now() - user.metadata.createdAt);
-      if(Date.now() - user.metadata.createdAt <= 1000){
-        closePopup()
-        navigate("/onboarding")
-      }
-      else{
-        closePopup()
-        navigate("/dashboard")
+      if (Date.now() - user.metadata.createdAt <= 1000) {
+        closePopup();
+        navigate("/onboarding");
+      } else {
+        closePopup();
+        navigate("/dashboard");
       }
       // console.log("detaila", details);
       // await sendData("/api/v1/auth/signup", details)
@@ -83,7 +80,7 @@ const Login = ({ closePopup }) => {
       // .then(() => {
       //   closePopup()
       //   navigate("/dashboard")
-      //   return 
+      //   return
       // })
       // .catch((error) => {
 
@@ -99,7 +96,7 @@ const Login = ({ closePopup }) => {
       // console.log("HEerer");
       // })
     }
-      // .then(() => {
+    // .then(() => {
     // await sendData("/api/v1/auth/login", data);
   };
 
@@ -107,7 +104,7 @@ const Login = ({ closePopup }) => {
     <>
       <div className="w-[30vw] h-full flex justify-center items-end rounded-md">
         <div className="w-[full] h-full flex flex-col justify-start items-center gap-2 px-2 pt-6 py-4">
-          <DarkLogo width="180px" height="60px" />
+          {/* <DarkLogo width="180px" height="60px" /> */}
           <h1 className="flex justify-center text-white text-3xl font-bold items-center">
             Member Sign in
           </h1>
@@ -153,8 +150,10 @@ const Login = ({ closePopup }) => {
               <input
                 type="checkbox"
                 name="checkbox"
-                onChange={() => { setChecked(!checked) }}
-              // onClick={}
+                onChange={() => {
+                  setChecked(!checked);
+                }}
+                // onClick={}
               />
               <div>
                 <p className="text-[#c6c6c6] font-semibold leading-[14px]">
