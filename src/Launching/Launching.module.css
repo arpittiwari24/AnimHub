@@ -1,0 +1,92 @@
+/* * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+} */
+/* styles.css */
+@import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700&family=Poppins:wght@200;300;400&display=swap");
+
+.flip_clock {
+  --fcc-flip-duration: 0.5s; /* transition duration when flip card */
+  --fcc-digit-block-width: 30px; /* width of digit card */
+  --fcc-digit-block-height: 60px; /* height of digit card, highly recommend in even number */
+  --fcc-digit-font-size: 30px; /* font size of digit */
+  --fcc-digit-color: #000; /* color of digit */
+  --fcc-label-font-size: 10px; /* font size of label */
+  --fcc-label-color: #ffffff; /* color of label */
+  --fcc-background: #fff; /* background of digit card */
+  --fcc-divider-color: #000; /* color of divider */
+  --fcc-divider-height: 1px; /* height of divider */
+  --fcc-separator-size: 6px; /* size of colon */
+  --fcc-separator-color: #fff; /* color of colon */
+}
+.flip_clock {
+  font-family: "orbitron";
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+.page {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.overlay {
+  background: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.page_content {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.page .h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.page .h3 {
+  font-weight: 600;
+  max-width: 400px;
+  color: #c6c6c6;
+  margin-bottom: 3rem;
+}
+
+@media (min-width: 900px) {
+  .page .h1 {
+    font-size: 4rem;
+  }
+  .page .h3 {
+    max-width: 600px;
+  }
+  .flip_clock {
+    --fcc-digit-block-width: 80px; /* width of digit card */
+    --fcc-digit-block-height: 120px; /* height of digit card, highly recommend in even number */
+    --fcc-digit-font-size: 60px; /* font size of digit */
+    --fcc-digit-color: #000; /* color of digit */
+    --fcc-label-font-size: 20px; /* font size of label */
+  }
+}
+
+.btn {
+  width: 180px;
+  height: 64px;
+  background: #fff;
+  color: #000;
+  font-size: 1rem;
+  font-family: "Poppins";
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 0.4rem;
+  font-weight: 700;
+  cursor: pointer;
+}

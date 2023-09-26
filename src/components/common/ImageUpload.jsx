@@ -10,7 +10,14 @@ const ImageUpload = ({ src, form, setForm }) => {
 
   const handleFileChange = async (e) => {
     console.log("sfdgd");
+    const MAX_FILE_SIZE = 1024 * 256
     if (e.target.files[0]) {
+      setFileUrl(URL.createObjectURL(e.target.files[0]))
+      if (e.target.files[0].size > MAX_FILE_SIZE) {
+        alert('File is too big')
+
+        return
+      }
       const newUrl = await toBase64(e.target.files[0])
       setForm({
         ...form,
@@ -48,6 +55,7 @@ const ImageUpload = ({ src, form, setForm }) => {
       accept='image/*'
       onChange={handleFileChange}
       hidden={true} 
+      
       />
       {edit &&
         <button className='absolute text-[#fff] scale-[2] top-[50%] left-[50%] -translate-x-[50%] -translate-y-[90%]'>
