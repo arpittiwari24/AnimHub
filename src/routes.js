@@ -12,15 +12,15 @@ import {
   ComingSoon,
   OnBoardingPage,
 } from "./pages";
+import Launching from "./Launching/Launching";
+import { Confirm } from "./components/Popups";
 
-import {
-  Confirm, 
-} from './components/Popups'
+const launched = false;
 
 export const routesData = [
   {
     path: "/",
-    component: Home,
+    component: launched ? Home : Launching,
   },
   {
     path: "/about",
