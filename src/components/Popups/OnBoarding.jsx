@@ -7,18 +7,17 @@ import { AuthContext } from "../../context/AuthContextProviders";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebase/auth";
 import { deleteUser } from "firebase/auth";
+import ImageUpload from "../common/ImageUpload";
 
 const OnBoarding = () => {
   const navigate = useNavigate();
   const currentUser = useContext(AuthContext).user;
   const [form, setForm] = useState({
-    profilePicUrl:
-      currentUser.photoURL ||
-      "https://wallpapers.com/images/featured/dark-profile-pictures-gvfjo9dys52qj75q.jpg",
+    profilePicUrl: "https://wallpapers.com/images/featured/dark-profile-pictures-gvfjo9dys52qj75q.jpg",
     gradientBg: "gradient Colors",
     country: "India",
-    email: currentUser.email || "",
-    name: currentUser.displayName || "",
+    email: "onkarwaghmode58@gmail.com",
+    name: "",
     bio: "",
     github: "",
     linkedin: "",
@@ -27,7 +26,17 @@ const OnBoarding = () => {
   });
 
   useEffect(() => {
-    const handleBeforeUnload =  (event) => {
+    const currentUser = auth.currentUser
+    if (currentUser) {
+
+      setForm({
+        ...form,
+        email: currentUser.email || "onkarwaghmode58@gmail.com",
+        name: currentUser.displayName || "",
+        profilePicUrl: currentUser.photoURL || "https://wallpapers.com/images/featured/dark-profile-pictures-gvfjo9dys52qj75q.jpg",
+      })
+    }
+    const handleBeforeUnload = (event) => {
       event.preventDefault();
       alert("hello");
       const currentUser = auth.currentUser;
@@ -92,11 +101,7 @@ const OnBoarding = () => {
           </span>
         </h1>
         <form className="flex flex-col w-full items-center gap-[10px] mt-[20px] mb-[50px]">
-          <img
-            src={form.profilePicUrl}
-            alt="Image"
-            className="w-[150px] h-[150px] border border-6 rounded-full mb-[20px]"
-          />
+          <ImageUpload src={form.profilePicUrl} form={form} setForm={setForm}/>
           <p className="font-[600] text-[#ff6961]">{errorMsg}</p>
           <div className="w-full flex justify-between">
             <input
