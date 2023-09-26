@@ -63,9 +63,9 @@ const Login = ({ closePopup }) => {
         email: user.email,
       };
       console.log(Date.now() - user.metadata.createdAt);
-      if (Date.now() - user.metadata.createdAt <= 1000) {
+      if (Date.now() - user.metadata.createdAt <= 5000) {
         closePopup();
-        toast.success("Login Successfull");
+        toast.success("SignUp Successfull");
         navigate("/onboarding");
       } else {
         closePopup();

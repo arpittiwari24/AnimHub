@@ -23,20 +23,17 @@ const Signup = ({ closePopup }) => {
   const navigate = useNavigate();
   const saveData = async (e) => {
     e.preventDefault();
-    console.log("Vefore User Creating");
     const createUser = await createUserWithEmailAndPassword(
       auth,
       form.email,
       form.password
     );
-    console.log("After User Creating");
     createUser.user.displayName = form.name;
     if (createUser) {
       closePopup();
       navigate("/onboarding")
       return
     }
-    console.log("User Not Created");
   };
 
   const handledata = (e) => {
@@ -47,14 +44,18 @@ const Signup = ({ closePopup }) => {
   };
 
   const handleOAuth = async () => {
-    const { user } = await signInWithPopup(auth, provider);
+    const { user } = await signInWithPopup(auth, provider)
     if (user) {
-      closePopup();
-      navigate("/onboarding")
-      return
+      if (Date.now() - user.metadata.createdAt <= 5000) {
+        closePopup()
+        navigate("/onboarding")
+      }
+      else {
+        closePopup()
+        navigate("/dashboard")
+      }
     }
-    console.log("User Not Created");
-  };
+  }
 
 
   return (
