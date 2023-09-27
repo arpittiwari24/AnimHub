@@ -15,7 +15,7 @@ import {
 import Launching from "./Launching/Launching";
 import { Confirm } from "./components/Popups";
 
-const launched = false;
+const launched = true;
 
 export const routesData = [
   {
