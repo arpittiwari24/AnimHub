@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import ComponentCard from "../components/common/ComponentCard";
 import { Pagination } from "../components/common";
+import ReactGA from 'react-ga4'
 
 const Home = () => {
   function handle() {
@@ -9,7 +10,12 @@ const Home = () => {
     return
   } 
   useEffect(() => {
+    
+    // ReactGA.pageview(window.location.pathname)
+    // ReactGA.event({"page_path": window.location.pathname})
+    ReactGA.send({ hitType: "pageview", page: window.location.pathname })
     window.addEventListener("beforeunload", handle);
+
   }, []);
 
   // return () => {

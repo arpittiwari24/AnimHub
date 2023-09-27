@@ -4,7 +4,13 @@ import { auth } from "./firebase/auth";
 import { routesData } from "./routes";
 import { Navbar, Footer } from "./components";
 import AuthContextProvider from "./context/AuthContextProviders";
+import ReactGA from 'react-ga4'
 // import Layout from "./components/Popup/Layout";
+
+const TRACKING_ID = "G-ZD6KL0KF0K"
+
+ReactGA.initialize(TRACKING_ID)
+
 
 function App() {
   const navigator = useNavigate();
@@ -21,7 +27,7 @@ function App() {
   }, []);
   return (
     <div className="dark">
-      {/* <Navbar /> */}
+      <Navbar />
       <Routes>
         {routesData.map((route, index) => (
           <Route
