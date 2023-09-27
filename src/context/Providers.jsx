@@ -1,3 +1,4 @@
+import React from "react";
 import PopupContextProvider from "./PopupContextProvider";
 import AuthContextProvider from "./AuthContextProviders";
 import { Toaster } from "react-hot-toast";
