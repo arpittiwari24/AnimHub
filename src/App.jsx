@@ -21,7 +21,7 @@ function App() {
   }, []);
   return (
     <div className="dark">
-      {/* <Navbar /> */}
+      <Navbar />
       <Routes>
         {routesData.map((route, index) => (
           <Route
@@ -32,7 +32,7 @@ function App() {
           />
         ))}
       </Routes>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 }
