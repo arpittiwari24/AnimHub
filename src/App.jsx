@@ -7,7 +7,7 @@ import AuthContextProvider from "./context/AuthContextProviders";
 import ReactGA from 'react-ga4'
 // import Layout from "./components/Popup/Layout";
 
-const TRACKING_ID = "G-ZD6KL0KF0K"
+const TRACKING_ID = "G-81YMRFRDH4"
 
 ReactGA.initialize(TRACKING_ID)
 
