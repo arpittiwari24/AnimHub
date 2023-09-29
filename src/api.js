@@ -13,6 +13,12 @@ export async function sendData(url, data) {
 }
 
 
+export async function getData(url) {
+    const response = await axiosDefaults.get(url)
+    console.log("response", response);
+    return response
+}
+
 
 
 axiosDefaults.interceptors.request.use(

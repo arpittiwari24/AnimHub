@@ -15,7 +15,6 @@ const Home = () => {
     // ReactGA.event({"page_path": window.location.pathname})
     ReactGA.send({ hitType: "pageview", page: window.location.pathname })
     window.addEventListener("beforeunload", handle);
-
   }, []);
 
   // return () => {
