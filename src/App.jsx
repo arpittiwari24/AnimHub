@@ -14,21 +14,8 @@ const TRACKING_ID = "G-81YMRFRDH4";
 ReactGA.initialize(TRACKING_ID);
 
 function App() {
-  const navigator = useNavigate();
-  // const { user } = useAuthContext();
-  const user = auth.currentUser;
+  const { user, authloading } = useAuthContext();
 
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        console.log("User logged in ", user);
-        // navigator("/dashboard");
-      } else {
-        console.log("User not logged in ");
-        // navigator("/");
-      }
-    });
-  }, []);
   return (
     <div className="dark">
       <Navbar />
