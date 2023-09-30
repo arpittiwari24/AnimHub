@@ -8,5 +8,6 @@ export { default as Categories } from "./Categories";
 export { default as Policy } from "./Policy";
 export { default as Contact } from "./Contact";
 export { default as Testing } from "./Testing";
-export {default as ComingSoon} from "./ComingSoon";
-export {default as OnBoardingPage} from "./OnBoardingPage";
+export { default as ComingSoon } from "./ComingSoon";
+export { default as OnBoardingPage } from "./OnBoardingPage";
+export { default as Profile } from "./Profile";

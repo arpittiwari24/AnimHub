@@ -8,12 +8,13 @@ import {
   Categories,
   Policy,
   Contact,
-  Testing,
   ComingSoon,
   OnBoardingPage,
+  Profile,
 } from "./pages";
 import Launching from "./Launching/Launching";
 import { Confirm } from "./components/Popups";
+import NotFound from "./pages/NotFound";
 
 const launched = true;
 
@@ -29,6 +30,10 @@ export const routesData = [
   {
     path: "/dashboard",
     component: Dashboard,
+  },
+  {
+    path: "/profile/:username",
+    component: Profile,
   },
   {
     path: "/admin",
@@ -55,10 +60,6 @@ export const routesData = [
     component: Contact,
   },
   {
-    path: "/testing",
-    component: Testing,
-  },
-  {
     path: "/confirm",
     component: Confirm,
   },
@@ -69,6 +70,10 @@ export const routesData = [
   {
     path: "/onboarding",
     component: OnBoardingPage,
+  },
+  {
+    path: "*",
+    component: NotFound,
   },
 ];
 export default routesData;

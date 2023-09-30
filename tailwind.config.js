@@ -10,7 +10,9 @@ module.exports = {
         secondary: "#1B1B1B",
         contrast: "#808080",
       },
-
+      fontFamily: {
+        Poppins: ["Poppins", "sans-serif"],
+      },
       boxShadow: {
         "shadow-arrow":
           "rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px",
