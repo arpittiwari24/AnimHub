@@ -11,3 +11,4 @@ export { default as Testing } from "./Testing";
 export { default as ComingSoon } from "./ComingSoon";
 export { default as OnBoardingPage } from "./OnBoardingPage";
 export { default as Profile } from "./Profile";
+export { default as Faq } from "./Faq";

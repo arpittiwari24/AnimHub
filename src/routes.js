@@ -11,6 +11,7 @@ import {
   ComingSoon,
   OnBoardingPage,
   Profile,
+  Faq,
 } from "./pages";
 import Launching from "./Launching/Launching";
 import { Confirm } from "./components/Popups";
@@ -53,6 +54,11 @@ export const routesData = [
   {
     path: "/explore",
     component: Explore,
+    authenticated: false,
+  },
+  {
+    path: "/faq",
+    component: Faq,
     authenticated: false,
   },
   {
