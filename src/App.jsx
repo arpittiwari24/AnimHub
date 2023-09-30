@@ -1,10 +1,11 @@
 import React from "react";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { auth } from "./firebase/auth";
 import { routesData } from "./routes";
 import { Navbar, Footer } from "./components";
 import AuthContextProvider from "./context/AuthContextProviders";
+import { useAuthContext } from "./context/AuthContextProviders";
 import ReactGA from "react-ga4";
 // import Layout from "./components/Popup/Layout";
 
@@ -14,10 +15,13 @@ ReactGA.initialize(TRACKING_ID);
 
 function App() {
   const navigator = useNavigate();
+  // const { user } = useAuthContext();
+  const user = auth.currentUser;
+
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
-        console.log("User logged in ");
+        console.log("User logged in ", user);
         // navigator("/dashboard");
       } else {
         console.log("User not logged in ");
@@ -33,7 +37,15 @@ function App() {
           <Route
             key={index}
             path={route.path}
-            element={<route.component />}
+            element={
+              // Conditionally render routes based on authentication status
+              route.authenticated && !user ? (
+                // Redirect unauthenticated users to a home page or another route
+                <Navigate to="/" replace={true} />
+              ) : (
+                <route.component />
+              )
+            }
             exact={true}
           />
         ))}
