@@ -5,74 +5,74 @@ import { Categories, Languages, Tags, TopUsers, Trending } from "./NavSections";
 export const navLinks = [
   {
     name: "Home",
-    link: "/",
+    path: "/",
   },
   {
     name: "Categories",
-    link: "/",
+    path: "/",
     content: Categories,
   },
   {
     name: "Languages",
-    link: "/",
+    path: "/",
     content: Languages,
   },
   {
     name: "Top Users",
-    link: "/",
+    path: "/",
     content: TopUsers,
   },
   {
     name: "Trending",
-    link: "/",
+    path: "/",
     content: Trending,
   },
   {
     name: "Blogs",
-    link: "/",
+    path: "/",
   },
   {
     name: "Tags",
-    link: "/",
+    path: "/",
     content: Tags,
   },
   {
     name: "About",
-    link: "/",
+    path: "/",
   },
 ];
 export const subNavLinks = [
   {
     name: "Spotlight",
-    link: "/",
+    path: "/",
   },
   {
     name: "Feedback",
-    link: "/",
+    path: "/contact",
   },
   {
     name: "Admins",
-    link: "/",
+    path: "/",
   },
   {
     name: "Insights",
-    link: "/",
+    path: "/",
   },
   {
     name: "Privacy Policy",
-    link: "/",
+    path: "/privacy-policy",
   },
   {
     name: "Maintainer",
-    link: "/",
+    path: "/contact",
   },
   {
     name: "Shop",
-    link: "/",
+    path: "/",
   },
   {
     name: "EN",
-    link: "/",
+    path: "/",
   },
 ];
 export const dropdownItemsLeftSidebar = [
