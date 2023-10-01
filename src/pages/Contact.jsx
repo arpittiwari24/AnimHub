@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 import { FaSquareXTwitter } from "react-icons/fa6";
 import { AiFillInstagram } from "react-icons/ai";
@@ -6,8 +6,6 @@ import { AiFillLinkedin } from "react-icons/ai";
 import { BsYoutube } from "react-icons/bs";
 
 import { toast } from "react-hot-toast";
-
-
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -139,7 +137,7 @@ const Contact = () => {
                       <option className="" value="" disabled selected>
                         Select contact type *
                       </option>
-                      <option className="text-white"  value="Fun">
+                      <option className="text-white" value="Fun">
                         Just for fun 👀
                       </option>
                       <option className="text-white" value="Feedback">

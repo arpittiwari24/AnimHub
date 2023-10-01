@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { DarkLogo } from "../../assets/logos/Logo";
 import { BiSearch } from "react-icons/bi";
 import { BsPlusCircleFill } from "react-icons/bs";
@@ -33,7 +34,9 @@ const Navbar = () => {
         <div className="flex justify-center items-center">
           <ul className=" w-full flex justify-center items-center gap-4 py-1 bg-black">
             {subNavLinks.map((link) => (
-              <li className=" text-[#969696]">{link.name}</li>
+              <li className=" text-[#969696]">
+                <Link to={link.path}>{link.name}</Link>
+              </li>
             ))}
           </ul>
         </div>
