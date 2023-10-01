@@ -1,30 +1,21 @@
-import { Routes, Route, useNavigate } from "react-router-dom";
+import React from "react";
+import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { auth } from "./firebase/auth";
 import { routesData } from "./routes";
 import { Navbar, Footer } from "./components";
 import AuthContextProvider from "./context/AuthContextProviders";
-import ReactGA from 'react-ga4'
+import { useAuthContext } from "./context/AuthContextProviders";
+import ReactGA from "react-ga4";
 // import Layout from "./components/Popup/Layout";
 
-const TRACKING_ID = "G-ZD6KL0KF0K"
+const TRACKING_ID = "G-81YMRFRDH4";
 
-ReactGA.initialize(TRACKING_ID)
-
+ReactGA.initialize(TRACKING_ID);
 
 function App() {
-  const navigator = useNavigate();
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        console.log("User logged in ");
-        // navigator("/dashboard");
-      } else {
-        console.log("User not logged in ");
-        // navigator("/");
-      }
-    });
-  }, []);
+  const { user, authloading } = useAuthContext();
+
   return (
     <div className="dark">
       <Navbar />
@@ -33,12 +24,20 @@ function App() {
           <Route
             key={index}
             path={route.path}
-            element={<route.component />}
+            element={
+              // Conditionally render routes based on authentication status
+              route.authenticated && !user ? (
+                // Redirect unauthenticated users to a home page or another route
+                <Navigate to="/" replace={true} />
+              ) : (
+                <route.component />
+              )
+            }
             exact={true}
           />
         ))}
       </Routes>
-      {/* <Footer /> */}
+      <Footer />
     </div>
   );
 }

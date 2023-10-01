@@ -59,7 +59,7 @@ function LeftSidebar({ isLeftSidebarOpen, setIsLeftSidebarOpen }) {
       </button>
       {isLeftSidebarOpen && (
         <div
-          className="absolute z-10 top-[43px] left-[30px] w-[17rem] bg-[#0e0e0e] p-4 rounded-lg shadow-lg overflow-y-auto"
+          className="absolute z-10 top-[43px] left-[30px] w-[17.1rem] no-scrollbar bg-[#0e0e0e] p-4 rounded-lg shadow-lg overflow-y-auto"
           style={parentDropdownStyle}
         >
           <ul className="flex flex-col gap-2">
@@ -124,7 +124,7 @@ function LeftSidebar({ isLeftSidebarOpen, setIsLeftSidebarOpen }) {
                 )}
               </li>
             ))}
-            <div className="flex flex-wrap justify-center items-center gap-2">
+            <div className="flex flex-wrap justify-center items-center gap-1">
               {dropdownColumnsLeftSidebar.map((column, index) => (
                 <li
                   key={index}

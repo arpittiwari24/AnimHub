@@ -46,6 +46,7 @@ const Signup = ({ closePopup }) => {
   const handleOAuth = async () => {
     const { user } = await signInWithPopup(auth, provider)
     if (user) {
+      console.log(Date.now() - user.metadata.createdAt);
       if (Date.now() - user.metadata.createdAt <= 5000) {
         closePopup()
         navigate("/onboarding")

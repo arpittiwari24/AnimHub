@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { DarkLogo } from "../../assets/logos/Logo";
 import { BiSearch } from "react-icons/bi";
 import { BsPlusCircleFill } from "react-icons/bs";
@@ -9,10 +10,23 @@ import LeftSidebar from "./LeftSidebar";
 import RightSidebar from "./RightSidebar";
 import { navLinks, subNavLinks } from "./constants";
 import PromoStrip from "./PromoStrip";
+import LanguagePopup from "../Popups/LanguagePopup";
+import { usePopupContext } from "../../context/PopupContextProvider";
 
 const Navbar = () => {
   const [isLeftSidebarOpen, setIsLeftSidebarOpen] = useState(false);
   const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(false);
+  const { isOpen, popupContent, openPopup, closePopup } = usePopupContext()
+  const handleOpenPopup = () => {
+    const content = (
+      <div className="fixed flex justify-center items-center top-0 left-0 h-screen w-screen bg-[#00000070] z-20 p-6">
+        <div className="relative flex justify-center items-center bg-[#151515]  h-auto w-auto flex-col gap-4 rounded-md">
+          <LanguagePopup  closePopup={closePopup} />
+        </div>
+      </div>
+    )
+    openPopup(content)
+  }
 
   return (
     <>
@@ -20,7 +34,9 @@ const Navbar = () => {
         <div className="flex justify-center items-center">
           <ul className=" w-full flex justify-center items-center gap-4 py-1 bg-black">
             {subNavLinks.map((link) => (
-              <li className=" text-[#969696]">{link.name}</li>
+              <li className=" text-[#969696]">
+                <Link to={link.path}>{link.name}</Link>
+              </li>
             ))}
           </ul>
         </div>
@@ -45,8 +61,8 @@ const Navbar = () => {
                   placeholder="Search Animated Components"
                 />
               </div>
-              <button className="">
-                <BsPlusCircleFill className="text-[#c6c6c6] text-3xl" />
+              <button className="null">
+                <BsPlusCircleFill className="text-[#c6c6c6] text-3xl" onClick={handleOpenPopup} />
               </button>
               <button className="">
                 <PiYoutubeLogoFill className="text-[#c4302b] text-4xl" />

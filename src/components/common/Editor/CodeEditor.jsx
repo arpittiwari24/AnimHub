@@ -1,46 +1,66 @@
-import React, { forwardRef, useEffect, useRef, useState } from 'react'
-// import  from 'monaco-editor'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import MonacoEditor from '@monaco-editor/react'
 import CodeOutput from '../CodeOutput'
+import { AiFillHtml5 } from 'react-icons/ai'
+import { FaCss3Alt } from 'react-icons/fa'
+import { BiLogoJavascript } from 'react-icons/bi'
+import ComponentInfo from '../ComponentInfo'
+import { PiCodeFill } from 'react-icons/pi'
+import { CategoryLangContext } from '../../../context/CategoryLangContextProvider'
+import { BiLogoTailwindCss } from 'react-icons/bi'
+// import {Icon} from 'react-icons'
+// import { icons } from 'react-icons/lib'
+
+const themeArray = ['vs-dark', 'vs-light', 'hc-black', 'hc-light',]
 
 const CodeEditor = () => {
+    const { langCategory } = useContext(CategoryLangContext)
+    const languages = langCategory.language.split("+")
     const [code, setcode] = useState("")
-    const [activeFile, setActiveFile] = useState("index.html")
-    // const editorRef = forwardRef(null)
+    const [theme, setTheme] = useState("vs-dark")
+    const [activeFile, setActiveFile] = useState("HTML")
     const [html, setHtml] = useState("<h1> Helo World</h1>")
-    const [css, setCss] = useState("*{ margin: 0; padding: 0;}")
-    const [js, setJs] = useState("console.log('hello world')")
+    const [css, setCss] = useState("*{\n margin: 0;\n padding: 0;\n background-color: #151515;\n color: #fff;\n}")
+    const [js, setJs] = useState("// Write your code here...")
+    const [tailwind, setTailwind] = useState('@tailwind base;\n@tailwind components;\n@tailwind utilities;')
 
     const files = {
-        "index.html": {
-            name: 'index.html',
+        "HTML": {
+            name: <p className='flex items-center'><AiFillHtml5 className=' text-red-600' />HTML</p>,
             language: 'html',
             value: '<h1>Hello World</h1>'
         },
-        "style.css": {
-            name: 'style.css',
+        "CSS": {
+            name: <p className='flex items-center'><FaCss3Alt className=' text-blue-600' />CSS</p>,
             language: 'css',
-            value: '*{ margin: 0; padding: 0;}'
+            value: '*{\n margin: 0;\n padding: 0;\n background-color: #151515;\n color: #fff;\n}'
         },
-        "app.js": {
-            name: 'app.js',
+        "JS": {
+            name: <p className='flex items-center'><BiLogoJavascript className=' text-yellow-300' />JS</p>,
             language: 'javascript',
-            value: "console.log('hello world')"
+            value: "// Write your code here..."
+        },
+        "Tailwind": {
+            name: <p className='flex items-center'><BiLogoTailwindCss className='text-sky-400' /> Tailwind</p>,
+            language: 'css',
+            value: '@tailwind base;\n@tailwind components;\n@tailwind utilities;'
         }
     }
 
     const editorRef = useRef(null)
 
     const handlChange = (event) => {
-        // setcode(event.target.value)
-        if (activeFile == "index.html") {
+        if (activeFile == "HTML") {
             setHtml(editorRef.current.getValue())
         }
-        if (activeFile == "style.css") {
+        if (activeFile == "CSS") {
             setCss(editorRef.current.getValue())
         }
-        if (activeFile == "app.js") {
+        if (activeFile == "JS") {
             setJs(editorRef.current.getValue())
+        }
+        if (activeFile == "Tailwind") {
+            setTailwind(editorRef.current.getValue())
         }
 
     }
@@ -49,72 +69,65 @@ const CodeEditor = () => {
         const documentContents = `
             <html>
                 <head>
-                    <style>${css}</style>
-                </head>
+                    <style>${ languages.includes("Tailwind") && css}</style>
+                    ${ languages.includes("Tailwind") && `<script src="https://cdn.tailwindcss.com"></script>`}
+                    </head>
                 <body>
                     ${html}
                     <script>${js}</script>
+
                 </body>
             </html>
         `
         setcode(documentContents)
-        // iframe.contentWindow.document.open()
-        // iframe.contentWindow.document.write(documentContents)
-        // iframe.contentWindow.document.close()
-        // console.log(documentContents);
 
-    }, [html, css, js])
-
-    // const runCode = () => {
-
-    //     const iframe = document.getElementById('iframe')
-    //     const documentContents = `
-    //         <html>
-    //             <head>
-    //                 <style>${css}</style>
-    //             </head>
-    //             <body>
-    //                 ${html}
-    //                 <script>${js}</script>
-    //             </body>
-    //         </html>
-    //     `
-    //     iframe.contentWindow.document.open()
-    //     iframe.contentWindow.document.write(documentContents)
-    //     iframe.contentWindow.document.close()
-    //     // console.log(documentContents);
-    //     console.log(document);
-    // }
-
+    }, [html, css, js, tailwind])
     return (
-        <>
-            {Object.keys(files).map((file, idx) => {
-                return (
-                    <button key={idx} className='rounded-t-lg bg-gray-500 p-1 ml-1' onClick={() => setActiveFile(file)}>
-                        {file}
-                    </button>
-                )
-            })}
-            {/* <button className='rounded-t-lg bg-gray-500 p-1 ml-1' onClick={runCode}>
-                Run
-            </button> */}
-            <div className='flex'>
+        <div className='w-full h-full flex items-center justify-center gap-[15px]'>
+            <div className='flex flex-col w-1/2 h-full gap-[5px]'>
+                <div className='flex flex-row  bg-[#292929] justify-start items-center'>
+                    {languages.map((fileLang, idx) => {
+                        return (
+                            <button
+                                key={idx}
+                                className={`p-1 mx-2 text-[18px] font-[600] text-[#fff] ${activeFile == fileLang ? "text-opacity-100" : "text-opacity-40 hover:text-opacity-100"}`}
+                                onClick={() => { setActiveFile(fileLang) }}>
+                                {files[fileLang].name}
+                            </button>
+                        )
+                    })}
+                    <select
+                        className='ml-auto mr-[30px] px-[10px] h-[90%]'
+                        onChange={(e) => setTheme(e.target.value)}
+
+                    >
+                        {themeArray.map((themeName, idx) => {
+                            return (
+                                <option key={idx} value={themeName}>{themeName}</option>
+                            )
+                        })}
+                    </select>
+                    <PiCodeFill className='mr-[20px] text-[#5EBE55] scale-150 self-center hover:cursor-pointer' title='Code' />
+                </div>
                 <MonacoEditor
                     // ref={editorRef}
-                    height="50vh"
-                    width="50%"
-                    theme='vs-dark'
+                    // height="50vh"
+                    // width="50%"
+                    theme={theme}
                     language={files[activeFile].language}
-                    path={files[activeFile].name}
+                    path={activeFile}
                     onChange={handlChange}
                     defaultValue={files[activeFile].value || '// write your code here...'}
                     onMount={(editor, _) => {
                         editorRef.current = editor
                     }}
                 />
-                <CodeOutput sourceCode = {code}/>
             </div>
-        </>
+            <div className='flex flex-col w-1/2 h-full gap-[15px]'>
+                <CodeOutput sourceCode={code} />
+                <ComponentInfo />
+            </div>
+        </div>
     )
 }
 

@@ -15,7 +15,6 @@ const Home = () => {
     // ReactGA.event({"page_path": window.location.pathname})
     ReactGA.send({ hitType: "pageview", page: window.location.pathname })
     window.addEventListener("beforeunload", handle);
-
   }, []);
 
   // return () => {
@@ -85,7 +84,7 @@ const Home = () => {
     <>
       <div className="w-full flex flex-col justify-start items-start px-12">
         <div className="w-full auto flex flex-col justify-start items-start ">
-          <h1 className="text-xl font-bold">Explore all the components</h1>
+          <h1 className="text-xl font-bold">Explore all the components GA Page Added</h1>
           <div
             className="relative hide-scrollbar mt-2"
             onScroll={disableScrollbar}
