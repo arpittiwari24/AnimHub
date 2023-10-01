@@ -6,7 +6,7 @@ const CodeOutput = ({ sourceCode }) => {
 
   // console.log(sourceCode);
   return (
-    <div className='w-full h-1/2 flex flex-col'>
+    <div className='w-full h-1/2 flex flex-col resize-y overflow-auto'>
       <div className='h-[40px] bg-[#292929] flex flex-row justify-end items-center rounded-t-[15px] px-[20px] text-[600] text-[20px]'>
         <MdOutlinePreview className='text-[#00E0FF] hover:cursor-pointer' title='Preview'/>
       </div>
