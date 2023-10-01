@@ -2,7 +2,7 @@ import React from "react";
 import PopupContextProvider from "./PopupContextProvider";
 import AuthContextProvider from "./AuthContextProviders";
 import { Toaster } from "react-hot-toast";
-import CategoryLangContextProvider from "./CategoryLangContextProvider";
+import EditorContextProvider from "./EditorContextProvider";
 // import Analytics from "./Analytics";
 
 export default function Providers({ children }) {
@@ -11,9 +11,7 @@ export default function Providers({ children }) {
       {/* <Analytics /> */}
       <PopupContextProvider>
         <AuthContextProvider>
-          <CategoryLangContextProvider>
-            {children}
-          </CategoryLangContextProvider>
+          <EditorContextProvider>{children}</EditorContextProvider>
         </AuthContextProvider>
       </PopupContextProvider>
       <Toaster

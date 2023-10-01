@@ -14,9 +14,9 @@ export async function updateCategory(data) {
   return response;
 }
 export async function getAllCategories(data) {
-  const response = await axiosDefaults.post(
+  const response = await axiosDefaults.get(
     "api/v1/category/getAllCategories",
     data
   );
-  return response;
+  return response.data.categories;
 }

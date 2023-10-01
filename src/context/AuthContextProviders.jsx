@@ -2,6 +2,7 @@ import React from "react";
 import { auth } from "../firebase/auth";
 import { onAuthStateChanged } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
+import { getUserByEmail } from "../apis/user.api";
 
 export const AuthContext = createContext({});
 
@@ -28,6 +29,7 @@ function getCookie(cookieName) {
 const AuthContextProvider = ({ children }) => {
   // const [user, setUser] = useState(auth.currentUser || null);
   const [user, setUser] = useState(getCookie("user"));
+  const [userId, setUserId] = useState(getCookie("userId"));
 
   const [authloading, setAuthLoading] = useState(true);
 
@@ -43,9 +45,16 @@ const AuthContextProvider = ({ children }) => {
       }
       setAuthLoading(false);
     });
-
+    getUserid();
     return () => unsubscribe();
   }, [user, authloading]);
+
+  const getUserid = async () => {
+    // console.log();
+    const _id = await getUserByEmail(auth.currentUser.email);
+    setCookie("userId", _id, 7);
+    setUserId(_id);
+  };
 
   return (
     <AuthContext.Provider value={{ user, authloading }}>
