@@ -6,9 +6,11 @@ import { getData } from "../api";
 import { usePopupContext } from "../context/PopupContextProvider";
 import LanguagePopup from "../components/Popups/LanguagePopup";
 import { RxCross2 } from "react-icons/rx";
+import { useNavigate } from "react-router";
 
 const Editor = () => {
   const [viewers, setViewers] = useState(0)
+  const navigate = useNavigate()
   const { isOpen, popupContent, openPopup, closePopup } = usePopupContext()
   useEffect(() => {
     async function fetchData() {
@@ -34,7 +36,11 @@ const Editor = () => {
   }
   return (
     <div className="relative h-[100vh] py-[0px] px-[20px]">
-      <button className="bg-[#292929] p-[10px] my-[10px]" onClick={handleOpenPopup}>Create New</button>
+      <div className="flex items-center justify-between">
+        <h1>AnimHub</h1>
+        <button className="bg-[#292929] p-[10px] my-[10px]" onClick={handleOpenPopup}>Create New</button>
+        <button className="bg-[#292929] p-[10px] my-[10px]" onClick={() => navigate("/dashboard")}><img src="" />Dashboard</button>
+      </div>
       <CodeEditor />
       {/* {"Currrent Online Members: " + viewers} */}
     </div>
