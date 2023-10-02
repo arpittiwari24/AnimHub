@@ -12,21 +12,27 @@ import { navLinks, subNavLinks } from "./constants";
 import PromoStrip from "./PromoStrip";
 import LanguagePopup from "../Popups/LanguagePopup";
 import { usePopupContext } from "../../context/PopupContextProvider";
+import { auth } from "../../firebase/auth";
+import { useAuthContext } from "../../context/AuthContextProviders";
+import { toast } from "react-hot-toast";
 
 const Navbar = () => {
   const [isLeftSidebarOpen, setIsLeftSidebarOpen] = useState(false);
   const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(false);
-  const { isOpen, popupContent, openPopup, closePopup } = usePopupContext()
+  const { user } = useAuthContext();
+  const { isOpen, popupContent, openPopup, closePopup } = usePopupContext();
   const handleOpenPopup = () => {
-    const content = (
+    const content = user ? (
       <div className="fixed flex justify-center items-center top-0 left-0 h-screen w-screen bg-[#00000070] z-20 p-6">
         <div className="relative flex justify-center items-center bg-[#151515]  h-auto w-auto flex-col gap-4 rounded-md">
-          <LanguagePopup  closePopup={closePopup} />
+          <LanguagePopup closePopup={closePopup} />
         </div>
       </div>
-    )
-    openPopup(content)
-  }
+    ) : (
+      toast.error("Login First")
+    );
+    openPopup(content);
+  };
 
   return (
     <>
@@ -62,7 +68,10 @@ const Navbar = () => {
                 />
               </div>
               <button className="null">
-                <BsPlusCircleFill className="text-[#c6c6c6] text-3xl" onClick={handleOpenPopup} />
+                <BsPlusCircleFill
+                  className="text-[#c6c6c6] text-3xl"
+                  onClick={handleOpenPopup}
+                />
               </button>
               <button className="">
                 <PiYoutubeLogoFill className="text-[#c4302b] text-4xl" />

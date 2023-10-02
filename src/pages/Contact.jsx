@@ -6,6 +6,7 @@ import { AiFillLinkedin } from "react-icons/ai";
 import { BsYoutube } from "react-icons/bs";
 
 import { toast } from "react-hot-toast";
+import { createContactForm } from "../apis/contact.api";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -28,6 +29,12 @@ const Contact = () => {
     const toastId = toast.loading("sending");
     console.log(formData);
     //make a post request with formData
+    const createdContact = await createContactForm(formData);
+    if (createdContact.error) {
+      toast.dismiss(toastId);
+      toast.error(createdContact.error.message);
+      return;
+    }
     setTimeout(() => {
       toast.dismiss(toastId);
       toast.success("Message sent successfully");

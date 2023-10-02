@@ -2,6 +2,7 @@ import React from "react";
 import { auth } from "../firebase/auth";
 import { onAuthStateChanged } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
+import { getUserByEmail } from "../apis/user.api";
 
 export const AuthContext = createContext({});
 
@@ -43,7 +44,7 @@ const AuthContextProvider = ({ children }) => {
       }
       setAuthLoading(false);
     });
-
+    // getUserid();
     return () => unsubscribe();
   }, [user, authloading]);
 
