@@ -9,12 +9,16 @@ import { RxCross2 } from "react-icons/rx";
 import { useNavigate } from "react-router";
 import { EditorContext } from "../context/EditorContextProvider";
 import { createComponent } from "../apis/components.api";
+import { useAuthContext } from "../context/AuthContextProviders";
+import { auth } from "../firebase/auth";
 
 const Editor = () => {
   const [viewers, setViewers] = useState(0);
   const navigate = useNavigate();
   const { isOpen, popupContent, openPopup, closePopup } = usePopupContext();
   const { code, langCategory } = useContext(EditorContext);
+  const email = auth.currentUser.email;
+  console.log(email);
   useEffect(() => {
     async function fetchData() {
       const resData = await getData("/api/v1/data/viewersData");
@@ -38,7 +42,8 @@ const Editor = () => {
     openPopup(content);
   };
   const handleSave = async () => {
-    await createComponent({ code, langCategory });
+    console.log("callling");
+    await createComponent({ code, langCategory, email });
   };
 
   return (
@@ -53,7 +58,7 @@ const Editor = () => {
         </button>
         <button
           className="bg-[#292929] p-[10px] my-[10px]"
-          onClick={handleSave}
+          onClick={() => handleSave()}
         >
           Save
         </button>

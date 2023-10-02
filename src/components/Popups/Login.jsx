@@ -62,8 +62,8 @@ const Login = ({ closePopup }) => {
         name: user.displayName,
         email: user.email,
       };
-      console.log(Date.now() - user.metadata.createdAt);
-      if (Date.now() - user.metadata.createdAt <= 5000) {
+      console.log("timddifference", Date.now() - user.metadata.createdAt);
+      if (Date.now() - user.metadata.createdAt <= 50000) {
         closePopup();
         toast.success("SignUp Successfull");
         navigate("/onboarding");
