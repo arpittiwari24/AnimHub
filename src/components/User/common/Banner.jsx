@@ -1,7 +1,8 @@
 import React from "react";
 import dummyImage from "../../../assets/dummyImage.jpg";
 
-const Banner = () => {
+const Banner = ({userInfo}) => {
+  console.log(userInfo);
   return (
     <>
       <div
@@ -15,7 +16,7 @@ const Banner = () => {
           <div className="w-40 h-40">
             <img className="w-full h-full" src={dummyImage} alt="user_image" />
           </div>
-          <h1 className="text-2xl font-extrabold">Name is name</h1>
+          <h1 className="text-2xl font-extrabold">{userInfo.name}</h1>
         </div>
         <div className="flex justify-center items-center gap-2">
           <div className="flex justify-center items-center flex-col ">

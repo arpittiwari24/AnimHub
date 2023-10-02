@@ -51,7 +51,7 @@ const LanguagePopup = ({ closePopup }) => {
             className={`px-5 py-2 mx-5 my-2.5  rounded-md font-[600]
                         ${
                           langCategory.category !== category.name &&
-                          "hover:bg-primary hover:bg-secondary hover:border-primary"
+                          "hover:bg-secondary hover:border-primary"
                         }
                         ${
                           langCategory.category !== category.name &&
@@ -81,7 +81,7 @@ const LanguagePopup = ({ closePopup }) => {
             className={`px-5 py-2 mx-5 my-2.5  rounded-md font-[600]
             ${
               langCategory.language !== language &&
-              "hover:bg-primary hover:bg-secondary hover:border-primary"
+              "hover:bg-secondary hover:border-primary"
             }
             ${langCategory.language !== language && "border border-[#888]"}
             ${
