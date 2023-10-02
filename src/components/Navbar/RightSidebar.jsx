@@ -36,7 +36,7 @@ const RightSidebar = ({ isRightSidebarOpen, setIsRightSidebarOpen }) => {
   const userAuth = useContext(AuthContext);
   useEffect(() => {
     setAuth(userAuth.user ? true : false);
-    console.log(userAuth.user, "\nAUth in Login", auth1);
+    // console.log(userAuth.user, "\nAUth in Login", auth1);
   }, [userAuth]);
   const dropdownRef = useRef(null);
 

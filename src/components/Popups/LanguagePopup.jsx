@@ -13,29 +13,25 @@ const languages = [
 ];
 
 const LanguagePopup = ({ closePopup }) => {
-  const { langCategory, setLangCategory } = useContext(EditorContext);
-  console.log("contexr", langCategory);
+  const { data, setData } = useContext(EditorContext);
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const handleSubmit = () => {
-    if (langCategory.language === "" || langCategory.category === "") {
+    if (data.language === "" || data.category === "") {
       toast.error("Please select both category and language");
       return;
     }
 
     closePopup();
-    console.log("context", langCategory);
     navigate("/editor");
   };
 
   const getCategories = async () => {
     const categories = await getAllCategories();
     setCategories(categories);
-    console.log(categories);
   };
   useEffect(() => {
     getCategories();
-    console.log(langCategory);
   }, []);
 
   return (
@@ -50,20 +46,20 @@ const LanguagePopup = ({ closePopup }) => {
             key={idx}
             className={`px-5 py-2 mx-5 my-2.5  rounded-md font-[600]
                         ${
-                          langCategory.category !== category.name &&
+                          data.category !== category.name &&
                           "hover:bg-primary hover:bg-secondary hover:border-primary"
                         }
                         ${
-                          langCategory.category !== category.name &&
+                          data.category !== category.name &&
                           "border border-[#888]"
                         }
                         ${
-                          langCategory.category === category.name &&
+                          data.category === category.name &&
                           "bg-primary text-[#000] border-primary"
                         }
           `}
             onClick={() =>
-              setLangCategory((prev) => ({ ...prev, category: category.name }))
+              setData((prev) => ({ ...prev, category: category.name }))
             }
           >
             {category.name.toUpperCase()}
@@ -76,16 +72,19 @@ const LanguagePopup = ({ closePopup }) => {
           <button
             key={idx}
             onClick={() =>
-              setLangCategory((prev) => ({ ...prev, language: language }))
+              setData((prev) => ({ ...prev, language: language.split("+") }))
             }
             className={`px-5 py-2 mx-5 my-2.5  rounded-md font-[600]
             ${
-              langCategory.language !== language &&
+              data.language.includes(language) !== language &&
               "hover:bg-primary hover:bg-secondary hover:border-primary"
             }
-            ${langCategory.language !== language && "border border-[#888]"}
             ${
-              langCategory.language === language &&
+              data.language.includes(language) !== language &&
+              "border border-[#888]"
+            }
+            ${
+              data.language.includes(language) === language &&
               "bg-primary text-secondary border-primary"
             }
 `}

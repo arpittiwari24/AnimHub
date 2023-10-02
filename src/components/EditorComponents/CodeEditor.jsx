@@ -10,20 +10,30 @@ import { EditorContext } from "../../context/EditorContextProvider";
 import { BiLogoTailwindCss } from "react-icons/bi";
 import { BiReset } from "react-icons/bi";
 import toast from "react-hot-toast";
-import { set } from "mongoose";
-
-const themeArray = ["vs-dark", "vs-light", "hc-black", "hc-light"];
+import {
+  editorThemes,
+  cssTemplate,
+  htmlTemplate,
+  jsTemplate,
+  tailwindConfigTemplate,
+  tailwindCssTemplate,
+} from "./constants";
 
 const CodeEditor = () => {
-  const initialValues = {
-    html: "<h1> Hello World</h1>",
-    css: "*{\n margin: 0;\n padding: 0;\n background-color: #151515;\n color: #fff;\n}",
-    js: "// Write your code here...",
-    tailwind: "@tailwind base;\n@tailwind components;\n@tailwind utilities;",
-  };
-  const { langCategory } = useContext(EditorContext);
-  const languages = langCategory.language.split("+");
-  const { code, setCode } = useContext(EditorContext);
+  const initialValues = [
+    { html: htmlTemplate },
+    { css: cssTemplate },
+    { js: jsTemplate },
+    { tailwind: tailwindCssTemplate },
+    { tailwindConfig: tailwindConfigTemplate },
+  ];
+
+  const { data, setData } = useContext(EditorContext);
+
+  useEffect(() => {
+    setData(initialValues);
+  });
+  // setData(initialValues);
   const [documentContents, setDocumentContents] = useState("");
   const [theme, setTheme] = useState("vs-dark");
   const [activeFile, setActiveFile] = useState("HTML");
@@ -44,7 +54,7 @@ const CodeEditor = () => {
           HTML
         </p>
       ),
-      language: "html",
+      language: "HTML",
       value: "<h1>Hello World</h1>",
     },
     CSS: {
@@ -54,7 +64,7 @@ const CodeEditor = () => {
           CSS
         </p>
       ),
-      language: "css",
+      language: "CSS",
       value:
         "*{\n margin: 0;\n padding: 0;\n background-color: #151515;\n color: #fff;\n}",
     },
@@ -65,7 +75,7 @@ const CodeEditor = () => {
           JS
         </p>
       ),
-      language: "javascript",
+      language: "JavaScript",
       value: "// Write your code here...",
     },
     Tailwind: {
@@ -100,30 +110,32 @@ const CodeEditor = () => {
     const documentContents = `
         <html>
         <head>
-        <style>${languages.includes("CSS") && css}</style>
+        <style>${data.language.includes("CSS") && data.code[1].css}</style>
         ${
-          languages.includes("Tailwind")
+          data.language.includes("Tailwind")
             ? `<script src="https://cdn.tailwindcss.com"></script>`
             : ``
         }
         </head>
         <body>
-        ${html}
-        <script>${js}</script>
+        ${data.code[0].html}
+        <script>${data.code[2].js}</script>
         
         </body>
         </html>
         `;
     setDocumentContents(documentContents);
-    setCode({
-      ...code,
-      html: html,
-      css: css,
-      javascript: js,
-      tailwind: tailwind,
-    });
-    console.log(code);
-  }, [html, css, js, tailwind]);
+    // setData({
+    //   ...data,
+    //   code: {
+    //     html: code.html,
+    //     css: code.css,
+    //     javascript: code.js,
+    //     tailwind: code.tailwind,
+    //   },
+    // });
+    // console.log(code);
+  }, [data]);
 
   const handleReset = () => {
     // setHtml(files["HTML"].value)
@@ -168,7 +180,7 @@ const CodeEditor = () => {
     <div className="w-full h-full flex items-center justify-center gap-[15px]">
       <div className="flex flex-col w-1/2 h-full gap-[5px]">
         <div className="flex flex-row  bg-[#292929] justify-start items-center">
-          {languages.map((fileLang, idx) => {
+          {data.language.map((fileLang, idx) => {
             return (
               <button
                 key={idx}
@@ -189,10 +201,10 @@ const CodeEditor = () => {
             className="ml-auto mr-[30px] px-[10px] h-[90%]"
             onChange={(e) => setTheme(e.target.value)}
           >
-            {themeArray.map((themeName, idx) => {
+            {editorThemes.map((themeName, idx) => {
               return (
-                <option key={idx} value={themeName}>
-                  {themeName}
+                <option key={idx} value={themeName.theme}>
+                  {themeName.name}
                 </option>
               );
             })}
@@ -217,15 +229,16 @@ const CodeEditor = () => {
           onChange={handlChange}
           defaultValue={files[activeFile].value || "// write your code here..."}
           // value={files[activeFile].value}
+          height={"100vh"}
           value={
             activeFile === "HTML"
-              ? html
+              ? data.code[0].html
               : activeFile === "CSS"
-              ? css
+              ? data.code[1].css
               : activeFile === "JS"
-              ? js
+              ? data.code[2].js
               : activeFile === "Tailwind"
-              ? tailwind
+              ? data.code[3].tailwind
               : ""
           }
           onMount={(editor, _) => {

@@ -1,78 +1,51 @@
-import React, { useState, useEffect, useContext } from "react";
-import CodeEditor from "../components/Editor/CodeEditor";
-// import CodeOutput from "../components/common/CodeOutput";
-import ReactGA from "react-ga4";
-import { getData } from "../api";
-import { usePopupContext } from "../context/PopupContextProvider";
-import LanguagePopup from "../components/Popups/LanguagePopup";
-import { RxCross2 } from "react-icons/rx";
-import { useNavigate } from "react-router";
+import React, { useContext, useEffect } from "react";
 import { EditorContext } from "../context/EditorContextProvider";
-import { createComponent } from "../apis/components.api";
-import { useAuthContext } from "../context/AuthContextProviders";
-import { auth } from "../firebase/auth";
+import { DarkLogo } from ".././assets/logos/Logo";
+import { Link } from "react-router-dom";
+import { Button } from "../components/common";
+import dummyImage from "../assets/dummyImage.jpg";
+import CodeEditor from "../components/EditorComponents/CodeEditor";
+import CodeOutput from "../components/EditorComponents/CodeOutput";
+import ComponentInfo from "../components/EditorComponents/ComponentInfo";
 
 const Editor = () => {
-  const [viewers, setViewers] = useState(0);
-  const navigate = useNavigate();
-  const { isOpen, popupContent, openPopup, closePopup } = usePopupContext();
-  const { code, langCategory } = useContext(EditorContext);
-  const email = auth.currentUser.email;
-  console.log(email);
-  useEffect(() => {
-    async function fetchData() {
-      const resData = await getData("/api/v1/data/viewersData");
-      console.log(resData.data[0].metricValues[0].value);
-      setViewers(resData.data[0].metricValues[0].value);
-    }
-    // fetchData()
-    ReactGA.send({
-      hitType: "pageview",
-      page: window.location.pathname,
-    });
-  }, []);
-  const handleOpenPopup = () => {
-    const content = (
-      <div className="fixed flex justify-center items-center top-0 left-0 h-screen w-screen bg-[#00000070] z-20 p-6">
-        <div className="relative flex justify-center items-center bg-[#151515]  h-auto w-auto flex-col gap-4 rounded-md">
-          <LanguagePopup closePopup={closePopup} />
-        </div>
-      </div>
-    );
-    openPopup(content);
+  const { data, setData } = useContext(EditorContext);
+  const handleCreate = () => {
+    // TODO: handleCreate
   };
-  const handleSave = async () => {
-    console.log("callling");
-    await createComponent({ code, langCategory, email });
+  const handleUpdate = () => {
+    // TODO: handleUpdate
   };
 
+  useEffect(() => {
+    console.log(data);
+  });
   return (
-    <div className="relative h-[100vh] py-[0px] px-[20px]">
-      <div className="flex items-center justify-between">
-        <h1>AnimHub</h1>
-        <button
-          className="bg-[#292929] p-[10px] my-[10px]"
-          onClick={handleOpenPopup}
-        >
-          Create New
-        </button>
-        <button
-          className="bg-[#292929] p-[10px] my-[10px]"
-          onClick={() => handleSave()}
-        >
-          Save
-        </button>
-        <button
-          className="bg-[#292929] p-[10px] my-[10px]"
-          onClick={() => navigate("/dashboard")}
-        >
-          <img src="" />
-          Dashboard
-        </button>
+    <>
+      <div className="relative h-[100vh] py-2 px-12">
+        <div className="flex items-center justify-between">
+          <DarkLogo width="120px" />
+          <div className="flex items-center justify-between gap-2">
+            <Button label="Create" onClick={handleCreate} />
+            <Button label="Update" onClick={handleUpdate} />
+          </div>
+          <Link className="w-12 h-12" to="/dashboard">
+            <img
+              src={dummyImage}
+              className="w-full h-full rounded-full"
+              alt=""
+            />
+          </Link>
+        </div>
+        <div className="w-full flex justify-between items-center">
+          <CodeEditor category={data.category} language={data.language} />
+          <div className="flex flex-col justify-center items-center">
+            <CodeOutput />
+            <ComponentInfo />
+          </div>
+        </div>
       </div>
-      <CodeEditor />
-      {/* {"Currrent Online Members: " + viewers} */}
-    </div>
+    </>
   );
 };
 

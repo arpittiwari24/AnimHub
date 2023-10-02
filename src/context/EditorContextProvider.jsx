@@ -3,21 +3,16 @@ import React, { useState, createContext } from "react";
 export const EditorContext = createContext({});
 
 const EditorContextProvider = ({ children }) => {
-  const [langCategory, setLangCategory] = useState({
+  const [data, setData] = useState({
+    email: "",
+    code: [],
+    language: [],
     category: "",
-    language: "",
-  });
-  const [code, setCode] = useState({
-    html: "",
-    css: "",
-    javascript: "",
-    tailwind: "",
+    tags: [],
   });
 
   return (
-    <EditorContext.Provider
-      value={{ langCategory, setLangCategory, code, setCode }}
-    >
+    <EditorContext.Provider value={{ data, setData }}>
       {children}
     </EditorContext.Provider>
   );
