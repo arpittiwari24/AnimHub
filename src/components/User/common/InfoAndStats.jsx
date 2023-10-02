@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ComponentChart from "./ComponentChart";
 import {
   FaTwitterSquare,
@@ -8,46 +8,99 @@ import {
 } from "react-icons/fa";
 
 const InfoAndStats = () => {
+  const [activeTab, setActiveTab] = useState("home");
+  const openSharePopup = () => {
+    const url = window.location.href;
+    const text = "Check out this awesome profile on AnimHub";
+    const twitterUrl = `https://twitter.com/share?url=${url}&text=${text}`;
+    window.open(twitterUrl, "_blank");
+  }
   return (
     <>
       <div className="w-full flex flex-col items-center justify-center">
         <div className="w-full flex items-center justify-between py-2 ">
           <ul className="flex justify-center items-center gap-2">
-            <li className="flex justify-center items-center">Home</li>
-            <li className="flex justify-center items-center">Stats</li>
-            <li className="flex justify-center items-center">Anything Else</li>
+            <li
+              className={`p-[10px] flex justify-center items-center cursor-pointer font-[600] ${activeTab === "home" ? "border-b-4 border-primary" : ""}`}
+              onClick={() => setActiveTab("home")}
+            >
+              Home
+            </li>
+            <li
+              className={`p-[10px] flex justify-center items-center cursor-pointer font-[600] ${activeTab === "stats" ? "border-b-4 border-primary" : ""}`}
+              onClick={() => setActiveTab("stats")}
+            >
+              Stats
+            </li>
+            <li
+              className={`p-[10px] flex justify-center items-center cursor-pointer font-[600] ${activeTab === "else" ? "border-b-4 border-primary" : ""}`}
+              onClick={() => setActiveTab("else")}
+            >
+              Anything Else
+            </li>
           </ul>
           <ul className="flex justify-center items-center gap-2">
-            <li className="flex justify-center items-center">idk</li>
-            <li className="flex justify-center items-center">Share</li>
-            <li className="flex justify-center items-center">Follow</li>
+            {/* <li className="flex justify-center items-center">idk</li> */}
+            <li className="flex justify-center items-center">
+              <button
+                className="bg-secondary border border-6 py-[10px] px-[20px] m-[0px] rounded-[5px] font-[600]"
+                onClick={openSharePopup}
+              >
+                Share
+              </button>
+            </li>
+            <li className="flex justify-center items-center">
+              <button
+                className="bg-secondary border border-6 py-[10px] px-[20px] m-[0px] rounded-[5px] font-[600]"
+              >
+                Follow
+              </button>
+            </li>
           </ul>
         </div>
         <div className="w-full flex items-start justify-between px-6">
-          <div className="w-full flex flex-col items-start justify-center">
-            <h2 className="">About Om Gawande</h2>
-            <p className="">
+          {activeTab === "home" &&
+            <div className="w-full flex flex-col items-start justify-center">
+            <h2 className="font-[700] mt-5 text-[20px]">About Om Gawande</h2>
+            <p className="font-[400] my-2 text-opacity-50">
               My bio My bio My bio My bio My bio My bio My bio My bio
             </p>
           </div>
+          }
+          {activeTab === "stats" &&
+            <div className="w-full flex flex-col items-start justify-center">
+            <h2 className="font-[700] mt-5 text-[20px]">This is Stats Component</h2>
+            <p className="font-[400] my-2 text-opacity-50">
+              {/* My bio My bio My bio My bio My bio My bio My bio My bio */}
+            </p>
+          </div>
+          }
+          {activeTab === "else" &&
+            <div className="w-full flex flex-col items-start justify-center">
+            <h2 className="font-[700] mt-5 text-[20px]">This is Something else</h2>
+            <p className="font-[400] my-2 text-opacity-50">
+              {/* My bio My bio My bio My bio My bio My bio My bio My bio */}
+            </p>
+          </div>
+          }
 
           <div className="flex justify-center items-start">
-            <ul className="flex flex-col justify-center items-start">
-              <li className="flex justify-center items-center">
+            <ul className="flex flex-col justify-center items-start mx-20 gap-[20px]">
+              <li className="flex justify-center items-center gap-[10px]">
                 <FaTwitterSquare />
-                <a href="">@abcded</a>
+                <a href="" className="text-opacity-100">Twitter</a>
               </li>
-              <li className="flex justify-center items-center">
+              <li className="flex justify-center items-center gap-[10px]">
                 <FaInstagramSquare />
-                <a href="">@abcde</a>
+                <a href="" className="text-opacity-60">Instagram</a>
               </li>
-              <li className="flex justify-center items-center">
+              <li className="flex justify-center items-center gap-[10px]">
                 <FaLinkedin />
-                <a href="">@abcde</a>
+                <a href="" className="text-opacity-60">LinkedIn</a>
               </li>
-              <li className="flex justify-center items-center">
+              <li className="flex justify-center items-center gap-[10px]">
                 <FaGithubSquare />
-                <a href="">@abcde</a>
+                <a href="" className="text-opacity-60">Github</a>
               </li>
             </ul>
             <div>
