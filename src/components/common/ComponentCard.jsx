@@ -15,7 +15,7 @@ const ComponentCard = ({
   const [abbreviatedLikesCount, setAbbreviatedLikesCount] = useState("");
   const [abbreviatedViewsCount, setAbbreviatedViewsCount] = useState("");
   // const { languages } = data;
-  const { html, css, js, tailwind } = data?.code;
+  // const { html, css, js, tailwind } = data?.code;
   useEffect(() => {
     // Set the abbreviated count using the utility function
     setAbbreviatedLikesCount(abbreviateNumber(like));
@@ -63,23 +63,23 @@ const ComponentCard = ({
     openPopup(content);
   };
 
-  const srcCode = `
-  <html>
-  <head>
-  <style>${languages.includes("CSS") && css}</style>
-  ${
-    languages.includes("Tailwind")
-      ? `<script src="https://cdn.tailwindcss.com"></script>`
-      : ``
-  }
-  </head>
-  <body>
-  ${html}
-  <script>${js}</script>
+  // const srcCode = `
+  // <html>
+  // <head>
+  // <style>${languages.includes("CSS") && css}</style>
+  // ${
+  //   languages.includes("Tailwind")
+  //     ? `<script src="https://cdn.tailwindcss.com"></script>`
+  //     : ``
+  // }
+  // </head>
+  // <body>
+  // ${html}
+  // <script>${js}</script>
   
-  </body>
-  </html>
-  `;
+  // </body>
+  // </html>
+  // `;
 
   return (
     <>
@@ -95,7 +95,7 @@ const ComponentCard = ({
             background: "black",
           }}
           title="empty-blueprint-forked-2qj2p"
-          srcDoc={srcCode}
+          // srcDoc={srcCode}
         ></iframe>
         <div className="w-full flex justify-between items-center mt-[2px]">
           <a
