@@ -10,10 +10,12 @@ import {
 const InfoAndStats = () => {
   const [activeTab, setActiveTab] = useState("home");
   const openSharePopup = () => {
+    // const url = window.location.href;
+    // const text = "Check out this awesome profile on AnimHub";
+    // const twitterUrl = `https://twitter.com/share?url=${url}&text=${text}`;
+    // window.open(twitterUrl, "_blank");
+
     const url = window.location.href;
-    const text = "Check out this awesome profile on AnimHub";
-    const twitterUrl = `https://twitter.com/share?url=${url}&text=${text}`;
-    window.open(twitterUrl, "_blank");
   }
   return (
     <>

@@ -1,8 +1,10 @@
 import React from "react";
 import { AiFillInfoCircle } from "react-icons/ai";
-import UserInfo from "./UserInfo";
 import { FaRegCalendarCheck } from "react-icons/fa";
 const tags = ["button", "cool", "neon"];
+import { AiFillGithub } from 'react-icons/ai'
+import dummyProfileImg from '../../assets/dummyImage.jpg'
+
 
 const ComponentInfo = () => {
   return (
@@ -14,7 +16,18 @@ const ComponentInfo = () => {
         />
       </div>
       <div className="flex flex-col flex-grow gap-[20px] items-center p-[40px] bg-[#151515]">
-        <UserInfo />
+        <div className='w-full flex border-[#f00] gap-[20px] items-center'>
+          <div className='rounded-full w-[50px]'>
+            <img src={dummyProfileImg} alt='ProfileImg' className='w-full rounded-full' />
+          </div>
+          <div className='flex-grow'>
+            <h1 className='font-[600] text-[20px]'>Om Gawande</h1>
+            <a href='#' className='font-[400] text-[14px] text-[#FFA31A]'>
+              <h2>@spider.dev</h2>
+            </a>
+          </div>
+          <AiFillGithub className='w-auto scale-150 hover:cursor-pointer' onClick={() => window.open("https://www.github.com/onkar58", "_blank")} />
+        </div>
         <hr className="w-[90%] border border-[#555]" />
         <div className="w-full flex justify-between items-center gap-[10px]">
           <h1 className="text-[25px] font-[700] leading-none">
