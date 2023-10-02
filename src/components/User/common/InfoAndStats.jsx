@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ComponentChart from "./ComponentChart";
 import {
   FaTwitterSquare,
@@ -9,9 +9,9 @@ import {
 import { usePopupContext } from "../../../context/PopupContextProvider";
 import { SharePopup } from "../../Popups";
 
-const InfoAndStats = ({userInfo}) => {
-  console.log("fbdjfdf",userInfo);
-  const [info,setInfo]= useState(userInfo)
+const InfoAndStats = ({ userInfo }) => {
+  console.log("fbdjfdf", userInfo);
+  const [info, setInfo] = useState(userInfo);
   const [activeTab, setActiveTab] = useState("home");
   const { isOpen, popupContent, openPopup, closePopup } = usePopupContext();
   const openSharePopup = () => {
@@ -21,28 +21,39 @@ const InfoAndStats = ({userInfo}) => {
           <SharePopup closePopup={closePopup} />
         </div>
       </div>
-    )
+    );
     openPopup(content);
-  }
+  };
+  
+  useEffect(() => {
+    setInfo(userInfo);
+  }, [info, userInfo]);
+
   return (
     <>
       <div className="w-full flex flex-col items-center justify-center">
         <div className="w-full flex items-center justify-between py-2 ">
           <ul className="flex justify-center items-center gap-2">
             <li
-              className={`p-[10px] flex justify-center items-center cursor-pointer font-[600] ${activeTab === "home" ? "border-b-4 border-primary" : ""}`}
+              className={`p-[10px] flex justify-center items-center cursor-pointer font-[600] ${
+                activeTab === "home" ? "border-b-4 border-primary" : ""
+              }`}
               onClick={() => setActiveTab("home")}
             >
               Home
             </li>
             <li
-              className={`p-[10px] flex justify-center items-center cursor-pointer font-[600] ${activeTab === "stats" ? "border-b-4 border-primary" : ""}`}
+              className={`p-[10px] flex justify-center items-center cursor-pointer font-[600] ${
+                activeTab === "stats" ? "border-b-4 border-primary" : ""
+              }`}
               onClick={() => setActiveTab("stats")}
             >
               Stats
             </li>
             <li
-              className={`p-[10px] flex justify-center items-center cursor-pointer font-[600] ${activeTab === "else" ? "border-b-4 border-primary" : ""}`}
+              className={`p-[10px] flex justify-center items-center cursor-pointer font-[600] ${
+                activeTab === "else" ? "border-b-4 border-primary" : ""
+              }`}
               onClick={() => setActiveTab("else")}
             >
               Anything Else
@@ -68,30 +79,34 @@ const InfoAndStats = ({userInfo}) => {
           </ul>
         </div>
         <div className="w-full flex items-start justify-between px-6">
-          {activeTab === "home" &&
+          {activeTab === "home" && (
             <div className="w-full flex flex-col items-start justify-center">
-              <h2 className="font-[700] mt-5 text-[20px]">About {userInfo?.name}</h2>
-              <p className="font-[400] my-2 text-opacity-50">
-                {userInfo?.bio}
-              </p>
+              <h2 className="font-[700] mt-5 text-[20px]">
+                About {userInfo?.name}
+              </h2>
+              <p className="font-[400] my-2 text-opacity-50">{userInfo?.bio}</p>
             </div>
-          }
-          {activeTab === "stats" &&
+          )}
+          {activeTab === "stats" && (
             <div className="w-full flex flex-col items-start justify-center">
-              <h2 className="font-[700] mt-5 text-[20px]">This is Stats Component</h2>
-              <p className="font-[400] my-2 text-opacity-50">
-                {/* My bio My bio My bio My bio My bio My bio My bio My bio */}
-              </p>
-            </div>
-          }
-          {activeTab === "else" &&
-            <div className="w-full flex flex-col items-start justify-center">
-              <h2 className="font-[700] mt-5 text-[20px]">This is Something else</h2>
+              <h2 className="font-[700] mt-5 text-[20px]">
+                This is Stats Component
+              </h2>
               <p className="font-[400] my-2 text-opacity-50">
                 {/* My bio My bio My bio My bio My bio My bio My bio My bio */}
               </p>
             </div>
-          }
+          )}
+          {activeTab === "else" && (
+            <div className="w-full flex flex-col items-start justify-center">
+              <h2 className="font-[700] mt-5 text-[20px]">
+                This is Something else
+              </h2>
+              <p className="font-[400] my-2 text-opacity-50">
+                {/* My bio My bio My bio My bio My bio My bio My bio My bio */}
+              </p>
+            </div>
+          )}
 
           <div className="flex justify-center items-start">
             <ul className="flex flex-col justify-center items-start mx-20 gap-[20px]">
@@ -99,15 +114,14 @@ const InfoAndStats = ({userInfo}) => {
                 <FaTwitterSquare />
                 <a href={userInfo.socialLinks[]} className="text-opacity-100">Twitter</a>
               </li> */}
-              {/* {info.socialLinks.map((link,idx)=>{
+              {info.socialLinks &&
+                info.socialLinks.map((link, idx) => {
                   return (
-                    <li key={idx}>
+                    <li key={idx} className="text-white">
                       {link}
                     </li>
-                  )
-            
-              })} */}
-              
+                  );
+                })}
             </ul>
             <div>
               <ComponentChart />
