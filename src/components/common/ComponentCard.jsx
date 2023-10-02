@@ -76,7 +76,11 @@ const ComponentCard = ({
   // <body>
   // ${html}
   // <script>${js}</script>
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> 1bf1fc1226b4cc2773009231878643b0476a0aac
   // </body>
   // </html>
   // `;

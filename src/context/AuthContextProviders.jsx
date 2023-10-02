@@ -15,7 +15,7 @@ const setCookie = (name, value, days) => {
   document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
 };
 
-function getCookie(cookieName) {
+export function getCookie(cookieName) {
   const cookies = document.cookie.split(";");
   for (let i = 0; i < cookies.length; i++) {
     const cookie = cookies[i].trim();

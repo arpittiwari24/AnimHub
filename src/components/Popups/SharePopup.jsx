@@ -5,8 +5,9 @@ import { FaSquareXTwitter } from "react-icons/fa6";
 import { BsLinkedin } from "react-icons/bs";
 import { BsCheckLg } from "react-icons/bs";
 import { toast } from "react-hot-toast";
+import { RxCross1 } from "react-icons/rx";
 
-const SharePopup = () => {
+const SharePopup = ({closePopup}) => {
   const [copying, setCopying] = useState(false);
 
   const shareOnWhatsApp = () => {
@@ -44,7 +45,10 @@ const SharePopup = () => {
   };
 
   return (
-    <div className="w-[40vw]">
+    <div className=" relative w-[40vw]">
+      <button className="absolute top-2 right-2" onClick={closePopup}>
+        <RxCross1 className="text-3xl text-[#6a6a6a]" />
+      </button>
       <div className="w-full h-fit p-4 flex flex-col gap-6">
         {/* heading */}
         <div className="p-1 w-fit flex justify-center items-center tracking-wider">
