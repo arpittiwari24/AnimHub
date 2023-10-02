@@ -10,6 +10,7 @@ import { EditorContext } from "../../context/EditorContextProvider";
 import { BiLogoTailwindCss } from "react-icons/bi";
 import { BiReset } from "react-icons/bi";
 import toast from "react-hot-toast";
+import { set } from "mongoose";
 
 const themeArray = ["vs-dark", "vs-light", "hc-black", "hc-light"];
 
@@ -23,6 +24,7 @@ const CodeEditor = () => {
   const { langCategory } = useContext(EditorContext);
   const languages = langCategory.language.split("+");
   const { code, setCode } = useContext(EditorContext);
+  const [documentContents, setDocumentContents] = useState("");
   const [theme, setTheme] = useState("vs-dark");
   const [activeFile, setActiveFile] = useState("HTML");
   const [html, setHtml] = useState("<h1> Hello World</h1>");
@@ -112,7 +114,14 @@ const CodeEditor = () => {
         </body>
         </html>
         `;
-    setCode(documentContents);
+    setDocumentContents(documentContents);
+    setCode({
+      ...code,
+      html: html,
+      css: css,
+      javascript: js,
+      tailwind: tailwind,
+    });
     console.log(code);
   }, [html, css, js, tailwind]);
 
@@ -225,7 +234,7 @@ const CodeEditor = () => {
         />
       </div>
       <div className="flex flex-col w-1/2 h-full gap-[15px]">
-        <CodeOutput sourceCode={code} />
+        <CodeOutput sourceCode={documentContents} />
         <ComponentInfo />
       </div>
     </div>

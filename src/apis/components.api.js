@@ -1,37 +1,31 @@
 import { axiosDefaults } from "../api";
 export async function createComponent(data) {
-  const { code, langCategory } = data;
-  function getCookie(cookieName) {
-    const cookies = document.cookie.split(";");
-    for (let i = 0; i < cookies.length; i++) {
-      const cookie = cookies[i].trim();
-      if (cookie.startsWith(`${cookieName}=`)) {
-        return cookie.substring(cookieName.length + 1);
-      }
-    }
-    return null; // Return null if the cookie is not found
-  }
-  const userid = getCookie("userId");
+  const { code, langCategory, email } = data;
+  console.log(langCategory);
+  console.log("codecomponwnt apoi", code);
+  let language = langCategory.language.split("+");
+  console.log("dkjhbfadjh", language);
   const response = await axiosDefaults.post(
     "api/v1/component/createComponent",
     {
-      userid,
+      email,
       html: code.html,
       css: code.css,
       js: code.js,
       react: code.tailwind,
-      categoryId: langCategory.category,
+      category: langCategory.category,
+      language: language,
       // tags: [],
     }
   );
   return response;
 }
 export async function getAllComponents(data) {
-  const response = await axiosDefaults.post(
+  const response = await axiosDefaults.get(
     "api/v1/component/getAllComponents",
     data
   );
-  return response;
+  return response.data.componentArray;
 }
 export async function updateComponent(data) {
   const response = await axiosDefaults.post(
