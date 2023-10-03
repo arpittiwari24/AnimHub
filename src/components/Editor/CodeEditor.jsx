@@ -10,16 +10,22 @@ import { EditorContext } from "../../context/EditorContextProvider";
 import { BiLogoTailwindCss } from "react-icons/bi";
 import { BiReset } from "react-icons/bi";
 import toast from "react-hot-toast";
-import { set } from "mongoose";
+import {
+  editorThemes,
+  htmlTemplate,
+  cssTemplate,
+  jsTemplate,
+  tailwindCssTemplate,
+} from "./constants";
 
-const themeArray = ["vs-dark", "vs-light", "hc-black", "hc-light"];
+// const editorThemes = ["vs-dark", "vs-light", "hc-black", "hc-light"];
 
 const CodeEditor = () => {
   const initialValues = {
-    html: "<h1> Hello World</h1>",
-    css: "*{\n margin: 0;\n padding: 0;\n background-color: #151515;\n color: #fff;\n}",
-    js: "// Write your code here...",
-    tailwind: "@tailwind base;\n@tailwind components;\n@tailwind utilities;",
+    html: htmlTemplate,
+    css: cssTemplate,
+    js: jsTemplate,
+    tailwind: tailwindCssTemplate,
   };
   const { langCategory } = useContext(EditorContext);
   const languages = langCategory.language.split("+");
@@ -27,14 +33,10 @@ const CodeEditor = () => {
   const [documentContents, setDocumentContents] = useState("");
   const [theme, setTheme] = useState("vs-dark");
   const [activeFile, setActiveFile] = useState("HTML");
-  const [html, setHtml] = useState("<h1> Hello World</h1>");
-  const [css, setCss] = useState(
-    "*{\n margin: 0;\n padding: 0;\n background-color: #151515;\n color: #fff;\n}"
-  );
-  const [js, setJs] = useState("// Write your code here...");
-  const [tailwind, setTailwind] = useState(
-    "@tailwind base;\n@tailwind components;\n@tailwind utilities;"
-  );
+  const [html, setHtml] = useState(htmlTemplate);
+  const [css, setCss] = useState(cssTemplate);
+  const [js, setJs] = useState(jsTemplate);
+  const [tailwind, setTailwind] = useState(tailwindCssTemplate);
 
   const files = {
     HTML: {
@@ -45,7 +47,7 @@ const CodeEditor = () => {
         </p>
       ),
       language: "html",
-      value: "<h1>Hello World</h1>",
+      value: htmlTemplate,
     },
     CSS: {
       name: (
@@ -55,8 +57,7 @@ const CodeEditor = () => {
         </p>
       ),
       language: "css",
-      value:
-        "*{\n margin: 0;\n padding: 0;\n background-color: #151515;\n color: #fff;\n}",
+      value: cssTemplate,
     },
     JS: {
       name: (
@@ -66,7 +67,7 @@ const CodeEditor = () => {
         </p>
       ),
       language: "javascript",
-      value: "// Write your code here...",
+      value: jsTemplate,
     },
     Tailwind: {
       name: (
@@ -75,26 +76,11 @@ const CodeEditor = () => {
         </p>
       ),
       language: "css",
-      value: "@tailwind base;\n@tailwind components;\n@tailwind utilities;",
+      value: tailwindCssTemplate,
     },
   };
 
   const editorRef = useRef(null);
-
-  const handlChange = (event) => {
-    if (activeFile == "HTML") {
-      setHtml(editorRef.current.getValue());
-    }
-    if (activeFile == "CSS") {
-      setCss(editorRef.current.getValue());
-    }
-    if (activeFile == "JS") {
-      setJs(editorRef.current.getValue());
-    }
-    if (activeFile == "Tailwind") {
-      setTailwind(editorRef.current.getValue());
-    }
-  };
 
   useEffect(() => {
     const documentContents = `
@@ -124,6 +110,21 @@ const CodeEditor = () => {
     });
     console.log(code);
   }, [html, css, js, tailwind]);
+
+  const handlChange = (event) => {
+    if (activeFile == "HTML") {
+      setHtml(editorRef.current.getValue());
+    }
+    if (activeFile == "CSS") {
+      setCss(editorRef.current.getValue());
+    }
+    if (activeFile == "JS") {
+      setJs(editorRef.current.getValue());
+    }
+    if (activeFile == "Tailwind") {
+      setTailwind(editorRef.current.getValue());
+    }
+  };
 
   const handleReset = () => {
     // setHtml(files["HTML"].value)
@@ -189,10 +190,10 @@ const CodeEditor = () => {
             className="ml-auto mr-[30px] px-[10px] h-[90%]"
             onChange={(e) => setTheme(e.target.value)}
           >
-            {themeArray.map((themeName, idx) => {
+            {editorThemes.map((themeName, idx) => {
               return (
-                <option key={idx} value={themeName}>
-                  {themeName}
+                <option key={idx} value={themeName.theme}>
+                  {themeName.name}
                 </option>
               );
             })}
@@ -217,6 +218,15 @@ const CodeEditor = () => {
           onChange={handlChange}
           defaultValue={files[activeFile].value || "// write your code here..."}
           // value={files[activeFile].value}
+          options={{
+            minimap: {
+              enabled: false,
+            },
+            fontSize: 16,
+            automaticLayout: true,
+            fontWeight: 700,
+            // Add any additional editor options here
+          }}
           value={
             activeFile === "HTML"
               ? html

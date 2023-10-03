@@ -2,7 +2,7 @@ export { default as Home } from "./Home";
 export { default as About } from "./About";
 export { default as Dashboard } from "./Dashboard";
 export { default as AdminDashboard } from "./AdminDashboard";
-export { default as Editor } from "./Editor";
+export { default as EditorPage } from "./EditorPage";
 export { default as Explore } from "./Explore";
 export { default as Categories } from "./Categories";
 export { default as Policy } from "./Policy";

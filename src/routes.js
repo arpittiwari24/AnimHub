@@ -3,7 +3,6 @@ import {
   About,
   Dashboard,
   AdminDashboard,
-  Editor,
   Explore,
   Categories,
   Policy,
@@ -12,6 +11,7 @@ import {
   OnBoardingPage,
   Profile,
   Faq,
+  EditorPage,
 } from "./pages";
 import Launching from "./Launching/Launching";
 import { Confirm } from "./components/Popups";
@@ -48,7 +48,7 @@ export const routesData = [
   },
   {
     path: "/editor",
-    component: Editor,
+    component: EditorPage,
     authenticated: true,
   },
   {
