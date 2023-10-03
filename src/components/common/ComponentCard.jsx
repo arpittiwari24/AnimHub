@@ -7,56 +7,17 @@ import { usePopupContext } from "../../context/PopupContextProvider";
 import { RxCross2 } from "react-icons/rx";
 import { Link } from "react-router-dom";
 
-const ComponentCard = ({
-  username = "usernameusername",
-  like = 54325,
-  view = 123456,
-  data,
-}) => {
+const ComponentCard = ({ data, view = 123 }) => {
   const [abbreviatedLikesCount, setAbbreviatedLikesCount] = useState("");
   const [abbreviatedViewsCount, setAbbreviatedViewsCount] = useState("");
-
   // console.log(data);
-  // const { language } = data;
   const { css, html, js, tailwind } = data?.code[0] || {};
-  // const [documentContents, setDocumentContents] = useState("");
-  // const { languages } = data;
-  // const { html, css, js, tailwind } = data?.code;
-  // console.log(data?.code);
-  // useEffect(() => {
-  //   const documentContents = `
-  //       <html>
-  //       <head>
-  //       <style>${data?.language.includes("CSS") && data?.code[0]}</style>
-  //       ${
-  //         data?.language.includes("Tailwind")
-  //           ? `<script src="https://cdn.tailwindcss.com"></script>`
-  //           : ``
-  //       }
-  //       </head>
-  //       <body>
-  //       ${data?.code[1]}
-  //       <script>${data?.code[2]}</script>
-
-  //       </body>
-  //       </html>
-  //       `;
-  //   setDocumentContents(documentContents);
-  //   console.log(documentContents);
-  //   // setCode({
-  //   //   ...code,
-  //   //   html: html,
-  //   //   css: css,
-  //   //   javascript: js,
-  //   //   tailwind: tailwind,
-  //   // });
-  //   // console.log(code);
-  // }, [data?.code]);
+  const username = data?.userId?.username || "";
   useEffect(() => {
     // Set the abbreviated count using the utility function
     setAbbreviatedLikesCount(abbreviateNumber(+data?.likeCounter));
     setAbbreviatedViewsCount(abbreviateNumber(view));
-  }, [like, view]);
+  }, [data?.likeCounter, view]);
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const { isOpen, popupContent, openPopup, closePopup } = usePopupContext();
@@ -95,36 +56,25 @@ const ComponentCard = ({
         </div>
       </>
     );
-    console.log("clicked");
     openPopup(content);
   };
 
-  // const srcCode = `
-  // <html>
-  // <head>
-  // <style>${languages.includes("CSS") && css}</style>
-  // ${
-  //   languages.includes("Tailwind")
-  //     ? `<script src="https://cdn.tailwindcss.com"></script>`
-  //     : ``
-  // }
-  // </head>
-  // <body>
-  // ${html}
-  // <script>${js}</script>
-  // </body>
-  // </html>
-  // `;
-  // const MAX_LENGTH = 10;
-
-  // // Combine tags into a single string with commas
-  // const combinedTags = data?.tags.join(",");
-
-  // // Check if the combined length exceeds the maximum length
-  // const displayTags =
-  //   combinedTags.length <= MAX_LENGTH
-  //     ? combinedTags
-  //     : `${combinedTags.substring(0, MAX_LENGTH)}...`;
+  const srcCode = `
+  <html>
+    <head>
+      <style>${css}</style>
+      ${
+        data?.language.includes("Tailwind")
+          ? `<script src="https://cdn.tailwindcss.com"></script>`
+          : ``
+      }
+    </head>
+    <body>
+      ${html}
+      <script>${js}</script>
+    </body>
+  </html>
+  `;
 
   return (
     <>
@@ -140,33 +90,23 @@ const ComponentCard = ({
             background: "black",
           }}
           title="empty-blueprint-forked-2qj2p"
-          srcDoc={`
-            <html>
-              <head>
-                <style>${css}</style>
-                ${
-                  data?.language.includes("Tailwind")
-                    ? `<script src="https://cdn.tailwindcss.com"></script>`
-                    : ``
-                }
-              </head>
-              <body>
-                ${html}
-                <script>${js}</script>
-              </body>
-            </html>
-          `}
+          srcDoc={srcCode}
         ></iframe>
         <div className="w-full flex justify-between items-center mt-[2px]">
           <Link
-            to={`/profile/${username}`}
-            className={`text-white font-medium overflow-hidden ${
+            to={`/profile/${data?.userId?.username}`}
+            className={`text-white font-medium overflow-hidden flex justify-center items-center gap-2 ${
               username.length > 12
                 ? "whitespace-nowrap overflow-ellipsis max-w-[100px]"
                 : ""
             }`}
           >
-            {username}
+            <img
+              className="w-5 h-5 rounded-full border-primary  border-[1px]"
+              src={data?.userId?.profilePicUrl || data?.profilePicUrl}
+              alt=""
+            />
+            {data?.userId?.username}
           </Link>
           <div className="flex justify-center items-center gap-2">
             {/* <div className="flex justify-center text-md items-center gap-2">
