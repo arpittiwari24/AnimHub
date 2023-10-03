@@ -10,7 +10,7 @@ import { RxCross1 } from "react-icons/rx";
 const SharePopup = ({ closePopup, id }) => {
   const [copying, setCopying] = useState(false);
   // let url="https://www.animhub.dev/component/12345678910"
-  let url = "localhost:5173/component/12345678910";
+  let url = `${window.location.href}component/${id}`;
 
   const shareOnWhatsApp = () => {
     const url = encodeURIComponent(url); // Replace with your actual URL

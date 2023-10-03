@@ -15,8 +15,10 @@ const ComponentCard = ({
 }) => {
   const [abbreviatedLikesCount, setAbbreviatedLikesCount] = useState("");
   const [abbreviatedViewsCount, setAbbreviatedViewsCount] = useState("");
-  console.log(data);
-  const { css, html, js } = data?.code[0] || {};
+
+  // console.log(data);
+  // const { language } = data;
+  const { css, html, js, tailwind } = data?.code[0] || {};
   // const [documentContents, setDocumentContents] = useState("");
   // const { languages } = data;
   // const { html, css, js, tailwind } = data?.code;
@@ -85,7 +87,7 @@ const ComponentCard = ({
       <>
         <div className="fixed flex justify-center items-center top-0 left-0 h-screen w-screen bg-[#00000070] z-20 p-6">
           <div className="relative flex justify-center items-center bg-[#151515]  h-auto w-auto flex-col gap-4 rounded-md">
-            {<SharePopup id={data._id} />}
+            {<SharePopup id={data?._id} />}
             <button className="absolute top-2 right-2" onClick={closePopup}>
               <RxCross2 className="text-3xl text-[#6a6a6a]" />
             </button>
@@ -142,6 +144,11 @@ const ComponentCard = ({
             <html>
               <head>
                 <style>${css}</style>
+                ${
+                  data?.language.includes("Tailwind")
+                    ? `<script src="https://cdn.tailwindcss.com"></script>`
+                    : ``
+                }
               </head>
               <body>
                 ${html}
@@ -151,8 +158,8 @@ const ComponentCard = ({
           `}
         ></iframe>
         <div className="w-full flex justify-between items-center mt-[2px]">
-          <a
-            href="/username"
+          <Link
+            to={`/profile/${username}`}
             className={`text-white font-medium overflow-hidden ${
               username.length > 12
                 ? "whitespace-nowrap overflow-ellipsis max-w-[100px]"
@@ -160,7 +167,7 @@ const ComponentCard = ({
             }`}
           >
             {username}
-          </a>
+          </Link>
           <div className="flex justify-center items-center gap-2">
             {/* <div className="flex justify-center text-md items-center gap-2">
               <AiFillEye className="text-lg text-[#c6c6c6]" />
