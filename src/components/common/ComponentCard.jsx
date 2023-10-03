@@ -15,7 +15,7 @@ const ComponentCard = ({
 }) => {
   const [abbreviatedLikesCount, setAbbreviatedLikesCount] = useState("");
   const [abbreviatedViewsCount, setAbbreviatedViewsCount] = useState("");
-  console.log(data);
+  // console.log(data);
   const { css, html, js } = data?.code[0] || {};
   // const [documentContents, setDocumentContents] = useState("");
   // const { languages } = data;
