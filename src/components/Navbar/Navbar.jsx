@@ -89,7 +89,7 @@ const Navbar = () => {
         <div className="px-12 py-1 pb-0 flex justify-between items-center  bg-[#0e0e0e]">
           <ul className="grid grid-cols-8 justify-items-center w-full h-full items-center mx-auto">
             {navLinks.map((link) => (
-              <li className="group grid w-full h-auto  text-[#fff] font-bold ">
+              <li className="group grid w-full h-auto  text-[#fff] font-bold cursor-pointer">
                 <a className="group-hover:bg-[#333333] group-hover:border-[#363636] border-[1px] border-[transparent]">
                   <span className="flex flex-col justify-center items-center">
                     <span className="inline-block text-center align-top">

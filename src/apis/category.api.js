@@ -13,10 +13,7 @@ export async function updateCategory(data) {
   );
   return response;
 }
-export async function getAllCategories(data) {
-  const response = await axiosDefaults.get(
-    "api/v1/category/getAllCategories",
-    data
-  );
+export async function getAllCategories() {
+  const response = await axiosDefaults.get("api/v1/category/getAllCategories");
   return response.data.categories;
 }
