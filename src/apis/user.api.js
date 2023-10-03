@@ -13,3 +13,10 @@ export async function getUserData(email) {
   console.log("resUser", response.data.profileData);
   return response.data.profileData;
 }
+
+export async function getProfileData(username){
+  console.log("username",username);
+  const response = await axiosDefaults.post("api/v1/user/getProfileDataByUsername",{username});
+  console.log("fetched",response.data.profileData);
+  return response.data.profileData;
+}
