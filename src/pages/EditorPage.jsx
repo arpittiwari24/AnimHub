@@ -35,7 +35,7 @@ const EditorPage = () => {
   //   openPopup(content);
   // };
 
-  const { code, langCategory } = useContext(EditorContext);
+  const { code, langCategory, tags } = useContext(EditorContext);
   const { email, photoURL, displayName } = auth?.currentUser;
   // const user1 = getCookie("user");
   // const { email, photoURL, displayName } = user1;
@@ -77,7 +77,7 @@ const EditorPage = () => {
   };
   const handleSave = async () => {
     // console.log("callling");
-    await createComponent({ code, langCategory, email });
+    await createComponent({ code, langCategory, email, tags });
   };
   const handleUpdate = async () => {
     // console.log("updating");

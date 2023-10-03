@@ -1,6 +1,6 @@
 import { axiosDefaults } from "../api";
 export async function createComponent(data) {
-  const { code, langCategory, email } = data;
+  const { code, langCategory, email, tags } = data;
   console.log(langCategory);
   console.log("codecomponwnt apoi", code);
   let language = langCategory.language.split("+");
@@ -16,6 +16,7 @@ export async function createComponent(data) {
       // react: code.tailwind,
       category: langCategory.category,
       language: language,
+      tags,
       // tags: [],
     }
   );

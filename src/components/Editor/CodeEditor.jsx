@@ -147,6 +147,7 @@ const CodeEditor = () => {
       setTailwind(initialValues.tailwind);
       editorRef.current.setValue(initialValues.tailwind);
     }
+    toast.success(`Reset ${activeFile.toUpperCase()}`);
   };
 
   const handleCopy = () => {
@@ -168,7 +169,7 @@ const CodeEditor = () => {
   return (
     <div className="w-full h-full flex items-center justify-center gap-[15px]">
       <div className="flex flex-col w-1/2 h-full gap-[5px]">
-        <div className="flex flex-row  bg-[#292929] justify-start items-center">
+        <div className="flex flex-row  bg-[#292929] rounded-t-xl px-2 py-1 justify-start items-center">
           {languages.map((fileLang, idx) => {
             return (
               <button
@@ -187,7 +188,7 @@ const CodeEditor = () => {
             );
           })}
           <select
-            className="ml-auto mr-[30px] px-[10px] h-[90%]"
+            className="ml-auto mr-[30px] px-[10px] h-[90%] appearance-none focus:outline-none rounded-lg"
             onChange={(e) => setTheme(e.target.value)}
           >
             {editorThemes.map((themeName, idx) => {

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { AiFillInfoCircle } from "react-icons/ai";
 import { FaRegCalendarCheck } from "react-icons/fa";
 import { auth } from "../../firebase/auth";
@@ -12,6 +12,9 @@ import { FaScaleBalanced } from "react-icons/fa6";
 const ComponentInfo = () => {
   const { email, photoURL, displayName } = auth.currentUser;
   const { tags, setTags, langCategory } = useContext(EditorContext);
+  useEffect(() => {
+    setTags([langCategory.category.toLowerCase()]);
+  }, []);
 
   const addTags = (e) => {
     if (e.key === "Enter") {
@@ -21,7 +24,7 @@ const ComponentInfo = () => {
   };
 
   return (
-    <div className="w-full h-1/2 flex flex-col rounded-t-[15px]">
+    <div className="w-full h-full flex flex-col rounded-t-[15px] overflow-scroll">
       {/* <div className="h-[40px] bg-[#292929] rounded-t-[15px] flex flex-row justify-end items-center px-[20px]">
         <AiFillInfoCircle
           className="text-[#FFF500] hover:cursor-pointer"
@@ -55,9 +58,6 @@ const ComponentInfo = () => {
           <h1 className="text-[25px] font-[700] leading-none">
             {langCategory.category}
             <br />
-            <span className="text-[15px] font-[400] text-[#aaa] ">
-              #{langCategory.category},
-            </span>
             {tags.map((tag) => (
               <span className="text-[15px] font-[400] text-[#aaa] ">
                 #{tag},{" "}
@@ -83,7 +83,7 @@ const ComponentInfo = () => {
             <FaScaleBalanced className="text-2xl " />
             MIT License
           </div>
-          <div className="bg-[#292929] px-6 py-4 rounded-md h-[100px] overflow-scroll ">
+          <div className="bg-[#292929] px-6 py-4 rounded-md h-[300px] min-h-[200px] overflow-scroll ">
             <p>
               Copyright - {new Date(Date.now()).getFullYear()} username (
               {displayName}){" "}
