@@ -7,11 +7,13 @@ import { BsCheckLg } from "react-icons/bs";
 import { toast } from "react-hot-toast";
 import { RxCross1 } from "react-icons/rx";
 
-const SharePopup = ({closePopup}) => {
+const SharePopup = ({ closePopup, id }) => {
   const [copying, setCopying] = useState(false);
+  // let url="https://www.animhub.dev/component/12345678910"
+  let url = "localhost:5173/component/12345678910";
 
   const shareOnWhatsApp = () => {
-    const url = encodeURIComponent("https://www.example.com"); // Replace with your actual URL
+    const url = encodeURIComponent(url); // Replace with your actual URL
     const message = encodeURIComponent("Check out this URL: " + url);
     const whatsappURL = `https://wa.me/?text=${message}`;
     window.open(whatsappURL);
@@ -24,20 +26,20 @@ const SharePopup = ({closePopup}) => {
   };
 
   const shareOnTwitter = () => {
-    const url = encodeURIComponent("https://www.example.com"); // Replace with your actual URL
+    const url = encodeURIComponent(url); // Replace with your actual URL
     const twitterURL = `https://twitter.com/intent/tweet?url=${url}`;
     window.open(twitterURL);
   };
 
   const shareOnLinkedIn = () => {
-    const url = encodeURIComponent("https://www.example.com"); // Replace with your actual URL
+    const url = encodeURIComponent(url); // Replace with your actual URL
     const linkedInURL = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
     window.open(linkedInURL);
   };
 
   const handleCopy = async () => {
     setCopying(true);
-    await navigator.clipboard.writeText("https://www.example.com");
+    await navigator.clipboard.writeText(url);
     toast.success("Link copied successfully");
     setTimeout(() => {
       setCopying(false);
@@ -52,7 +54,7 @@ const SharePopup = ({closePopup}) => {
       <div className="w-full h-fit p-4 flex flex-col gap-6">
         {/* heading */}
         <div className="p-1 w-fit flex justify-center items-center tracking-wider">
-          <p className="text-white font-semibold text-base">share</p>
+          <p className="text-white font-semibold text-base">Share</p>
         </div>
         {/* icons and link */}
         <div className="w-full pl-10 flex flex-col gap-10 mb-10">
@@ -90,9 +92,7 @@ const SharePopup = ({closePopup}) => {
           {/* link */}
           <div className="w-[90%] bg-[#333333] h-12 flex gap-2 items-center rounded-md border-2 border-zinc-700">
             <div className="w-[80%] px-3 py-2">
-              <p className="text-[#C6C6C6] text-sm truncate">
-                https://www.animhub.dev/component/12345678910
-              </p>
+              <p className="text-[#C6C6C6] text-sm truncate">{url}</p>
             </div>
             <div className="w-[20%] h-full flex justify-center items-center">
               {!copying ? (

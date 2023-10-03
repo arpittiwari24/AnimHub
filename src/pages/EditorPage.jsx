@@ -77,7 +77,10 @@ const EditorPage = () => {
   };
   const handleSave = async () => {
     // console.log("callling");
-    await createComponent({ code, langCategory, email, tags });
+    const created = await createComponent({ code, langCategory, email, tags });
+    if (created) {
+      toast.success("Created and sent for verification");
+    }
   };
   const handleUpdate = async () => {
     // console.log("updating");
@@ -89,7 +92,9 @@ const EditorPage = () => {
       <div className="flex justify-center items-center flex-col w-full  h-[100vh]">
         <div className="relative w-full py-2 px-12">
           <div className="flex items-center justify-between">
-            <DarkLogo width="120px" />
+            <Link to="/">
+              <DarkLogo width="120px" />
+            </Link>
             <div className="flex items-center justify-between gap-2">
               {/* <Button label="New" onClick={() => handleOpenPopup()} /> */}
               <button
