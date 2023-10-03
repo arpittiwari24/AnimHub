@@ -23,10 +23,12 @@ function App() {
   const { user, authloading } = useAuthContext();
   const locatar = useLocation();
   const isEditorPage = locatar.pathname === "/editor";
+  const isComponentPage = locatar.pathname.startsWith("/component/");
 
   return (
     <div className="dark">
-      {isEditorPage ? <></> : <Navbar />}
+      {isEditorPage || isComponentPage ? <></> : <Navbar />}
+      {/* <Navbar /> */}
       <Routes>
         {routesData.map((route, index) => (
           <Route
@@ -45,7 +47,7 @@ function App() {
           />
         ))}
       </Routes>
-      {isEditorPage ? <></> : <Footer />}
+      {isEditorPage || isComponentPage ? <></> : <Footer />}
     </div>
   );
 }

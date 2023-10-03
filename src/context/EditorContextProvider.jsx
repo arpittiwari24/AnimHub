@@ -13,10 +13,11 @@ const EditorContextProvider = ({ children }) => {
     javascript: "",
     tailwind: "",
   });
+  const [tags, setTags] = useState([]);
 
   return (
     <EditorContext.Provider
-      value={{ langCategory, setLangCategory, code, setCode }}
+      value={{ langCategory, setLangCategory, code, setCode, tags, setTags }}
     >
       {children}
     </EditorContext.Provider>

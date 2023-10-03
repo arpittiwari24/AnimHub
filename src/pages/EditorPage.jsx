@@ -20,7 +20,21 @@ import toast from "react-hot-toast";
 const EditorPage = () => {
   const [viewers, setViewers] = useState(0);
   const navigate = useNavigate();
+  const { user } = useAuthContext();
   const { isOpen, popupContent, openPopup, closePopup } = usePopupContext();
+  // const handleOpenPopup = () => {
+  //   const content = user ? (
+  //     <div className="fixed flex justify-center items-center top-0 left-0 h-screen w-screen bg-[#00000070] z-20 p-6">
+  //       <div className="relative flex justify-center items-center bg-[#151515]  h-auto w-auto flex-col gap-4 rounded-md">
+  //         <LanguagePopup closePopup={closePopup} />
+  //       </div>
+  //     </div>
+  //   ) : (
+  //     toast.error("Login First")
+  //   );
+  //   openPopup(content);
+  // };
+
   const { code, langCategory } = useContext(EditorContext);
   const { email, photoURL, displayName } = auth?.currentUser;
   // const user1 = getCookie("user");
@@ -52,7 +66,7 @@ const EditorPage = () => {
   const handleOpenPopup = () => {
     console.log("opening popup on editor page");
     const content = (
-      <div className="fixed flex justify-center items-center top-0 left-0 h-screen w-screen bg-[#00000070] z-20 p-6">
+      <div className="fixed flex justify-center items-center top-0 left-0 h-screen w-screen bg-[#00000070] z-[2000] p-6">
         <div className="relative flex justify-center items-center bg-[#151515]  h-auto w-auto flex-col gap-4 rounded-md">
           <LanguagePopup closePopup={closePopup} />
         </div>

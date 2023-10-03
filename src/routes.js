@@ -12,6 +12,7 @@ import {
   Profile,
   Faq,
   EditorPage,
+  ComponentPage,
 } from "./pages";
 import Launching from "./Launching/Launching";
 import { Confirm } from "./components/Popups";
@@ -50,6 +51,11 @@ export const routesData = [
     path: "/editor",
     component: EditorPage,
     authenticated: true,
+  },
+  {
+    path: "/component/:id",
+    component: ComponentPage,
+    authenticated: false,
   },
   {
     path: "/explore",
