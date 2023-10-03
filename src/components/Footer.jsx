@@ -1,41 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { AiFillTwitterCircle, AiFillGithub } from "react-icons/ai";
-import { BsDiscord } from "react-icons/bs";
-const linkCol1 = [
-  {
-    name: "Sitemap",
-    link: "/sitemap",
-  },
-  {
-    name: "Terms & Condition",
-    link: "/Terms&Condition",
-  },
-  {
-    name: "Privacy Policy",
-    link: "/sitemap",
-  },
-  {
-    name: "2257",
-    link: "/sitemap",
-  },
-  {
-    name: "ECU",
-    link: "/sitemap",
-  },
-];
-
-const social = [
-  {
-    comp: AiFillTwitterCircle,
-  },
-  {
-    comp: AiFillGithub,
-  },
-  {
-    comp: BsDiscord,
-  },
-];
+import {
+  quickLinks,
+  legal,
+  openSourceStuff,
+  social,
+  otherStuff,
+} from "./footerConstants";
 
 const Footer = () => {
   return (
@@ -59,10 +30,29 @@ const Footer = () => {
         <div className="flex w-full justify-between py-8 flex-wrap">
           <div className="flex flex-col">
             <h3 className="text-[#969696] text-xl font-bold pb-4">
-              Information
+              Quick Links
             </h3>
             <ul className="flex flex-col gap-2">
-              {linkCol1.map((item, key) => {
+              {quickLinks.map((item, key) => {
+                return (
+                  <>
+                    <li className="">
+                      <Link
+                        to={item.link}
+                        className="text-primary pb-2 font-normal "
+                      >
+                        {item.name}
+                      </Link>
+                    </li>
+                  </>
+                );
+              })}
+            </ul>
+          </div>
+          <div className="flex flex-col">
+            <h3 className="text-[#969696] text-xl font-bold pb-4">Others</h3>
+            <ul className="flex flex-col gap-2">
+              {otherStuff.map((item, key) => {
                 return (
                   <>
                     <li className="">
@@ -80,10 +70,10 @@ const Footer = () => {
           </div>
           <div className="flex flex-col">
             <h3 className="text-[#969696] text-xl font-bold pb-4">
-              Information
+              Open Source
             </h3>
             <ul className="flex flex-col gap-2">
-              {linkCol1.map((item, key) => {
+              {openSourceStuff.map((item, key) => {
                 return (
                   <>
                     <li className="">
@@ -100,32 +90,9 @@ const Footer = () => {
             </ul>
           </div>
           <div className="flex flex-col">
-            <h3 className="text-[#969696] text-xl font-bold pb-4">
-              Information
-            </h3>
+            <h3 className="text-[#969696] text-xl font-bold pb-4">Legal</h3>
             <ul className="flex flex-col gap-2">
-              {linkCol1.map((item, key) => {
-                return (
-                  <>
-                    <li className="">
-                      <Link
-                        to={item.link}
-                        className="text-primary pb-2 font-normal "
-                      >
-                        {item.name}
-                      </Link>
-                    </li>
-                  </>
-                );
-              })}
-            </ul>
-          </div>
-          <div className="flex flex-col">
-            <h3 className="text-[#969696] text-xl font-bold pb-4">
-              Information
-            </h3>
-            <ul className="flex flex-col gap-2">
-              {linkCol1.map((item, key) => {
+              {legal.map((item, key) => {
                 return (
                   <>
                     <li className="">

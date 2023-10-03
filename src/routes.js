@@ -93,6 +93,31 @@ export const routesData = [
     authenticated: false,
   },
   {
+    path: "/spotlight",
+    component: ComingSoon,
+    authenticated: false,
+  },
+  {
+    path: "/shop",
+    component: ComingSoon,
+    authenticated: false,
+  },
+  {
+    path: "/admins",
+    component: ComingSoon,
+    authenticated: false,
+  },
+  {
+    path: "/maintainers",
+    component: ComingSoon,
+    authenticated: false,
+  },
+  {
+    path: "/insights",
+    component: ComingSoon,
+    authenticated: false,
+  },
+  {
     path: "/onboarding",
     component: OnBoardingPage,
     authenticated: true,
