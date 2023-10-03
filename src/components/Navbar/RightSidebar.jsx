@@ -10,7 +10,7 @@ import { usePopupContext } from "../../context/PopupContextProvider";
 import { AuthContext } from "../../context/AuthContextProviders";
 import { auth } from "../../firebase/auth";
 import { signOut } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const RightSidebar = ({ isRightSidebarOpen, setIsRightSidebarOpen }) => {
   const navigate = useNavigate();
@@ -88,7 +88,7 @@ const RightSidebar = ({ isRightSidebarOpen, setIsRightSidebarOpen }) => {
                   <div className="px-4 py-2 flex flex-col items-left justify-start ">
                     <h1 className="text-white text-xl font-bold">Username</h1>
                     <h3 className="text-white text-sm font-bold">
-                      See your profile
+                      <Link to="/dashboard">See your profile</Link>
                     </h3>
                     {/* <hr className="border-[#c6c6c6] border-1" /> */}
 
