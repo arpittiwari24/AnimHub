@@ -22,6 +22,15 @@ export async function createComponent(data) {
   );
   return response;
 }
+export async function getComponentById(id) {
+  console.log(id);
+  const response = await axiosDefaults.post(
+    "api/v1/component/getComponentById",
+    { componentId: id }
+  );
+  console.log(response);
+  return response;
+}
 export async function getAllComponents(data) {
   const response = await axiosDefaults.get(
     "api/v1/component/getAllComponents",
