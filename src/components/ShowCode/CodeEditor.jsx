@@ -12,8 +12,6 @@ import toast from "react-hot-toast";
 import { editorThemes } from "./constants";
 
 const CodeEditor = ({ data }) => {
-  const [componentData, setComponentData] = useState(data);
-
   const [documentContent, setDocumentContent] = useState("");
   const [theme, setTheme] = useState("vs-dark");
   const [activeFile, setActiveFile] = useState("HTML");
@@ -67,7 +65,6 @@ const CodeEditor = ({ data }) => {
   const editorRef = useRef(null);
 
   useEffect(() => {
-    setComponentData(data);
     const timeout = setTimeout(() => {
       setHtml(files["HTML"].value);
       setCss(files["CSS"].value);
@@ -93,6 +90,27 @@ const CodeEditor = ({ data }) => {
     }, 250);
 
     return () => clearTimeout(timeout);
+  }, [data]);
+  useEffect(() => {
+      setDocumentContent(`
+      <html>
+        <head>
+        <style>${data?.language.includes("CSS") && css}</style>
+        ${
+          data?.language.includes("Tailwind")
+            ? `<script src="https://cdn.tailwindcss.com"></script>`
+            : ``
+        }
+        </head>
+        <body>
+        ${html}
+        <script>${js}</script>
+        </body>
+        </html>
+      `);
+    // }, 250);
+
+    // return () => clearTimeout(timeout);
   }, [data, documentContent, html, css, js, tailwind]);
 
   const handlChange = (event) => {
