@@ -20,7 +20,7 @@ const ComponentPage = () => {
 
   useEffect(() => {
     getComponentData();
-  }, []);
+  }, [id]);
   return (
     <>
       <div className="flex justify-center items-center flex-col w-full  h-[100vh]">

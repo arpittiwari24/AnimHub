@@ -7,20 +7,20 @@ import { BiLogoJavascript } from "react-icons/bi";
 import ComponentInfo from "./ComponentInfo";
 import { FaRegCopy } from "react-icons/fa";
 import { BiLogoTailwindCss } from "react-icons/bi";
-import { BiReset } from "react-icons/bi";
+// import { BiReset } from "react-icons/bi";
 import toast from "react-hot-toast";
 import { editorThemes } from "./constants";
 
 const CodeEditor = ({ data }) => {
   const [componentData, setComponentData] = useState(data);
 
-  const [documentContents, setDocumentContents] = useState("");
+  const [documentContent, setDocumentContent] = useState("");
   const [theme, setTheme] = useState("vs-dark");
   const [activeFile, setActiveFile] = useState("HTML");
-  const [html, setHtml] = useState(data?.code[0]?.html);
-  const [css, setCss] = useState(data?.code[0]?.css);
-  const [js, setJs] = useState(data?.code[0]?.js);
-  const [tailwind, setTailwind] = useState(data?.code[0]?.tailwind);
+  const [html, setHtml] = useState("");
+  const [css, setCss] = useState("");
+  const [js, setJs] = useState("");
+  const [tailwind, setTailwind] = useState("");
 
   const files = {
     HTML: {
@@ -51,7 +51,7 @@ const CodeEditor = ({ data }) => {
         </p>
       ),
       language: "javascript",
-      value: data?.code[0]?.js,
+      value: data?.code[0]?.javascript,
     },
     Tailwind: {
       name: (
@@ -68,9 +68,14 @@ const CodeEditor = ({ data }) => {
 
   useEffect(() => {
     setComponentData(data);
+    const timeout = setTimeout(() => {
+      setHtml(files["HTML"].value);
+      setCss(files["CSS"].value);
+      setJs(files["JS"].value);
+      setTailwind(files["Tailwind"].value);
 
-    const documentContents = `
-        <html>
+      setDocumentContent(`
+      <html>
         <head>
         <style>${data?.language.includes("CSS") && css}</style>
         ${
@@ -82,20 +87,13 @@ const CodeEditor = ({ data }) => {
         <body>
         ${html}
         <script>${js}</script>
-        ${
-          data?.language.includes("Tailwind")
-            ? ` <script>
-        ${tailwind}
-</script>`
-            : ``
-        }
         </body>
         </html>
-        `;
+      `);
+    }, 250);
 
-    setDocumentContents(documentContents);
-    console.log("document:", documentContents);
-  }, [data, documentContents]);
+    return () => clearTimeout(timeout);
+  }, [data, documentContent, html, css, js, tailwind]);
 
   const handlChange = (event) => {
     if (activeFile === "HTML") {
@@ -233,7 +231,7 @@ const CodeEditor = ({ data }) => {
         />
       </div>
       <div className="flex flex-col w-1/2 h-full gap-[15px]">
-        <CodeOutput sourceCode={documentContents} />
+        <CodeOutput sourceCode={documentContent} />
         <ComponentInfo data={data} />
       </div>
     </div>
