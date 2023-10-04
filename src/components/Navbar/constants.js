@@ -9,42 +9,42 @@ export const navLinks = [
   },
   {
     name: "Categories",
-    path: "/",
+
     content: Categories,
   },
   {
     name: "Languages",
-    path: "/",
+
     content: Languages,
   },
   {
     name: "Top Users",
-    path: "/",
+
     content: TopUsers,
   },
   {
     name: "Trending",
-    path: "/",
+
     content: Trending,
   },
   {
     name: "Blogs",
-    path: "/",
+    path: "/blogs",
   },
   {
     name: "Tags",
-    path: "/",
+
     content: Tags,
   },
   {
     name: "About",
-    path: "/",
+    path: "/about",
   },
 ];
 export const subNavLinks = [
   {
     name: "Spotlight",
-    path: "/",
+    path: "/spotlight",
   },
   {
     name: "Feedback",
@@ -52,11 +52,11 @@ export const subNavLinks = [
   },
   {
     name: "Admins",
-    path: "/",
+    path: "/admins",
   },
   {
     name: "Insights",
-    path: "/",
+    path: "/insights",
   },
   {
     name: "Privacy Policy",
@@ -68,7 +68,7 @@ export const subNavLinks = [
   },
   {
     name: "Shop",
-    path: "/",
+    path: "/shop",
   },
   {
     name: "EN",
@@ -81,7 +81,7 @@ export const dropdownItemsLeftSidebar = [
     icon: BsFillGrid1X2Fill,
     subItems: [
       {
-        title: "Subitem 1",
+        title: "Subitem ",
         icon: BsFillGrid1X2Fill,
       },
       {

@@ -1,5 +1,11 @@
 import React from "react";
-import { Routes, Route, useNavigate, Navigate } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  useNavigate,
+  Navigate,
+  useLocation,
+} from "react-router-dom";
 import { useState, useEffect } from "react";
 import { auth } from "./firebase/auth";
 import { routesData } from "./routes";
@@ -15,10 +21,14 @@ ReactGA.initialize(TRACKING_ID);
 
 function App() {
   const { user, authloading } = useAuthContext();
+  const locatar = useLocation();
+  const isEditorPage = locatar.pathname === "/editor";
+  const isComponentPage = locatar.pathname.startsWith("/component/");
 
   return (
     <div className="dark">
-      <Navbar />
+      {isEditorPage || isComponentPage ? <></> : <Navbar />}
+      {/* <Navbar /> */}
       <Routes>
         {routesData.map((route, index) => (
           <Route
@@ -37,7 +47,7 @@ function App() {
           />
         ))}
       </Routes>
-      <Footer />
+      {isEditorPage || isComponentPage ? <></> : <Footer />}
     </div>
   );
 }

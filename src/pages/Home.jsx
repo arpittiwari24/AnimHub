@@ -2,26 +2,34 @@ import React, { useRef, useEffect, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import ComponentCard from "../components/common/ComponentCard";
 import { Pagination } from "../components/common";
-import ReactGA from 'react-ga4'
+import { getVerifiedComponents } from "../apis/components.api";
+import ReactGA from "react-ga4";
 
 const Home = () => {
+  const [componentsData, setComponentsData] = useState([]);
   function handle() {
-    alert("Are you sure you want to leave the page?")
-    return
-  } 
+    alert("Are you sure you want to leave the page?");
+    return;
+  }
+  const handleData = async () => {
+    const data = await getVerifiedComponents();
+    setComponentsData(data);
+    console.log(componentsData);
+  };
   useEffect(() => {
-    
     // ReactGA.pageview(window.location.pathname)
     // ReactGA.event({"page_path": window.location.pathname})
-    ReactGA.send({ hitType: "pageview", page: window.location.pathname })
+    ReactGA.send({ hitType: "pageview", page: window.location.pathname });
     window.addEventListener("beforeunload", handle);
+    handleData();
+    console.log(componentsData);
   }, []);
 
   // return () => {
-    // window.removeEventListener("beforeunload", (e) => {
-      // e.preventDefault();
-      // return "Are you sure you want to leave the page?";
-    // });
+  // window.removeEventListener("beforeunload", (e) => {
+  // e.preventDefault();
+  // return "Are you sure you want to leave the page?";
+  // });
   // };
   const [currentPage, setCurrentPage] = useState(1);
   const totalPages = 100; // Replace with the actual total number of pages
@@ -84,7 +92,9 @@ const Home = () => {
     <>
       <div className="w-full flex flex-col justify-start items-start px-12">
         <div className="w-full auto flex flex-col justify-start items-start ">
-          <h1 className="text-xl font-bold">Explore all the components GA Page Added</h1>
+          <h1 className="text-xl font-bold">
+            Explore all the components GA Page Added
+          </h1>
           <div
             className="relative hide-scrollbar mt-2"
             onScroll={disableScrollbar}
@@ -127,9 +137,9 @@ const Home = () => {
         </div>
         <div className="w-full h-auto flex flex-wrap gap-8 my-10 justify-between items-center">
           {/* cards */}
-          {Array.from({ length: 12 }, (_, index) => (
-            <ComponentCard />
-          ))}
+          {componentsData.map((card, index) => {
+            return <ComponentCard key={index} data={card} />;
+          })}
         </div>
         <div className="w-full px-12 mt-2 flex justify-center items-center">
           <Pagination

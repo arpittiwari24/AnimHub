@@ -2,6 +2,7 @@ import React from "react";
 import { auth } from "../firebase/auth";
 import { onAuthStateChanged } from "firebase/auth";
 import { createContext, useContext, useEffect, useState } from "react";
+import { getUserByEmail } from "../apis/user.api";
 
 export const AuthContext = createContext({});
 
@@ -14,7 +15,7 @@ const setCookie = (name, value, days) => {
   document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
 };
 
-function getCookie(cookieName) {
+export function getCookie(cookieName) {
   const cookies = document.cookie.split(";");
   for (let i = 0; i < cookies.length; i++) {
     const cookie = cookies[i].trim();
@@ -43,7 +44,7 @@ const AuthContextProvider = ({ children }) => {
       }
       setAuthLoading(false);
     });
-
+    // getUserid();
     return () => unsubscribe();
   }, [user, authloading]);
 

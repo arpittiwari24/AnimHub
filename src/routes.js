@@ -3,7 +3,6 @@ import {
   About,
   Dashboard,
   AdminDashboard,
-  Editor,
   Explore,
   Categories,
   Policy,
@@ -12,6 +11,8 @@ import {
   OnBoardingPage,
   Profile,
   Faq,
+  EditorPage,
+  ComponentPage,
 } from "./pages";
 import Launching from "./Launching/Launching";
 import { Confirm } from "./components/Popups";
@@ -48,8 +49,13 @@ export const routesData = [
   },
   {
     path: "/editor",
-    component: Editor,
+    component: EditorPage,
     authenticated: true,
+  },
+  {
+    path: "/component/:id",
+    component: ComponentPage,
+    authenticated: false,
   },
   {
     path: "/explore",
@@ -83,6 +89,31 @@ export const routesData = [
   },
   {
     path: "/blogs",
+    component: ComingSoon,
+    authenticated: false,
+  },
+  {
+    path: "/spotlight",
+    component: ComingSoon,
+    authenticated: false,
+  },
+  {
+    path: "/shop",
+    component: ComingSoon,
+    authenticated: false,
+  },
+  {
+    path: "/admins",
+    component: ComingSoon,
+    authenticated: false,
+  },
+  {
+    path: "/maintainers",
+    component: ComingSoon,
+    authenticated: false,
+  },
+  {
+    path: "/insights",
     component: ComingSoon,
     authenticated: false,
   },
