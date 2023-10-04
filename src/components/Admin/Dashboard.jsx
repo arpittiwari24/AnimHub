@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { verifyComponent } from "../../apis/admin.api";
 import { getUnVerifiedComponents } from "../../apis/components.api";
 import { ComponentCard } from "../common";
 const Dashboard = () => {
-  const handleVerification = async (componentId, email, score) => {
-    const res = await verifyComponent(componentId, email, score);
-    console.log(res);
-  };
   const [unVerifiedComponents, setUnVerifiedComponents] = useState([]);
 
   useEffect(() => {
