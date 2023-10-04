@@ -20,3 +20,9 @@ export async function getProfileData(username){
   console.log("fetched",response.data.profileData);
   return response.data.profileData;
 }
+export async function followUser(email, toBeFollowedEmail){
+  console.log("Other Person Email", email, toBeFollowedEmail);
+  const response = await axiosDefaults.post("api/v1/user/followUser",{email, toBeFollowedEmail});
+  console.log("fetched",response.data);
+  return response.data;
+}

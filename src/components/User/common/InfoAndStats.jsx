@@ -9,12 +9,15 @@ import {
 import { usePopupContext } from "../../../context/PopupContextProvider";
 import { SharePopup } from "../../Popups";
 import { Link } from "react-router-dom";
+import { followUser } from "../../../apis/user.api";
+import { useUserContext } from "../../../context/UserContextProvider";
 
 const InfoAndStats = ({ userInfo }) => {
   console.log("fbdjfdf", userInfo);
   const [info, setInfo] = useState(userInfo);
   const [activeTab, setActiveTab] = useState("home");
   const { isOpen, popupContent, openPopup, closePopup } = usePopupContext();
+  const {userData} = useUserContext()
   const openSharePopup = () => {
     const content = (
       <div className="fixed flex justify-center items-center top-0 left-0 h-screen w-screen bg-[#00000070] z-20 p-6">
@@ -29,6 +32,11 @@ const InfoAndStats = ({ userInfo }) => {
   useEffect(() => {
     setInfo(userInfo);
   }, [info, userInfo]);
+
+  const followUserName = async () => {
+    console.log("follow");
+    const followRequest = await followUser(userData.email, userInfo.email);
+  }
 
   return (
     <>
@@ -65,6 +73,14 @@ const InfoAndStats = ({ userInfo }) => {
                 onClick={openSharePopup}
               >
                 Share
+              </button>
+            </li>
+            <li className="flex justify-center items-center">
+              <button
+                className="bg-secondary border border-6 py-[10px] px-[20px] m-[0px] rounded-[5px] font-[600]"
+                onClick={followUserName}
+              >
+                Follow
               </button>
             </li>
           </ul>
@@ -106,7 +122,7 @@ const InfoAndStats = ({ userInfo }) => {
                 <FaTwitterSquare />
                 <a href={userInfo.socialLinks[]} className="text-opacity-100">Twitter</a>
               </li> */}
-              <Link target="_blank" to={userInfo.socialLinks[0]} className="flex justify-center items-center gap-[10px]">
+              {/* <Link target="_blank" to={userInfo.socialLinks[0]} className="flex justify-center items-center gap-[10px]">
                 <FaGithubSquare /> Github
               </Link>
               <Link target="_blank" to={userInfo.socialLinks[1]} className="flex justify-center items-center gap-[10px]">
@@ -114,7 +130,7 @@ const InfoAndStats = ({ userInfo }) => {
               </Link>
               <Link target="_blank" to={userInfo.socialLinks[2]} className="flex justify-center items-center gap-[10px]">
                 <FaInstagramSquare /> Instagram
-              </Link>
+              </Link> */}
               </ul>
             }
             <div>

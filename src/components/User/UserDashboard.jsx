@@ -3,7 +3,6 @@ import { Banner, InfoAndStats, Components } from "./common";
 import { getUserData } from "../../apis/user.api";
 import { getCookie } from "../../context/AuthContextProviders";
 import { UserContext, useUserContext } from "../../context/UserContextProvider";
-// import { getData } from "../../api";
 
 const UserDashboard = () => {
   const {userData} = useUserContext();

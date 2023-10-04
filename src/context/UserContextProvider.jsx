@@ -17,6 +17,7 @@ const UserContextProvider = ({ children }) => {
             try {
                 const userCookie = getCookie("user");
                 const response = await getUserData(JSON.parse(userCookie).email);
+                console.log(response);
                 if (response) {
                     setUserData(response);
                 } else {

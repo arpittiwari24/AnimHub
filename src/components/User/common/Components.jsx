@@ -20,7 +20,7 @@ const Components = ({userInfo}) => {
         <div className="w-[70%] h-auto flex flex-wrap gap-4 my-10 justify-between items-center">
           {/* cards */}
           {info && info.components.map((card, index) => (
-            <ComponentCard key={index} card={card}/>
+            <ComponentCard key={index} data={card}/>
           ))}
         </div>
         <div className="w-[30%] my-10 px-10 flex flex-col justify-center items-start ">
