@@ -8,7 +8,7 @@ export const axiosDefaults = axios.create({
 export async function sendData(url, data) {
     // const data1 = await axiosDefaults.post(url, data)
     const response1 = await axiosDefaults.post(url, data)
-    console.log("response1", response1);
+    // console.log("response1", response1);
     return response1
 }
 
@@ -23,11 +23,11 @@ export async function getData(url) {
 
 axiosDefaults.interceptors.request.use(
     (request) => {
-        console.log("request interceptor", request);
+        // console.log("request interceptor", request);
         return request
     },
     (error) => {
-        console.log("request interceptor error", error);
+        // console.log("request interceptor error", error);
         return error;
     }
 )

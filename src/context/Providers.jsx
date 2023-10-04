@@ -3,6 +3,7 @@ import PopupContextProvider from "./PopupContextProvider";
 import AuthContextProvider from "./AuthContextProviders";
 import { Toaster } from "react-hot-toast";
 import EditorContextProvider from "./EditorContextProvider";
+import UserContextProvider from "./UserContextProvider";
 // import Analytics from "./Analytics";
 
 export default function Providers({ children }) {
@@ -11,7 +12,11 @@ export default function Providers({ children }) {
       {/* <Analytics /> */}
       <PopupContextProvider>
         <AuthContextProvider>
-          <EditorContextProvider>{children}</EditorContextProvider>
+          <UserContextProvider >
+            <EditorContextProvider>
+              {children}
+            </EditorContextProvider>
+          </UserContextProvider>
         </AuthContextProvider>
       </PopupContextProvider>
       <Toaster

@@ -28,8 +28,8 @@ export async function getComponentById(id) {
     "api/v1/component/getComponentById",
     { componentId: id }
   );
-  console.log(response);
-  return response.data?.component || null;
+  console.log(response.data.component);
+  return response.data.component;
 }
 export async function getVerifiedComponents(data) {
   const response = await axiosDefaults.get(
