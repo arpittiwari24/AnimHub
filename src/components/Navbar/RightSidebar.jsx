@@ -70,7 +70,7 @@ const RightSidebar = ({ isRightSidebarOpen, setIsRightSidebarOpen }) => {
           {auth1 ? (
             <img
               className="w-12 h-12 rounded-full ring-1 ring-white ring-opacity-20 hover:ring-opacity-60 hover:ring-2 transition duration-30"
-              src={auth.currentUser.photoURL}
+              src={auth?.currentUser?.photoURL}
               alt=""
             />
           ) : (

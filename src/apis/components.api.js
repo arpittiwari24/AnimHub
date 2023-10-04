@@ -29,7 +29,7 @@ export async function getComponentById(id) {
     { componentId: id }
   );
   console.log(response);
-  return response;
+  return response.data?.component || null;
 }
 export async function getAllComponents(data) {
   const response = await axiosDefaults.get(
