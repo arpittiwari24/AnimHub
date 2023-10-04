@@ -14,17 +14,13 @@ import { editorThemes } from "./constants";
 const CodeEditor = ({ data }) => {
   const [componentData, setComponentData] = useState(data);
 
-  console.log(componentData?.code[0].html);
-
   const [documentContents, setDocumentContents] = useState("");
   const [theme, setTheme] = useState("vs-dark");
   const [activeFile, setActiveFile] = useState("HTML");
-  const [html, setHtml] = useState(componentData?.code[0]?.html || "");
-  const [css, setCss] = useState(componentData?.code[0]?.css || "");
-  const [js, setJs] = useState(componentData?.code[0]?.js || "");
-  const [tailwind, setTailwind] = useState(
-    componentData?.code[0]?.tailwind || ""
-  );
+  const [html, setHtml] = useState(data?.code[0]?.html);
+  const [css, setCss] = useState(data?.code[0]?.css);
+  const [js, setJs] = useState(data?.code[0]?.js);
+  const [tailwind, setTailwind] = useState(data?.code[0]?.tailwind);
 
   const files = {
     HTML: {
@@ -35,7 +31,7 @@ const CodeEditor = ({ data }) => {
         </p>
       ),
       language: "html",
-      value: html,
+      value: data?.code[0]?.html,
     },
     CSS: {
       name: (
@@ -45,7 +41,7 @@ const CodeEditor = ({ data }) => {
         </p>
       ),
       language: "css",
-      value: css,
+      value: data?.code[0]?.css,
     },
     JS: {
       name: (
@@ -55,7 +51,7 @@ const CodeEditor = ({ data }) => {
         </p>
       ),
       language: "javascript",
-      value: js,
+      value: data?.code[0]?.js,
     },
     Tailwind: {
       name: (
@@ -64,7 +60,7 @@ const CodeEditor = ({ data }) => {
         </p>
       ),
       language: "css",
-      value: tailwind,
+      value: data?.code[0]?.tailwind,
     },
   };
 
@@ -76,9 +72,9 @@ const CodeEditor = ({ data }) => {
     const documentContents = `
         <html>
         <head>
-        <style>${componentData?.language.includes("CSS") && css}</style>
+        <style>${data?.language.includes("CSS") && css}</style>
         ${
-          componentData?.language.includes("Tailwind")
+          data?.language.includes("Tailwind")
             ? `<script src="https://cdn.tailwindcss.com"></script>`
             : ``
         }
@@ -87,7 +83,7 @@ const CodeEditor = ({ data }) => {
         ${html}
         <script>${js}</script>
         ${
-          componentData?.language.includes("Tailwind")
+          data?.language.includes("Tailwind")
             ? ` <script>
         ${tailwind}
 </script>`
@@ -98,46 +94,47 @@ const CodeEditor = ({ data }) => {
         `;
 
     setDocumentContents(documentContents);
-  }, [documentContents, data]);
+    console.log("document:", documentContents);
+  }, [data, documentContents]);
 
   const handlChange = (event) => {
-    if (activeFile == "HTML") {
+    if (activeFile === "HTML") {
       setHtml(editorRef.current.getValue());
     }
-    if (activeFile == "CSS") {
+    if (activeFile === "CSS") {
       setCss(editorRef.current.getValue());
     }
-    if (activeFile == "JS") {
+    if (activeFile === "JS") {
       setJs(editorRef.current.getValue());
     }
-    if (activeFile == "Tailwind") {
+    if (activeFile === "Tailwind") {
       setTailwind(editorRef.current.getValue());
     }
   };
 
-  const handleReset = () => {
-    // setHtml(files["HTML"].value)
-    // setCss(files["CSS"].value)
-    // setJs(files["JS"].value)
-    // setTailwind(files["Tailwind"].value)
-    if (activeFile === "HTML") {
-      setHtml(initialValues.html);
-      editorRef.current.setValue(initialValues.html);
-    }
-    if (activeFile === "CSS") {
-      editorRef.current.setValue(initialValues.css);
-      setCss(initialValues.css);
-    }
-    if (activeFile === "JS") {
-      setJs(initialValues.js);
-      editorRef.current.setValue(initialValues.js);
-    }
-    if (activeFile === "Tailwind") {
-      setTailwind(initialValues.tailwind);
-      editorRef.current.setValue(initialValues.tailwind);
-    }
-    toast.success(`Reset ${activeFile.toUpperCase()}`);
-  };
+  // const handleReset = () => {
+  //   // setHtml(files["HTML"].value)
+  //   // setCss(files["CSS"].value)
+  //   // setJs(files["JS"].value)
+  //   // setTailwind(files["Tailwind"].value)
+  //   if (activeFile === "HTML") {
+  //     setHtml(initialValues.html);
+  //     editorRef.current.setValue(initialValues.html);
+  //   }
+  //   if (activeFile === "CSS") {
+  //     editorRef.current.setValue(initialValues.css);
+  //     setCss(initialValues.css);
+  //   }
+  //   if (activeFile === "JS") {
+  //     setJs(initialValues.js);
+  //     editorRef.current.setValue(initialValues.js);
+  //   }
+  //   if (activeFile === "Tailwind") {
+  //     setTailwind(initialValues.tailwind);
+  //     editorRef.current.setValue(initialValues.tailwind);
+  //   }
+  //   toast.success(`Reset ${activeFile.toUpperCase()}`);
+  // };
 
   const handleCopy = () => {
     if (activeFile === "HTML") {
@@ -159,7 +156,7 @@ const CodeEditor = ({ data }) => {
     <div className="w-full h-full flex items-center justify-center gap-[15px]">
       <div className="flex flex-col w-1/2 h-full gap-[5px]">
         <div className="flex flex-row  bg-[#292929] rounded-t-xl px-2 py-1 justify-start items-center">
-          {componentData?.language.map((fileLang, idx) => {
+          {data?.language.map((fileLang, idx) => {
             return (
               <button
                 key={idx}
@@ -172,7 +169,7 @@ const CodeEditor = ({ data }) => {
                   setActiveFile(fileLang);
                 }}
               >
-                {files[fileLang].name}
+                {files[fileLang]?.name}
               </button>
             );
           })}
@@ -194,19 +191,21 @@ const CodeEditor = ({ data }) => {
             name="copy"
             onClick={handleCopy}
           />
-          <BiReset
+          {/* <BiReset
             className="mr-[20px] text-red-400 scale-150 self-center hover:cursor-pointer"
             title="Reset Code"
             name="reset"
             onClick={handleReset}
-          />
+          /> */}
         </div>
         <MonacoEditor
           theme={theme}
-          language={files[activeFile].language}
+          language={files[activeFile]?.language}
           path={activeFile}
           onChange={handlChange}
-          defaultValue={files[activeFile].value || "// write your code here..."}
+          defaultValue={
+            files[activeFile]?.value || "// write your code here..."
+          }
           // value={files[activeFile].value}
           options={{
             minimap: {
