@@ -11,9 +11,12 @@ import { DarkLogo } from "../assets/logos/Logo";
 import { Link } from "react-router-dom";
 import { auth } from "../firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { verifyComponent } from "../apis/admin.api";
+import { IoMdCheckmark } from "react-icons/io";
 
 const ComponentPage = () => {
   const [userData, setUserData] = useState({});
+  const [score, setScore] = useState(0);
   const navigate = useNavigate();
   const { id } = useParams();
   const [component, setComponent] = useState(null);
@@ -48,6 +51,10 @@ const ComponentPage = () => {
     getComponentData();
   }, [id]);
   console.log(userData);
+  const handleVerification = async (componentId, email, score) => {
+    const res = await verifyComponent(componentId, email, score);
+    console.log(res);
+  };
   return (
     <>
       <div className="flex justify-center items-center flex-col w-full  h-[100vh]">
@@ -68,7 +75,25 @@ const ComponentPage = () => {
 
               {/* <Button label="Update" onClick={handleUpdate} /> */}
               {userData?.isAdmin && !component.verified && (
-                <Button label="Verify" onClick={() => {}} />
+                <>
+                  <div className="flex justify-between bg-[#212121] border-[#333333] min-w-[400px] items-center p-2 rounded-sm pl-4">
+                    <input
+                      type="number"
+                      name="score"
+                      placeholder="Give Score to component"
+                      onChange={(e) => setScore(e.target.value)}
+                      className=" appearance-none  bg-[#212121] w-full focus:outline-none"
+                    />
+                    <IoMdCheckmark className="text-[green] text-2xl" />
+                  </div>
+                  <Button
+                    label="Verify"
+                    onClick={() => {
+                      handleVerification(id, userData?.email, score);
+                    }}
+                    disabled={!score}
+                  />
+                </>
               )}
             </div>
             <Link className="w-12 h-12" to="/dashboard">
