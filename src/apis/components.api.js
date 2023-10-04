@@ -31,9 +31,16 @@ export async function getComponentById(id) {
   console.log(response);
   return response.data?.component || null;
 }
-export async function getAllComponents(data) {
+export async function getVerifiedComponents(data) {
   const response = await axiosDefaults.get(
-    "api/v1/component/getAllComponents",
+    "api/v1/component/getVerifiedComponents",
+    data
+  );
+  return response.data.componentArray;
+}
+export async function getUnVerifiedComponents(data) {
+  const response = await axiosDefaults.get(
+    "api/v1/component/getUnVerifiedComponents",
     data
   );
   return response.data.componentArray;

@@ -2,7 +2,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import ComponentCard from "../components/common/ComponentCard";
 import { Pagination } from "../components/common";
-import { getAllComponents } from "../apis/components.api";
+import { getVerifiedComponents } from "../apis/components.api";
 import ReactGA from "react-ga4";
 
 const Home = () => {
@@ -12,7 +12,7 @@ const Home = () => {
     return;
   }
   const handleData = async () => {
-    const data = await getAllComponents();
+    const data = await getVerifiedComponents();
     setComponentsData(data);
     console.log(componentsData);
   };
