@@ -10,7 +10,9 @@ import { usePopupContext } from "../../context/PopupContextProvider";
 import { AuthContext } from "../../context/AuthContextProviders";
 import { auth } from "../../firebase/auth";
 import { signOut } from "firebase/auth";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { PiSignOutBold } from "react-icons/pi";
+import { Link } from "react-router-dom";
 
 const RightSidebar = ({ isRightSidebarOpen, setIsRightSidebarOpen }) => {
   const navigate = useNavigate();
@@ -65,7 +67,15 @@ const RightSidebar = ({ isRightSidebarOpen, setIsRightSidebarOpen }) => {
     <>
       <div className="relative inline-block text-left" ref={dropdownRef}>
         <button onClick={toggleDropdown} className="">
-          <FaCircleUser className="text-[#c6c6c6] text-4xl" />
+          {auth1 ? (
+            <img
+              className="w-12 h-12 rounded-full ring-1 ring-white ring-opacity-20 hover:ring-opacity-60 hover:ring-2 transition duration-30"
+              src={auth?.currentUser?.photoURL}
+              alt=""
+            />
+          ) : (
+            <FaCircleUser className="text-[#c6c6c6] text-4xl" />
+          )}
         </button>
 
         {isRightSidebarOpen && (
@@ -77,19 +87,29 @@ const RightSidebar = ({ isRightSidebarOpen, setIsRightSidebarOpen }) => {
             >
               {auth1 ? (
                 <>
-                  <button
-                    onClick={() => {
-                      signOut(auth);
-                      navigate("/");
-                    }}
-                  >
-                    SignOut
-                  </button>
                   <div className="px-4 py-2 flex flex-col items-left justify-start ">
-                    <h1 className="text-white text-xl font-bold">Username</h1>
-                    <h3 className="text-white text-sm font-bold">
-                      <Link to="/dashboard">See your profile</Link>
-                    </h3>
+                    <div className="flex justify-between items-center w-full ">
+                      <div className="flex flex-col items-left justify-start w-full">
+                        <Link
+                          to="/dashboard"
+                          className="text-white text-xl font-bold"
+                        >
+                          Username
+                        </Link>
+                        <h3 className="text-white text-sm font-bold">
+                          See your profile
+                        </h3>
+                      </div>
+                      <button
+                        onClick={() => {
+                          signOut(auth);
+                          navigate("/");
+                        }}
+                        className="flex justify-end items-end w-full p-2"
+                      >
+                        <PiSignOutBold className="text-[#c6c6c6] text-4xl" />
+                      </button>
+                    </div>
                     {/* <hr className="border-[#c6c6c6] border-1" /> */}
 
                     <ul className="py-2 px-0 flex flex-col items-right justify-center ">

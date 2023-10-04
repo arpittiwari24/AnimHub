@@ -46,23 +46,24 @@ const EditorPage = () => {
     if (auth === null) {
       navigate("/");
       toast.error("Please select a language and category first");
+      return;
     }
     if (langCategory.category === "" && langCategory.language === "") {
-      alert("redirecting");
       navigate("/");
       toast.error("Please select a language and category first");
+      return;
     }
     async function fetchData() {
       const resData = await getData("/api/v1/data/viewersData");
       // console.log(resData.data[0].metricValues[0].value);
       setViewers(resData.data[0].metricValues[0].value);
     }
-    // fetchData()
+    // fetchData();
     ReactGA.send({
       hitType: "pageview",
       page: window.location.pathname,
     });
-  }, []);
+  }, [auth, langCategory]);
   const handleOpenPopup = () => {
     console.log("opening popup on editor page");
     const content = (
@@ -81,6 +82,7 @@ const EditorPage = () => {
     if (created) {
       toast.success("Created and sent for verification");
     }
+    navigate("/dashboard");
   };
   const handleUpdate = async () => {
     // console.log("updating");
@@ -97,13 +99,13 @@ const EditorPage = () => {
             </Link>
             <div className="flex items-center justify-between gap-2">
               {/* <Button label="New" onClick={() => handleOpenPopup()} /> */}
-              <button
+              {/* <button
                 className="bg-[#292929] p-[10px] my-[10px]"
                 onClick={handleOpenPopup}
               >
                 Create New
-              </button>
-              <Button label="Save" onClick={handleSave} />
+              </button> */}
+              <Button label="Create" onClick={handleSave} />
               <Button label="Update" onClick={handleUpdate} />
             </div>
             <Link className="w-12 h-12" to="/dashboard">

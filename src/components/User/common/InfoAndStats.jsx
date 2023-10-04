@@ -8,9 +8,7 @@ import {
 } from "react-icons/fa";
 import { usePopupContext } from "../../../context/PopupContextProvider";
 import { SharePopup } from "../../Popups";
-import { Link } from "react-router-dom";
-import { followUser } from "../../../apis/user.api";
-import { useUserContext } from "../../../context/UserContextProvider";
+import { auth } from "../../../firebase/auth";
 
 const InfoAndStats = ({ userInfo }) => {
   console.log("fbdjfdf", userInfo);
@@ -75,14 +73,15 @@ const InfoAndStats = ({ userInfo }) => {
                 Share
               </button>
             </li>
-            <li className="flex justify-center items-center">
-              <button
-                className="bg-secondary border border-6 py-[10px] px-[20px] m-[0px] rounded-[5px] font-[600]"
-                onClick={followUserName}
-              >
-                Follow
-              </button>
-            </li>
+            {auth?.currentUser?.email !== userInfo?.email ? (
+              <li className="flex justify-center items-center">
+                <button className="bg-secondary border border-6 py-[10px] px-[20px] m-[0px] rounded-[5px] font-[600]">
+                  Follow
+                </button>
+              </li>
+            ) : (
+              ""
+            )}
           </ul>
         </div>
         <div className="w-full flex items-start justify-between px-6">

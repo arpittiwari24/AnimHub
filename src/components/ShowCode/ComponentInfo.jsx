@@ -4,77 +4,22 @@ import { FaRegCalendarCheck } from "react-icons/fa";
 import { auth } from "../../firebase/auth";
 import { AiFillGithub } from "react-icons/ai";
 import dummyProfileImg from "../../assets/dummyImage.jpg";
-import { EditorContext } from "../../context/EditorContextProvider";
 
-import { formatCustomDate } from "../../utils/formatCustomDate";
+import { formatDateMongoDB } from "../../utils/formatDateMongoDB";
 import { FaScaleBalanced } from "react-icons/fa6";
 import { getCookie } from "../../context/AuthContextProviders";
 import { getUserData } from "../../apis/user.api";
 import { Link } from "react-router-dom";
 
-const ComponentInfo = () => {
-  const { email, photoURL, displayName } = auth.currentUser;
-  const { tags, setTags, langCategory } = useContext(EditorContext);
+const ComponentInfo = ({ data }) => {
+  const [userData, setUserData] = useState(data);
+
   useEffect(() => {
-    setTags([langCategory.category.toLowerCase()]);
-  }, []);
-  const [userData, setUserData] = useState({});
+    setUserData(data);
+  }, [data]);
 
-  // async function getData() {
-  //   const userCookie = getCookie("user");
-  //   const userEmail = JSON.parse(userCookie).email;
-  //   // const userEmail = "omgawandeofficial9834899149@gmail.com"
-  //   const fetchedUserInfo = await getUserData(userEmail);
-  //   setUserData(fetchedUserInfo);
-  //   console.log(fetchedUserInfo, userData);
-  //   return;
-  // }
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const userCookie = getCookie("user");
-        const userEmail = JSON.parse(userCookie).email;
-        const response = await getUserData(userEmail);
-
-        if (response) {
-          setUserData(response);
-        } else {
-          console.log("No data fetched");
-        }
-      } catch (error) {
-        console.log("Could not fetch user profile.", error);
-      }
-    };
-    fetchData(); // Call the async function directly
-    console.log(userData);
-  }, []); // Empty dependency array to run once on mount
-
-  const addTags = (e) => {
-    if (e.key === "Enter" || e.key === ",") {
-      e.preventDefault(); // Prevent adding a new line or comma
-      const inputValue = e.target.value.trim(); // Trim whitespace
-      if (inputValue && !tags.includes(inputValue)) {
-        setTags([...tags, inputValue]);
-      }
-      e.target.value = "";
-    } else if (e.key === "Backspace" && e.target.value === "") {
-      // Backspace pressed on an empty input field, navigate to the last tag
-      e.preventDefault(); // Prevent browser navigation
-      const lastTagIndex = tags.length - 1;
-      if (lastTagIndex >= 0) {
-        const input = document.getElementById("tag-input");
-        if (input) {
-          if (lastTagIndex === 0) {
-            // If there's only one tag, don't delete it
-            input.value = "";
-          } else {
-            input.value = tags[lastTagIndex];
-            setTags(tags.slice(0, lastTagIndex));
-          }
-        }
-      }
-    }
-  };
+  const { name, profilePicUrl, username } = userData?.userId || {};
+  const { category, tags, langauage } = userData || {};
 
   return (
     <div className="w-full full flex flex-col rounded-t-[15px] overflow-scroll">
@@ -88,11 +33,11 @@ const ComponentInfo = () => {
         <div className="w-full flex border-[#f00] gap-[20px] items-center">
           <div className="rounded-full w-[50px]">
             <Link
-              to={`/profile/${userData.username}`}
+              to={`/profile/${username}`}
               className="font-[400] text-[14px] text-[#FFA31A]"
             >
               <img
-                src={photoURL || dummyProfileImg}
+                src={profilePicUrl || dummyProfileImg}
                 alt="ProfileImg"
                 className="w-full rounded-full"
               />
@@ -100,14 +45,12 @@ const ComponentInfo = () => {
           </div>
           <div className="flex-grow">
             <Link
-              to={`/profile/${userData.username}`}
+              to={`/profile/${username}`}
               className="font-[400] text-[14px] text-[#FFA31A]"
             >
-              <h1 className="font-[600] text-[20px] text-[#ffffff]">
-                {displayName}
-              </h1>
+              <h1 className="font-[600] text-[20px] text-[#ffffff]">{name}</h1>
 
-              <h2>{userData.username}</h2>
+              <h2>{username}</h2>
             </Link>
           </div>
           <AiFillGithub
@@ -118,26 +61,26 @@ const ComponentInfo = () => {
         <hr className="w-[90%] border border-[#555]" />
         <div className="w-full flex justify-between items-center gap-[10px]">
           <h1 className="text-[25px] font-[700] leading-none">
-            {langCategory.category}
+            {category}
             <br />
-            {tags.map((tag) => (
+            {tags?.map((tag) => (
               <span className="text-[15px] font-[400] text-[#aaa] ">
                 #{tag},{" "}
               </span>
             ))}
 
-            <input
+            {/* <input
               id="tag-input"
               type="text"
               className="w-[100px] h-[30px] bg-[#151515] border border-[#555] rounded-[5px] text-[#aaa] font-[400] text-[15px] px-[10px]"
               placeholder="Add Tags"
               onKeyDown={addTags}
-            />
+            /> */}
           </h1>
           <h2>
             <span className="flex items-center gap-[10px] text-[#786666] font-[700]">
               <FaRegCalendarCheck />
-              {formatCustomDate(Date.now())}
+              {formatDateMongoDB(data?.createdAt)}
             </span>
           </h2>
         </div>
@@ -148,8 +91,8 @@ const ComponentInfo = () => {
           </div>
           <div className="bg-[#292929] px-6 py-4 rounded-md h-[300px] min-h-[200px] overflow-scroll ">
             <p>
-              Copyright - {new Date(Date.now()).getFullYear()}{" "}
-              {userData.username} ({displayName}){" "}
+              Copyright - {new Date(Date.now()).getFullYear()} {username} (
+              {name}){" "}
             </p>
 
             <p>
