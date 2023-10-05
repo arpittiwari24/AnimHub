@@ -40,7 +40,7 @@ export const routesData = [
   {
     path: "/profile/:username",
     component: Profile,
-    authenticated: true,
+    authenticated: false,
   },
   {
     path: "/admin",
