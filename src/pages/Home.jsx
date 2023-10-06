@@ -5,63 +5,54 @@ import { Pagination } from "../components/common";
 import { getVerifiedComponents } from "../apis/components.api";
 import ReactGA from "react-ga4";
 
+const ITEMS_PER_PAGE = 12;
+
 const Home = () => {
   const [componentsData, setComponentsData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1); // Initialize with 1 page
+  const ulContainerRef = useRef(null);
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(false);
+
+  const handleData = async () => {
+    const data = await getVerifiedComponents();
+    setComponentsData(data);
+
+    // Calculate the total number of pages based on the components data
+    const totalPages = Math.ceil(data.length / ITEMS_PER_PAGE);
+    setTotalPages(totalPages);
+  };
+
   function handle() {
     alert("Are you sure you want to leave the page?");
     return;
   }
-  const handleData = async () => {
-    const data = await getVerifiedComponents();
-    setComponentsData(data);
-    console.log(componentsData);
-  };
+
   useEffect(() => {
-    // ReactGA.pageview(window.location.pathname)
-    // ReactGA.event({"page_path": window.location.pathname})
     ReactGA.send({ hitType: "pageview", page: window.location.pathname });
     window.addEventListener("beforeunload", handle);
     handleData();
-    console.log(componentsData);
   }, []);
-
-  // return () => {
-  // window.removeEventListener("beforeunload", (e) => {
-  // e.preventDefault();
-  // return "Are you sure you want to leave the page?";
-  // });
-  // };
-  const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 100; // Replace with the actual total number of pages
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
-    // You can also load data for the selected page here
   };
-  // Reference to the ul container
-  const ulContainerRef = useRef(null);
 
-  // State to track whether the arrows should be visible
-  const [showLeftArrow, setShowLeftArrow] = useState(false);
-  const [showRightArrow, setShowRightArrow] = useState(false);
-
-  // Function to scroll the ul container left
   const scrollLeft = () => {
     ulContainerRef.current.scrollTo({
-      left: ulContainerRef.current.scrollLeft - 500, // Adjust the scroll distance as needed
-      behavior: "smooth", // Add smooth scrolling
+      left: ulContainerRef.current.scrollLeft - 500,
+      behavior: "smooth",
     });
   };
 
-  // Function to scroll the ul container right
   const scrollRight = () => {
     ulContainerRef.current.scrollTo({
-      left: ulContainerRef.current.scrollLeft + 500, // Adjust the scroll distance as needed
-      behavior: "smooth", // Add smooth scrolling
+      left: ulContainerRef.current.scrollLeft + 500,
+      behavior: "smooth",
     });
   };
 
-  // Check if there's content to scroll on mount and when the scroll position changes
   useEffect(() => {
     const container = ulContainerRef.current;
 
@@ -73,20 +64,23 @@ const Home = () => {
     };
 
     container.addEventListener("scroll", handleScroll);
-    handleScroll(); // Check on mount
+    handleScroll();
 
     return () => {
       container.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
-  // Function to temporarily disable the scrollbar during scrolling
   const disableScrollbar = () => {
     ulContainerRef.current.style.overflow = "hidden";
     setTimeout(() => {
       ulContainerRef.current.style.overflow = "scroll";
-    }, 1000); // Adjust the delay as needed
+    }, 1000);
   };
+
+  // Calculate the start and end index of components for the current page
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = currentPage * ITEMS_PER_PAGE;
 
   return (
     <>
@@ -137,7 +131,7 @@ const Home = () => {
         </div>
         <div className="w-full h-auto flex flex-wrap gap-8 my-10 justify-between items-center">
           {/* cards */}
-          {componentsData.map((card, index) => {
+          {componentsData.slice(startIndex, endIndex).map((card, index) => {
             return <ComponentCard key={index} data={card} />;
           })}
         </div>
