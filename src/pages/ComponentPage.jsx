@@ -103,8 +103,9 @@ const ComponentPage = () => {
               </button> */}
               {/* <Button label="Create" onClick={handleSave} /> */}
 
+              {/* <Button label="Update" onClick={handleUpdate} /> */}
               {component?.email === auth?.currentUser?.email || userData.isAdmin ? <Button label="Update" onClick={updateHandler}/> : <></>}
-              {userData?.isAdmin && (
+              {userData?.isAdmin && !component.verified && (
                 <>
                   <div className="flex justify-between bg-[#212121] border-[#333333] min-w-[400px] items-center p-2 rounded-sm pl-4">
                     <input
