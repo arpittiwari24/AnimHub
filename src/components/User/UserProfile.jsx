@@ -10,7 +10,7 @@ const UserProfile = ({profile}) => {
       <div className="flex justify-center items-center flex-col px-12">
         <Banner userInfo={profile} />
         <InfoAndStats userInfo={profile} />
-        {/* <Components userInfo={profile} /> */}
+        <Components userInfo={profile} />
       </div>
     </>
   );

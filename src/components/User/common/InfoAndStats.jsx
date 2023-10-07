@@ -9,6 +9,7 @@ import {
 import { usePopupContext } from "../../../context/PopupContextProvider";
 import { SharePopup } from "../../Popups";
 import { auth } from "../../../firebase/auth";
+import { useUserContext } from "../../../context/UserContextProvider";
 
 const InfoAndStats = ({ userInfo }) => {
   console.log("fbdjfdf", userInfo);

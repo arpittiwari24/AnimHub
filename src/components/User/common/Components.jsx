@@ -18,10 +18,13 @@ const Components = ({ userInfo }) => {
       <div className="w-full flex justify-between items-start">
         <div className="w-[70%] h-auto flex flex-wrap gap-4 my-10 justify-between items-center">
           {/* cards */}
-          {info.components &&
-            info.components.map((card, index) => (
+          {info?.components &&
+            info?.components.map((card, index) => (
               <ComponentCard key={index} data={card} />
             ))}
+            {info?.components?.length === 0 && (
+              <h1 className="text-[25px]">No Components</h1>
+            )}
         </div>
         <div className="w-[30%] my-10 px-10 flex flex-col justify-center items-start ">
           <h2 className="w-full bg-[#292929] px-10 py-2 font-[500] text-[20px]">
