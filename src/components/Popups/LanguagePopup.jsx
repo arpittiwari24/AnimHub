@@ -3,6 +3,7 @@ import { RxCross1 } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
 import { EditorContext } from "../../context/EditorContextProvider";
 import { getAllCategories } from "../../apis/category.api";
+import { Loader } from "../common";
 import { toast } from "react-hot-toast";
 
 const languages = [
@@ -14,7 +15,8 @@ const languages = [
 
 const LanguagePopup = ({ closePopup }) => {
   const { langCategory, setLangCategory } = useContext(EditorContext);
-  console.log("contexr", langCategory);
+  const [loading, setLoading] = useState(true);
+  // console.log("contexr", langCategory);
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const handleSubmit = () => {
@@ -31,6 +33,7 @@ const LanguagePopup = ({ closePopup }) => {
   const getCategories = async () => {
     const categories = await getAllCategories();
     setCategories(categories);
+    setLoading(false);
     console.log(categories);
   };
   useEffect(() => {
@@ -69,6 +72,11 @@ const LanguagePopup = ({ closePopup }) => {
             {category.name.toUpperCase()}
           </button>
         ))}
+        {loading && (
+          <div className="flex justify-center items-center w-full">
+            <Loader />
+          </div>
+        )}
       </div>
       <div className="languages my-10">
         <h1 className="mx-9 font-[600] text-[30px]">Language</h1>

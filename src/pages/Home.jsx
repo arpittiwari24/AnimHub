@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import ComponentCard from "../components/common/ComponentCard";
-import { Pagination } from "../components/common";
+import { Loader, Pagination } from "../components/common";
 import { getVerifiedComponents } from "../apis/components.api";
 import ReactGA from "react-ga4";
 
@@ -14,10 +14,12 @@ const Home = () => {
   const ulContainerRef = useRef(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const handleData = async () => {
     const data = await getVerifiedComponents();
     setComponentsData(data);
+    setLoading(false);
 
     // Calculate the total number of pages based on the components data
     const totalPages = Math.ceil(data.length / ITEMS_PER_PAGE);
@@ -134,6 +136,11 @@ const Home = () => {
           {componentsData.slice(startIndex, endIndex).map((card, index) => {
             return <ComponentCard key={index} data={card} />;
           })}
+          {loading && (
+            <div className="flex justify-center items-center w-full">
+              <Loader />
+            </div>
+          )}
         </div>
         <div className="w-full px-12 mt-2 flex justify-center items-center">
           <Pagination
