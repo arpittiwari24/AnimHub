@@ -13,8 +13,8 @@ const SharePopup = ({ closePopup, id }) => {
   let url = `${window.location.href}component/${id}`;
 
   const shareOnWhatsApp = () => {
-    const url = encodeURIComponent(url); // Replace with your actual URL
-    const message = encodeURIComponent("Check out this URL: " + url);
+    const newUrl = encodeURIComponent(url); // Replace with your actual URL
+    const message = encodeURIComponent("Check out this URL: " + newUrl);
     const whatsappURL = `https://wa.me/?text=${message}`;
     window.open(whatsappURL);
   };
@@ -26,14 +26,14 @@ const SharePopup = ({ closePopup, id }) => {
   };
 
   const shareOnTwitter = () => {
-    const url = encodeURIComponent(url); // Replace with your actual URL
-    const twitterURL = `https://twitter.com/intent/tweet?url=${url}`;
+    const newUrl = encodeURIComponent(url); // Replace with your actual URL
+    const twitterURL = `https://twitter.com/intent/tweet?url=${newUrl}`;
     window.open(twitterURL);
   };
 
   const shareOnLinkedIn = () => {
-    const url = encodeURIComponent(url); // Replace with your actual URL
-    const linkedInURL = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+    const newUrl = encodeURIComponent(url); // Replace with your actual URL
+    const linkedInURL = `https://www.linkedin.com/sharing/share-offsite/?url=${newUrl}`;
     window.open(linkedInURL);
   };
 
