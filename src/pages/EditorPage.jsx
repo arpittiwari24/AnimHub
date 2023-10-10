@@ -106,7 +106,7 @@ const EditorPage = () => {
                 Create New
               </button> */}
               <Button label="Create" onClick={handleSave} />
-              <Button label="Update" onClick={handleUpdate} />
+              {/* <Button label="Update" onClick={handleUpdate} /> */}
             </div>
             <Link className="w-12 h-12" to="/dashboard">
               <img

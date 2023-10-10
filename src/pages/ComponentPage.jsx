@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { useParams } from "react-router-dom";
-import { getComponentById } from "../apis/components.api";
+import { getComponentById, updateComponent } from "../apis/components.api";
 import { getUserData } from ".././apis/user.api";
 import { getCookie } from "../context/AuthContextProviders";
 import { Button } from "../components/common";
@@ -13,6 +13,7 @@ import { auth } from "../firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { verifyComponent } from "../apis/admin.api";
 import { IoMdCheckmark } from "react-icons/io";
+import toast from "react-hot-toast";
 
 const ComponentPage = () => {
   const [userData, setUserData] = useState({});
@@ -20,9 +21,22 @@ const ComponentPage = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [component, setComponent] = useState(null);
+  const [updatedState, setUpdatedState] = useState({
+    html: "",
+    css: "",
+    js: "",
+    tailwind: "",
+  });
   const getComponentData = async () => {
     const fetchedComponent = await getComponentById(id);
+    console.log("fetched", fetchedComponent);
     setComponent(fetchedComponent);
+    setUpdatedState({
+      html: fetchedComponent?.code[0]?.html,
+      css: fetchedComponent?.code[0]?.css,
+      js: fetchedComponent?.code[0]?.javascript,
+      tailwind: fetchedComponent?.code[0]?.tailwind,
+    });
   };
   const { photoURL } = auth?.currentUser || false;
 
@@ -41,19 +55,40 @@ const ComponentPage = () => {
       } catch (error) {
         console.log("Could not fetch user profile.", error);
       }
-      // if (userData.isAdmin) {
-      //   setIsAdmin(true);
-      // } else {
-      //   navigate("/dashboard");
-      // }
     };
     fetchData();
+    console.log("userData123", component?.email);
+    console.log("currentUser", auth?.currentUser?.email);
+    console.log("not same", userData?.email !== auth?.currentUser?.email);
+
     getComponentData();
-  }, [id]);
+  }, []);
   console.log(userData);
+
   const handleVerification = async (componentId, email, score) => {
     const res = await verifyComponent(componentId, email, score);
     console.log(res);
+    toast.success("Component Verified Successfully");
+    navigate("/dashboard");
+  };
+
+  const updateHandler = async () => {
+    const data = {
+      ...component,
+      componentId: component._id,
+      code: [
+        {
+          html: updatedState.html,
+          css: updatedState.css,
+          javascript: updatedState.js,
+          tailwind: updatedState.tailwind,
+        },
+      ],
+    };
+    console.log("SData", data);
+    const updatedMsg = await updateComponent(data);
+    console.log(updatedMsg);
+    toast.success("Component Updated Successfully");
   };
   return (
     <>
@@ -74,7 +109,13 @@ const ComponentPage = () => {
               {/* <Button label="Create" onClick={handleSave} /> */}
 
               {/* <Button label="Update" onClick={handleUpdate} /> */}
-              {userData?.isAdmin && !component?.verified && (
+              {component?.email === auth?.currentUser?.email ||
+              userData.isAdmin ? (
+                <Button label="Update" onClick={updateHandler} />
+              ) : (
+                <></>
+              )}
+              {userData?.isAdmin && !component.verified && (
                 <>
                   <div className="flex justify-between bg-[#212121] border-[#333333] min-w-[400px] items-center p-2 rounded-sm pl-4">
                     <input
@@ -109,7 +150,11 @@ const ComponentPage = () => {
           className="w-full h-full flex justify-between items-center px-12"
           style={{ height: "calc(100vh - 64px)" }}
         >
-          <CodeEditor data={component} />
+          <CodeEditor
+            data={component}
+            updatedState={updatedState}
+            setUpdatedState={setUpdatedState}
+          />
         </div>
       </div>
     </>

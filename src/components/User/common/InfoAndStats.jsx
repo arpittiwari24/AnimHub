@@ -9,12 +9,14 @@ import {
 import { usePopupContext } from "../../../context/PopupContextProvider";
 import { SharePopup } from "../../Popups";
 import { auth } from "../../../firebase/auth";
+import { useUserContext } from "../../../context/UserContextProvider";
 
 const InfoAndStats = ({ userInfo }) => {
   console.log("fbdjfdf", userInfo);
   const [info, setInfo] = useState(userInfo);
   const [activeTab, setActiveTab] = useState("home");
   const { isOpen, popupContent, openPopup, closePopup } = usePopupContext();
+  const {userData} = useUserContext()
   const openSharePopup = () => {
     const content = (
       <div className="fixed flex justify-center items-center top-0 left-0 h-screen w-screen bg-[#00000070] z-20 p-6">
@@ -30,31 +32,33 @@ const InfoAndStats = ({ userInfo }) => {
     setInfo(userInfo);
   }, [info, userInfo]);
 
+  const followUserName = async () => {
+    console.log("follow");
+    const followRequest = await followUser(userData.email, userInfo.email);
+  }
+
   return (
     <>
       <div className="w-full flex flex-col items-center justify-center">
         <div className="w-full flex items-center justify-between py-2 ">
           <ul className="flex justify-center items-center gap-2">
             <li
-              className={`p-[10px] flex justify-center items-center cursor-pointer font-[600] ${
-                activeTab === "home" ? "border-b-4 border-primary" : ""
-              }`}
+              className={`p-[10px] flex justify-center items-center cursor-pointer font-[600] ${activeTab === "home" ? "border-b-4 border-primary" : ""
+                }`}
               onClick={() => setActiveTab("home")}
             >
               Home
             </li>
             <li
-              className={`p-[10px] flex justify-center items-center cursor-pointer font-[600] ${
-                activeTab === "stats" ? "border-b-4 border-primary" : ""
-              }`}
+              className={`p-[10px] flex justify-center items-center cursor-pointer font-[600] ${activeTab === "stats" ? "border-b-4 border-primary" : ""
+                }`}
               onClick={() => setActiveTab("stats")}
             >
               Stats
             </li>
             <li
-              className={`p-[10px] flex justify-center items-center cursor-pointer font-[600] ${
-                activeTab === "else" ? "border-b-4 border-primary" : ""
-              }`}
+              className={`p-[10px] flex justify-center items-center cursor-pointer font-[600] ${activeTab === "else" ? "border-b-4 border-primary" : ""
+                }`}
               onClick={() => setActiveTab("else")}
             >
               Anything Else
@@ -112,20 +116,23 @@ const InfoAndStats = ({ userInfo }) => {
           )}
 
           <div className="flex justify-center items-start">
-            <ul className="flex flex-col justify-center items-start mx-20 gap-[20px]">
-              {/* <li className="flex justify-center items-center gap-[10px]">
+            {info &&
+              <ul className="flex flex-col justify-center items-start mx-20 gap-[20px]">
+                {/* <li className="flex justify-center items-center gap-[10px]">
                 <FaTwitterSquare />
                 <a href={userInfo.socialLinks[]} className="text-opacity-100">Twitter</a>
               </li> */}
-              {info.socialLinks &&
-                info.socialLinks.map((link, idx) => {
-                  return (
-                    <li key={idx} className="text-white">
-                      {link}
-                    </li>
-                  );
-                })}
-            </ul>
+              {/* <Link target="_blank" to={userInfo.socialLinks[0]} className="flex justify-center items-center gap-[10px]">
+                <FaGithubSquare /> Github
+              </Link>
+              <Link target="_blank" to={userInfo.socialLinks[1]} className="flex justify-center items-center gap-[10px]">
+                <FaLinkedin /> LinkedIn
+              </Link>
+              <Link target="_blank" to={userInfo.socialLinks[2]} className="flex justify-center items-center gap-[10px]">
+                <FaInstagramSquare /> Instagram
+              </Link> */}
+              </ul>
+            }
             <div>
               <ComponentChart />
             </div>

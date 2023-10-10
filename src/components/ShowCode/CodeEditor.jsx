@@ -11,7 +11,7 @@ import { BiLogoTailwindCss } from "react-icons/bi";
 import toast from "react-hot-toast";
 import { editorThemes } from "./constants";
 
-const CodeEditor = ({ data }) => {
+const CodeEditor = ({ data, updatedState, setUpdatedState }) => {
   const [documentContent, setDocumentContent] = useState("");
   const [theme, setTheme] = useState("vs-dark");
   const [activeFile, setActiveFile] = useState("HTML");
@@ -116,16 +116,35 @@ const CodeEditor = ({ data }) => {
   const handlChange = (event) => {
     if (activeFile === "HTML") {
       setHtml(editorRef.current.getValue());
+      setUpdatedState((prevState) => ({
+        ...prevState,
+        "html": editorRef.current.getValue(),
+      }))
     }
     if (activeFile === "CSS") {
       setCss(editorRef.current.getValue());
+      setUpdatedState((prevState) => ({
+        ...prevState,
+        "css": editorRef.current.getValue(),
+      }))
     }
     if (activeFile === "JS") {
       setJs(editorRef.current.getValue());
+      setUpdatedState((prevState) => ({
+        ...prevState,
+        "js": editorRef.current.getValue(),
+      }))
     }
     if (activeFile === "Tailwind") {
       setTailwind(editorRef.current.getValue());
+      setUpdatedState((prevState) => ({
+        ...prevState,
+        "tailwind": editorRef.current.getValue(),
+      }))
     }
+
+    console.log("updatedState", updatedState);
+    
   };
 
   // const handleReset = () => {
