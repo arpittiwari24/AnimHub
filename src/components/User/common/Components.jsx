@@ -6,7 +6,7 @@ import { TbLoader3 } from "react-icons/tb";
 import { PiSlidersHorizontalBold } from "react-icons/pi";
 
 const Components = ({ userInfo }) => {
-  console.log(userInfo);
+  // console.log(userInfo);
   // console.log(userInfo.components[0]);
   const [info, setInfo] = useState(userInfo);
   useEffect(() => {
