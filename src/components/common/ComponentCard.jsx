@@ -1,23 +1,33 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import { AiFillEye, AiFillLike } from "react-icons/ai";
+import { AiFillEye, AiFillLike, AiFillDelete } from "react-icons/ai";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { abbreviateNumber } from "../../utils/numberAbbreviation";
 import { SharePopup } from "../Popups";
 import { usePopupContext } from "../../context/PopupContextProvider";
 import { RxCross2 } from "react-icons/rx";
 import { Link } from "react-router-dom";
+import { getCookie } from "../../context/AuthContextProviders";
+import { getUserData } from "../../apis/user.api";
+import { useUserContext } from "../../context/UserContextProvider";
+import DeletePopup  from "../Popups/DeletePopup";
 
 const ComponentCard = ({ data, view = 123 }) => {
+  // const [userEmail, setUserEmail] = useState("");
+  const email = JSON.parse(getCookie("user"))?.email;
+  const {userData} = useUserContext();
+  console.log("userData",userData);
   const [abbreviatedLikesCount, setAbbreviatedLikesCount] = useState("");
   const [abbreviatedViewsCount, setAbbreviatedViewsCount] = useState("");
   // console.log(data);
   const { css, html, js, tailwind } = data?.code[0] || {};
   const username = data?.userId?.username || "";
+  
   useEffect(() => {
     // Set the abbreviated count using the utility function
     setAbbreviatedLikesCount(abbreviateNumber(+data?.likeCounter));
     setAbbreviatedViewsCount(abbreviateNumber(view));
   }, [data?.likeCounter, view]);
+
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef(null);
   const { isOpen, popupContent, openPopup, closePopup } = usePopupContext();
@@ -33,22 +43,25 @@ const ComponentCard = ({ data, view = 123 }) => {
         setDropdownOpen(false);
       }
     }
-
     // Attach the event listener
     document.addEventListener("mousedown", handleClickOutside);
 
+    console.log("Component Data", data);
+
+    console.log("conditiom", data?.email, email, userData?.isAdmin);
     // Clean up the event listener when the component unmounts
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
-  const handleOpenPopup = () => {
+  const handleOpenPopup = (popUpName) => {
     const content = (
       <>
         <div className="fixed flex justify-center items-center top-0 left-0 h-screen w-screen bg-[#00000070] z-20 p-6">
           <div className="relative flex justify-center items-center bg-[#151515]  h-auto w-auto flex-col gap-4 rounded-md">
-            {<SharePopup id={data?._id} />}
+            {popUpName==="share" && <SharePopup id={data?._id} />}
+            {popUpName==="delete" && <DeletePopup email={data?.email} componentId={data?._id} closePopup={closePopup} />}
             <button className="absolute top-2 right-2" onClick={closePopup}>
               <RxCross2 className="text-3xl text-[#6a6a6a]" />
             </button>
@@ -150,12 +163,19 @@ const ComponentCard = ({ data, view = 123 }) => {
                     </li>
                   </Link>
                   <li
-                    onClick={handleOpenPopup}
+                    onClick={() => handleOpenPopup("share")}
                     className="px-4 py-2 text-lg font-semibold flex justify-start items-center gap-2"
                   >
                     <AiFillEye />
                     Download Code
                   </li>
+                  {(data.email===email || userData?.isAdmin) && <li
+                    onClick={() => handleOpenPopup("delete")}
+                    className="px-4 py-2 text-lg font-semibold flex justify-start items-center gap-2"
+                  >
+                    <AiFillDelete />
+                    Delete Component
+                  </li>}
                 </ul>
               </div>
             )}
