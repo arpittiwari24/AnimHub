@@ -13,6 +13,7 @@ import {
   Faq,
   EditorPage,
   ComponentPage,
+  Pricing,
 } from "./pages";
 import Launching from "./Launching/Launching";
 import { Confirm } from "./components/Popups";
@@ -121,6 +122,11 @@ export const routesData = [
     path: "/onboarding",
     component: OnBoardingPage,
     authenticated: true,
+  },
+  {
+    path: "/pricing",
+    component: Pricing,
+    authenticated: false,
   },
   {
     path: "*",

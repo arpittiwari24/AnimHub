@@ -115,7 +115,7 @@ const ComponentPage = () => {
               ) : (
                 <></>
               )}
-              {userData?.isAdmin && !component.verified && (
+              {userData?.isAdmin && !component?.verified && (
                 <>
                   <div className="flex justify-between bg-[#212121] border-[#333333] min-w-[400px] items-center p-2 rounded-sm pl-4">
                     <input
