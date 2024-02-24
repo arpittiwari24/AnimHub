@@ -4,6 +4,8 @@ import ComponentCard from "../components/common/ComponentCard";
 import { Loader, Pagination } from "../components/common";
 import { getVerifiedComponents } from "../apis/components.api";
 import ReactGA from "react-ga4";
+import { usePremiumContext } from "../context/IsPremiumContextProvider";
+import SearchModal from "../components/Navbar/SearchModal";
 
 const ITEMS_PER_PAGE = 12;
 
@@ -15,6 +17,7 @@ const Home = () => {
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
   const [loading, setLoading] = useState(true);
+  const {premium} = usePremiumContext()
 
   const handleData = async () => {
     const data = await getVerifiedComponents();
@@ -133,9 +136,19 @@ const Home = () => {
         </div>
         <div className="w-full h-auto flex flex-wrap gap-8 my-10 justify-between items-center">
           {/* cards */}
-          {componentsData.slice(startIndex, endIndex).map((card, index) => {
+          {componentsData
+          .slice(startIndex, endIndex)
+          .filter((component) => !component.premium || premium)
+          .map((card, index) => {
             return <ComponentCard key={index} data={card} />;
           })}
+           {premium &&
+          componentsData
+            .slice(startIndex, endIndex)
+            .filter((component) => component.premium)
+            .map((card, index) => (
+              <div key={index} className="hidden" /> // Empty container for hidden content
+            ))}
           {loading && (
             <div className="flex justify-center items-center w-full">
               <Loader />

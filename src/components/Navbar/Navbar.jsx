@@ -15,10 +15,12 @@ import { usePopupContext } from "../../context/PopupContextProvider";
 import { auth } from "../../firebase/auth";
 import { useAuthContext } from "../../context/AuthContextProviders";
 import { toast } from "react-hot-toast";
+import SearchModal from "./SearchModal";
 
 const Navbar = () => {
   const [isLeftSidebarOpen, setIsLeftSidebarOpen] = useState(false);
   const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(false);
+  const [searchValue, setSearchValue] = useState("")
   const { user } = useAuthContext();
   const { isOpen, popupContent, openPopup, closePopup } = usePopupContext();
   const handleOpenPopup = () => {
@@ -47,7 +49,7 @@ const Navbar = () => {
           </ul>
         </div>
 
-        <div className="px-12 py-1 flex justify-between items-center bg-[#0e0e0e]">
+        <div className="px-12 max-sm:px-6 py-1 flex justify-between items-center bg-[#0e0e0e]">
           <div className=" w-[70%] flex justify-center items-center ">
             <div className="flex justify-center items-center gap-4">
               <LeftSidebar
@@ -58,8 +60,12 @@ const Navbar = () => {
                 <DarkLogo width="180px" />
               </Link>
             </div>
+          
             <div className="w-full flex justify-center items-center gap-2">
-              <div className=" w-[70%] flex justify-center items-center bg-[#252525] px-4 py-[0.4rem] rounded-full">
+             <div className="w-full  lg:hidden">
+              <SearchModal />
+            </div>   
+            <div className=" w-[70%] flex justify-center items-center bg-[#252525] px-4 py-[0.4rem] rounded-full max-sm:hidden">
                 <BiSearch className="text-[#fff] text-2xl" />
                 <input
                   className="appearance-none focus:outline-none all-none w-full bg-[#252525] text-[#fff] text-sm h-8 px-2 py-1  "

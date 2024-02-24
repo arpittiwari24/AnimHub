@@ -4,6 +4,7 @@ import AuthContextProvider from "./AuthContextProviders";
 import { Toaster } from "react-hot-toast";
 import EditorContextProvider from "./EditorContextProvider";
 import UserContextProvider from "./UserContextProvider";
+import IsPremiumContextProvider from "./IsPremiumContextProvider";
 // import Analytics from "./Analytics";
 
 export default function Providers({ children }) {
@@ -14,7 +15,9 @@ export default function Providers({ children }) {
         <AuthContextProvider>
           <UserContextProvider >
             <EditorContextProvider>
-              {children}
+             <IsPremiumContextProvider>
+             {children}
+             </IsPremiumContextProvider>
             </EditorContextProvider>
           </UserContextProvider>
         </AuthContextProvider>
