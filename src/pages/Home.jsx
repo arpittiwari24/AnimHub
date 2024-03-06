@@ -6,6 +6,7 @@ import { getVerifiedComponents } from "../apis/components.api";
 import ReactGA from "react-ga4";
 import { usePremiumContext } from "../context/IsPremiumContextProvider";
 import SearchModal from "../components/Navbar/SearchModal";
+import { useUserContext } from "../context/UserContextProvider";
 
 const ITEMS_PER_PAGE = 12;
 
@@ -18,6 +19,7 @@ const Home = () => {
   const [showRightArrow, setShowRightArrow] = useState(false);
   const [loading, setLoading] = useState(true);
   const {premium} = usePremiumContext()
+  const {userData} = useUserContext()
 
   const handleData = async () => {
     const data = await getVerifiedComponents();
@@ -142,7 +144,7 @@ const Home = () => {
           .map((card, index) => {
             return <ComponentCard key={index} data={card} />;
           })}
-           {premium &&
+           {premium && userData?.email !== undefined &&
           componentsData
             .slice(startIndex, endIndex)
             .filter((component) => component.premium)

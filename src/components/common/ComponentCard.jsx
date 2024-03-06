@@ -167,7 +167,7 @@ const ComponentCard = ({ data, view = 123 }) => {
                     className="px-4 py-2 text-lg font-semibold flex justify-start items-center gap-2"
                   >
                  <a href={data?.code} rel="noopener noreferrer" target="_blank" download>   <AiOutlineDownload />
-                    Download Code</a>
+                    Download Code </a>
                   </li>
                   {(data.email===email || userData?.isAdmin) && <li
                     onClick={() => handleOpenPopup("delete")}

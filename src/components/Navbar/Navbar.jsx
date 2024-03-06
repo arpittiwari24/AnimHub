@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { DarkLogo } from "../../assets/logos/Logo";
 import { BiSearch } from "react-icons/bi";
@@ -16,13 +16,24 @@ import { auth } from "../../firebase/auth";
 import { useAuthContext } from "../../context/AuthContextProviders";
 import { toast } from "react-hot-toast";
 import SearchModal from "./SearchModal";
+import { getVerifiedComponents } from "../../apis/components.api";
+import { usePremiumContext } from "../../context/IsPremiumContextProvider";
 
 const Navbar = () => {
   const [isLeftSidebarOpen, setIsLeftSidebarOpen] = useState(false);
   const [isRightSidebarOpen, setIsRightSidebarOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("")
+  const [active, setActive] = useState(false)
   const { user } = useAuthContext();
   const { isOpen, popupContent, openPopup, closePopup } = usePopupContext();
+  const [componentsData, setComponentsData] = useState([])
+  const {premium} = usePremiumContext()
+  const category = []
+  const [loading, setLoading] = useState(false)
+  const [clicked, setClicked] = useState(false)
+  const [modalOpened, setModalOpened] = useState(false)
+
+  console.log(searchValue);
   const handleOpenPopup = () => {
     const content = user ? (
       <div className="fixed flex justify-center items-center top-0 left-0 h-screen w-screen bg-[#00000070] z-20 p-6">
@@ -35,6 +46,36 @@ const Navbar = () => {
     );
     openPopup(content);
   };
+  const handleChange = (event) => {
+    setSearchValue(event.target.value);
+  }
+  const handleClick = () => {
+    setActive(true)
+  }
+    const handleData = async () => {
+    const data = await getVerifiedComponents();
+    setComponentsData(data);
+    setLoading(false);
+  };
+  if(active === true) {
+    const button = document.getElementById('search-modal')
+    button.click()
+  }
+
+  useEffect(() => {
+    handleData()
+  },[])
+
+  for(let i=0;i< componentsData.length;i++){
+    category.push(componentsData[i].category)
+  }
+   const filteredComponents = componentsData.filter((component) =>
+    component.category.toLowerCase().includes(searchValue.toLowerCase())
+  );
+
+  const searchCategory = (searchValue) => {
+    return category.filter(item => item.toLowerCase().includes(searchValue.toLowerCase()));
+  }
 
   return (
     <>
@@ -65,12 +106,14 @@ const Navbar = () => {
              <div className="w-full  lg:hidden">
               <SearchModal />
             </div>   
-            <div className=" w-[70%] flex justify-center items-center bg-[#252525] px-4 py-[0.4rem] rounded-full max-sm:hidden">
-                <BiSearch className="text-[#fff] text-2xl" />
+            <div className=" w-[70%] flex justify-center items-center bg-[#252525] px-4 py-[0.4rem] rounded-full max-sm:hidden" id="search-modal" onClick={handleClick}>
+                {/* <BiSearch className="text-[#fff] text-2xl" /> */}
+                  <SearchModal />
                 <input
                   className="appearance-none focus:outline-none all-none w-full bg-[#252525] text-[#fff] text-sm h-8 px-2 py-1  "
                   type="text"
                   placeholder="Search Animated Components"
+                  onChange={handleChange}
                 />
               </div>
               <button className="null">

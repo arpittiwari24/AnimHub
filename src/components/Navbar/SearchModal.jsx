@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import  { useEffect, useState } from 'react'
 import { BiSearch } from 'react-icons/bi'
 import { usePremiumContext } from '../../context/IsPremiumContextProvider';
 import { getVerifiedComponents } from '../../apis/components.api';
@@ -9,10 +9,13 @@ const SearchModal = () => {
     const [searchValue, setSearchValue] = useState("")
     const [loading, setLoading] = useState(false)
     const [componentsData, setComponentsData] = useState([])
+    const [clicked, setClicked] = useState(false)
     const {premium} = usePremiumContext()
+    const category = []
 
     const handleChange = (event) => {
-    setSearchValue(event.target.value);  
+      setClicked(false)
+      setSearchValue(event.target.value);  
   };
 
 
@@ -25,11 +28,17 @@ const SearchModal = () => {
   useEffect(() => {
     handleData()
   },[])
-  // console.log(componentsData[0].category);
+
+  for(let i=0;i< componentsData.length;i++){
+    category.push(componentsData[i].category)
+  }
    const filteredComponents = componentsData.filter((component) =>
     component.category.toLowerCase().includes(searchValue.toLowerCase())
   );
 
+  const searchCategory = (searchValue) => {
+    return category.filter(item => item.toLowerCase().includes(searchValue.toLowerCase()));
+  }
 
   const toggleModal = () => {
     setIsOpen(!isOpen);
@@ -50,7 +59,6 @@ const SearchModal = () => {
               <span aria-hidden="true" className='text-black'>&times;</span>
             </button>
            <div className=" flex justify-center items-center bg-[#252525] px-4 py-[0.4rem] rounded-full ">
-                <BiSearch className="text-[#fff] text-2xl" />
                 <input
                   className="appearance-none focus:outline-none all-none w-full bg-[#252525] text-[#fff] text-sm h-8 px-2 py-1  "
                   type="text"
@@ -59,7 +67,7 @@ const SearchModal = () => {
                   onChange={handleChange}
                 />
               </div> 
-              {searchValue.length !== 0 &&  searchValue.length >= 3 &&
+              {searchValue.length !== 0 &&  searchValue.length >= 3 && clicked === true &&
               filteredComponents
           .filter((component) => !component.premium || premium)
           .map((card, index) => {
@@ -71,6 +79,22 @@ const SearchModal = () => {
             .map((card, index) => (
               <div key={index} className="hidden" /> // Empty container for hidden content
             ))}
+
+           {searchValue.length !== 0 && searchValue.length >= 1 && clicked === false &&
+          Array.from(new Set(searchCategory(searchValue))).map((categoryName, index) => {
+        return (
+          <div key={index} className='shadow'>
+            <button onClick={() => {
+              setClicked(true)
+              setSearchValue(categoryName)
+            }} className='text-black text-xl'>{categoryName}</button>
+          </div>
+        );
+    })
+}
+   {searchValue.length !== 0 && searchValue.length >= 1 && Array.from(new Set(searchCategory(searchValue))).length === 0 &&
+       <p className='text-black text-xl'>No results found.</p>
+   }
             {loading && <p>Loading...</p>}
           </div>
         </div>

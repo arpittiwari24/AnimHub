@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { Button } from "../components/common";
 import { FaCircleCheck } from "react-icons/fa6";
 import { useUserContext } from "../context/UserContextProvider";
@@ -182,6 +182,16 @@ const SuccessDisplay =  ({ sessionId}) => {
   const {userData} = useUserContext();
   const email = userData?.email
   console.log("email:", email)
+
+  useEffect(() => {
+  const button = document.getElementById('checkout-and-portal-button');
+  if (button) {
+    // Add a delay if necessary
+    setTimeout(() => {
+      button.click();
+    }, 500); // Delay of 500 milliseconds
+  }
+}, []);
 
   return (
     <section>
