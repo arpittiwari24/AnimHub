@@ -46,9 +46,7 @@ const Navbar = () => {
     );
     openPopup(content);
   };
-  const handleChange = (event) => {
-    setSearchValue(event.target.value);
-  }
+
   const handleClick = () => {
     setActive(true)
   }
@@ -57,10 +55,6 @@ const Navbar = () => {
     setComponentsData(data);
     setLoading(false);
   };
-  if(active === true) {
-    const button = document.getElementById('search-modal')
-    button.click()
-  }
 
   useEffect(() => {
     handleData()
@@ -81,7 +75,7 @@ const Navbar = () => {
     <>
       <div className="w-full flex flex-col ">
         <div className="flex justify-center items-center">
-          <ul className=" w-full flex justify-center items-center gap-4 py-1 bg-black">
+          <ul className=" w-full flex justify-center items-center gap-4 max-sm:gap-3 py-1 bg-black flex-wrap">
             {subNavLinks.map((link) => (
               <li className=" text-[#969696]">
                 <Link to={link.path}>{link.name}</Link>
@@ -106,16 +100,15 @@ const Navbar = () => {
              <div className="w-full  lg:hidden">
               <SearchModal />
             </div>   
-            <div className=" w-[70%] flex justify-center items-center bg-[#252525] px-4 py-[0.4rem] rounded-full max-sm:hidden" id="search-modal" onClick={handleClick}>
+            <button className=" w-[70%] flex justify-center items-center bg-[#252525] px-4 py-[0.4rem] rounded-full max-sm:hidden" id="search-modal" onClick={handleClick}>
                 {/* <BiSearch className="text-[#fff] text-2xl" /> */}
                   <SearchModal />
                 <input
                   className="appearance-none focus:outline-none all-none w-full bg-[#252525] text-[#fff] text-sm h-8 px-2 py-1  "
                   type="text"
                   placeholder="Search Animated Components"
-                  onChange={handleChange}
                 />
-              </div>
+              </button>
               <button className="null">
                 <BsPlusCircleFill
                   className="text-[#c6c6c6] text-3xl"
@@ -135,8 +128,8 @@ const Navbar = () => {
           </div>
         </div>
 
-        <div className="px-12 py-1 pb-0 flex justify-between items-center  bg-[#0e0e0e]">
-          <ul className="grid grid-cols-8 justify-items-center w-full h-full items-center mx-auto">
+        <div className="px-12 py-1 pb-0 flex justify-between items-center bg-[#0e0e0e]">
+          <ul className="lg:grid lg:grid-cols-8 max-sm:flex max-sm:flex-wrap justify-items-center w-full h-full items-center mx-auto">
             {navLinks.map((link) => (
               <li className="group grid w-full h-auto  text-[#fff] font-bold cursor-pointer">
                 <a className="group-hover:bg-[#333333] group-hover:border-[#363636] border-[1px] border-[transparent] transition duration-30">
@@ -162,13 +155,13 @@ const Navbar = () => {
             ))}
           </ul>
         </div>
-        <div className="flex gap-1 py-1 justify-center items-center bg-[#1b1b1b]">
+        <div className="flex gap-1 max-sm:gap-0 py-1 justify-center items-center bg-[#1b1b1b] max-sm:text-center">
           <PiWarningCircleFill className="text-[#c6c6c6] text-2xl" />
           <p className="">
             If you have anything for us or want to email us{" "}
             <a
               className=" 
-            text-[#c6c6c6] hover:text-[#7373ff] transition duration-30"
+            text-[#c6c6c6] hover:text-[#7373ff] transition duration-30 underline"
               href="mailto:hello@animhub.dev"
               target="_blank"
             >
