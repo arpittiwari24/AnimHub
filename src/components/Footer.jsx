@@ -10,8 +10,8 @@ import {
 
 const Footer = () => {
   return (
-    <footer className="h-auto w-full flex flex-col justify-center items-start mt-[28rem]">
-      <p className="text-center text-[12px] text-[#969696] leading-4 px-28 mb-12">
+    <footer className="h-auto w-full flex flex-col justify-center items-start mt-[28rem] max-sm:mt-[2rem]">
+      <p className="text-center text-[12px] text-[#969696] leading-4 px-28 max-sm:px-4 mb-12">
         At Animhub, our team is always busy, tinkering away like mad scientists,
         crafting and animating the wildest components for your web adventures.
         It's all here, and it's all 100% free, just like your favorite Saturday
@@ -111,18 +111,18 @@ const Footer = () => {
         </div>
         <div className="font-normal text-[#969696] pb-8">Language:</div>
       </div>
-      <div className="h-auto w-full bg-black flex justify-between items-center  px-[10vw] py-4">
+      <div className="h-auto w-full bg-black flex justify-between items-center px-[10vw] py-4 max-sm:px-[2vw]">
         <div className="flex gap-4">
           {social.map((item, key) => {
             return (
               <>
-                <div className="text-3xl ">{<item.comp />}</div>
+                <div className="text-3xl">{<item.comp />}</div>
               </>
             );
           })}
         </div>
-        <div>
-          <h2 className="text-[#969696] ">@Animhub.com,2023</h2>
+        <div className="">
+          <h2 className="text-[#969696]">&copy; {new Date().getFullYear()} . Animhub.dev</h2>
         </div>
       </div>
     </footer>
