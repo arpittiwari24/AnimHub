@@ -8,9 +8,9 @@ export async function getUserByEmail(data) {
 
 
 export async function getUserData(email) {
-  console.log("userId", email);
+  // console.log("userId", email);
   const response = await axiosDefaults.post("api/v1/user/getProfileData", {email})
-  console.log("resUser", response.data.profileData);
+  // console.log("resUser", response.data.profileData);
   return response.data.profileData;
 }
 

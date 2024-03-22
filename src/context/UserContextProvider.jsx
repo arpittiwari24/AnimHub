@@ -12,12 +12,12 @@ export const useUserContext = () => useContext(UserContext);
 const UserContextProvider = ({ children }) => {
 
     const [userData, setUserData] = useState(null);
+
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const userCookie = getCookie("user");
                 const response = await getUserData(JSON.parse(userCookie).email);
-                console.log(response);
                 if (response) {
                     setUserData(response);
                 } else {
@@ -27,7 +27,7 @@ const UserContextProvider = ({ children }) => {
                 console.log("Could not fetch user profile.", error);
             }
         };
-
+    
         fetchData();
     }, []);
 
