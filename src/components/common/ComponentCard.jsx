@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
-import { AiFillEye, AiFillLike, AiFillDelete } from "react-icons/ai";
+import { AiFillEye, AiFillLike, AiFillDelete, AiOutlineDownload } from "react-icons/ai";
 import { BiDotsVerticalRounded } from "react-icons/bi";
 import { abbreviateNumber } from "../../utils/numberAbbreviation";
 import { SharePopup } from "../Popups";
@@ -15,7 +15,7 @@ const ComponentCard = ({ data, view = 123 }) => {
   // const [userEmail, setUserEmail] = useState("");
   const email = JSON.parse(getCookie("user"))?.email;
   const {userData} = useUserContext();
-  console.log("userData",userData);
+  // console.log("userData",userData);
   const [abbreviatedLikesCount, setAbbreviatedLikesCount] = useState("");
   const [abbreviatedViewsCount, setAbbreviatedViewsCount] = useState("");
   // console.log(data);
@@ -153,7 +153,7 @@ const ComponentCard = ({ data, view = 123 }) => {
               <div className="absolute top-4 right-3 mt-2 w-64 px-2 py-1 bg-[#151515] rounded-lg shadow-lg z-10">
                 <ul>
                   <li className="px-4 py-2 text-lg font-semibold flex justify-start items-center gap-2">
-                    <AiFillEye />
+                    <AiFillLike />
                     Like
                   </li>
                   <Link to={`/component/${data?._id}`}>
@@ -163,11 +163,11 @@ const ComponentCard = ({ data, view = 123 }) => {
                     </li>
                   </Link>
                   <li
-                    onClick={() => handleOpenPopup("share")}
+                    // onClick={() => handleOpenPopup("share")}
                     className="px-4 py-2 text-lg font-semibold flex justify-start items-center gap-2"
                   >
-                    <AiFillEye />
-                    Download Code
+                 <a href={data?.code} rel="noopener noreferrer" target="_blank" download>   <AiOutlineDownload />
+                    Download Code </a>
                   </li>
                   {(data.email===email || userData?.isAdmin) && <li
                     onClick={() => handleOpenPopup("delete")}

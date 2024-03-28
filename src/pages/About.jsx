@@ -4,8 +4,13 @@ import tutorial from "../assets/tutorial.svg";
 import community from "../assets/community.svg";
 import tile from "../assets/tile.svg";
 import { AiFillYoutube } from "react-icons/ai";
+import { usePremiumContext } from "../context/IsPremiumContextProvider";
 
-const About = () => {
+const About =  () => {
+
+  const {premium} = usePremiumContext()
+  console.log(premium)
+
   return (
     <>
       <div className="w-full mt-10 flex flex-col">
@@ -18,11 +23,11 @@ const About = () => {
               </p>
             </div>
             <div className="w-full flex items-center p-1">
-              <p className="font-normal text-white opacity-70">
-                We are passionate about animation and creativity! Our website is
-                your gateway to a vibrant world of animated components, from
-                buttons and input fields to cards and more.
-              </p>
+            <p className="font-normal text-white opacity-70">
+               We are passionate about animation and creativity! Our website is
+               your gateway to a vibrant world of animated components, from
+               buttons and input fields to cards and more.
+             </p>
             </div>
             <div className="w-full flex items-center gap-10">
               <div className="flex flex-col items-center gap-1">
@@ -58,11 +63,15 @@ const About = () => {
             <p className="text-white font-semibold text-5xl">
               &lt;What we offer&gt;
             </p>
-            <p className="text-[#C6C6C6] text-center text-base font-normal">
+            {premium ? (
+              <p className="text-[#C6C6C6] text-center text-base font-normal">
               Whether you&apos;re an animation enthusiast, a UI/UX designer, or
               just someone who loves interactive content, you&apos;ve come to
               the right place!
             </p>
+            ) : (
+              <p></p>
+            )}
           </div>
           <div className="w-[80%] mx-auto flex justify-between ">
             <div className="flex flex-col items-center gap-4 w-[25%] text-center p-6 bg-[#151515] rounded-md">

@@ -13,11 +13,11 @@ import {
   Faq,
   EditorPage,
   ComponentPage,
-  Pricing,
 } from "./pages";
 import Launching from "./Launching/Launching";
 import { Confirm } from "./components/Popups";
 import NotFound from "./pages/NotFound";
+import Subscription from "./pages/Pricing";
 // import CustomRoute from "./CustomRoute"; // Import the CustomRoute component
 
 const launched = true;
@@ -125,7 +125,7 @@ export const routesData = [
   },
   {
     path: "/pricing",
-    component: Pricing,
+    component: Subscription,
     authenticated: false,
   },
   {
