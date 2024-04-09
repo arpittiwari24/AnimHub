@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import  { useEffect, useState } from "react";
 import { Button } from "../components/common";
 import { FaCircleCheck } from "react-icons/fa6";
@@ -12,7 +13,7 @@ const Pricing = () => {
   const yearlyPrice = import.meta.env.VITE_REACT_APP_yearly_price
   const monthlyPrice = import.meta.env.VITE_REACT_APP_monthly_price
   const dailyPrice = import.meta.env.VITE_REACT_APP_daily_price
-
+  const apiUrl = import.meta.env.VITE_REACT_APP_PROD_API_URL
 
   let payload
   let value
@@ -58,7 +59,7 @@ const Pricing = () => {
           </li>
         </ul>
         <div className="mt-4">
-          <form action="http://localhost:8000/api/v1/payments/create-checkout-session" content={payload} method="POST">
+          <form action= {`${apiUrl}/api/v1/payments/create-checkout-session`} content={payload} method="POST">
           <input
           type="hidden"
           id="lookup_key"
@@ -104,7 +105,7 @@ const Pricing = () => {
           </li>
         </ul>
         <div className="mt-4">
-          <form action="http://localhost:8000/api/v1/payments/create-checkout-session" content={payload} method="POST">
+          <form action={`${apiUrl}/api/v1/payments/create-checkout-session`} content={payload} method="POST">
           <input
           type="hidden"
           id="lookup_key"
@@ -150,7 +151,7 @@ const Pricing = () => {
           </li>
         </ul>
         <div className="mt-4">
-          <form action="http://localhost:8000/api/v1/payments/create-checkout-session" content={payload} method="POST">
+          <form action={`${apiUrl}/api/v1/payments/create-checkout-session`} content={payload} method="POST">
           <input
           type="hidden"
           id="lookup_key"
@@ -178,7 +179,7 @@ const Pricing = () => {
 };
 
 const SuccessDisplay =  ({ sessionId}) => {
-
+  const apiUrl = import.meta.env.VITE_REACT_APP_PROD_API_URL
   const {userData} = useUserContext();
   const email = userData?.email
   console.log("email:", email)
@@ -200,7 +201,7 @@ const SuccessDisplay =  ({ sessionId}) => {
           <h3>Subscription successful!</h3>
         </div>
       </div>
-      <form action='http://localhost:8000/api/v1/payments/create-portal-session'
+      <form action= {`${apiUrl}/api/v1/payments/create-portal-session`}
       method="POST"
       >
         <input
