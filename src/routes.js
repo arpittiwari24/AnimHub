@@ -18,6 +18,7 @@ import Launching from "./Launching/Launching";
 import { Confirm } from "./components/Popups";
 import NotFound from "./pages/NotFound";
 import Subscription from "./pages/Pricing";
+import Reels from "./pages/Reels";
 // import CustomRoute from "./CustomRoute"; // Import the CustomRoute component
 
 const launched = true;
@@ -126,6 +127,11 @@ export const routesData = [
   {
     path: "/pricing",
     component: Subscription,
+    authenticated: false,
+  },
+  {
+    path: "/reels",
+    component: Reels,
     authenticated: false,
   },
   {
