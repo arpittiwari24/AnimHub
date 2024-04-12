@@ -35,7 +35,7 @@ export default function Reels() {
 
 
   return (
-    <div className="grid place-items-center h-screen text-white">
+    <div className="grid place-items-center h-screen">
       <center>
           <div
             className="video-container w-full"
