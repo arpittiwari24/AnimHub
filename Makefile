@@ -3,5 +3,5 @@ run:
 
 push: 
 	   git add .
-		 git commit -m "updates"
-		 git push -u origin dev-test
+	   git commit -m "updates"
+	   git push -u origin dev-test

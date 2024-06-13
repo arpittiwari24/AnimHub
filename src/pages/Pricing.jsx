@@ -1,39 +1,26 @@
 /* eslint-disable react/prop-types */
-import  { useEffect, useState } from "react";
+
 import { Button } from "../components/common";
 import { FaCircleCheck } from "react-icons/fa6";
-import { useUserContext } from "../context/UserContextProvider";
-import { Link } from "react-router-dom";
 import { usePremiumContext } from "../context/IsPremiumContextProvider";
 
 const Pricing = () => {
 
   const {plan} = usePremiumContext()
   console.log(plan);
-  const yearlyPrice = import.meta.env.VITE_REACT_APP_yearly_price
-  const monthlyPrice = import.meta.env.VITE_REACT_APP_monthly_price
-  const dailyPrice = import.meta.env.VITE_REACT_APP_daily_price
+  const yearlyPrice = "415056"
+  const monthlyPrice = "415054"
+  const dailyPrice = "415019"
   const apiUrl = import.meta.env.VITE_REACT_APP_PROD_API_URL
 
   let payload
-  let value
-
-  const handleClick = () => {
-    const priceValue = document.getElementById("lookup_key")
-    value = priceValue.value
-  
-    payload = {
-      price: value
-    }
-  }
-
 
   return (
     <div className="flex flex-col items-center justify-center">
-    <h1 className="text-4xl font-bold mb-4">Choose Your Plan</h1>
+    <h1 className="text-4xl font-bold mb-4 text-center">Choose Your Plan</h1>
     <p className="text-gray-500 mb-8">Select the plan that suits you the best.</p>
     
-    <div className="flex justify-center gap-4">
+    <div className="flex max-sm:flex-col justify-center gap-4 max-sm:px-2">
       {/* Daily Plan */}
       <div className="bg-gray-900 p-8 rounded-lg shadow-md">
       <div className="flex flex-row gap-5 justify-center items-center">
@@ -58,15 +45,9 @@ const Pricing = () => {
             Access to all new Releases
           </li>
         </ul>
-        <div className="mt-4">
-          <form action= {`${apiUrl}/api/v1/payments/create-checkout-session`} content={payload} method="POST">
-          <input
-          type="hidden"
-          id="lookup_key"
-          name="price"
-          value={dailyPrice}
-        />
-            <Button
+        <div className="mt-4 text-center">
+        <a href="https://animhub.lemonsqueezy.com/buy/2b70e640-80f2-4d5a-8f5d-3a8b36a37876?embed=1">
+           <Button
               id="daily-plan-button"
               type="submit"
               label={"Buy now"}
@@ -74,9 +55,8 @@ const Pricing = () => {
               py={"4"}
               fontSize={"16px"}
               variant="primary"
-              onClick={handleClick}
             />
-          </form>
+           </a>
         </div>
       </div>
   
@@ -104,15 +84,9 @@ const Pricing = () => {
             Access to all new Releases
           </li>
         </ul>
-        <div className="mt-4">
-          <form action={`${apiUrl}/api/v1/payments/create-checkout-session`} content={payload} method="POST">
-          <input
-          type="hidden"
-          id="lookup_key"
-          name="price"
-          value={monthlyPrice}
-        />
-            <Button
+        <div className="mt-4 text-center">
+        <a href="https://animhub.lemonsqueezy.com/buy/802e0dc9-6658-4479-8b92-6ab522f74e2e?embed=1">
+           <Button
               id="monthly-plan-button"
               type="submit"
               label={"Buy now"}
@@ -120,9 +94,8 @@ const Pricing = () => {
               py={"4"}
               fontSize={"16px"}
               variant="primary"
-              onClick={handleClick}
             />
-          </form>
+           </a>
         </div>
       </div>
   
@@ -150,15 +123,9 @@ const Pricing = () => {
             Access to all new Releases
           </li>
         </ul>
-        <div className="mt-4">
-          <form action={`${apiUrl}/api/v1/payments/create-checkout-session`} content={payload} method="POST">
-          <input
-          type="hidden"
-          id="lookup_key"
-          name="price"
-          value={yearlyPrice}
-        />
-            <Button
+        <div className="mt-4 text-center">
+           <a href="https://animhub.lemonsqueezy.com/buy/8a66ea49-03b1-4651-8916-73f511d70e61?embed=1">
+           <Button
               id="yearly-plan-button"
               type="submit"
               label={"Buy now"}
@@ -166,9 +133,8 @@ const Pricing = () => {
               py={"4"}
               fontSize={"16px"}
               variant="primary"
-              onClick={handleClick}
             />
-          </form>
+           </a>
         </div>
       </div>
     </div>
@@ -178,95 +144,7 @@ const Pricing = () => {
   );
 };
 
-const SuccessDisplay =  ({ sessionId}) => {
-  const apiUrl = import.meta.env.VITE_REACT_APP_PROD_API_URL
-  const {userData} = useUserContext();
-  const email = userData?.email
-  console.log("email:", email)
+export default Pricing
 
-  useEffect(() => {
-  const button = document.getElementById('checkout-and-portal-button');
-  if (button) {
-    // Add a delay if necessary
-    setTimeout(() => {
-      button.click();
-    }, 500); // Delay of 500 milliseconds
-  }
-}, []);
-
-  return (
-    <section>
-      <div className="product Box-root">
-        <div className="description Box-root">
-          <h3>Subscription successful!</h3>
-        </div>
-      </div>
-      <form action= {`${apiUrl}/api/v1/payments/create-portal-session`}
-      method="POST"
-      >
-        <input
-          type="hidden"
-          id="session-id"
-          name="session_id"
-          value={sessionId}
-        />
-        <input
-          type="hidden"
-          id="email"
-          name="email"
-          value={email}
-        />
-        <Button id="checkout-and-portal-button" 
-        type="submit"  
-        label={"Click Here to return to Main Content"}
-              padx={"35px"}
-              pady={"15px"}
-              fontSize={"20px"} />
-      </form>
-    </section>
-  );
-};
-
-const Message = ({ message }) => (
-  <section>
-    <p>{message}</p>
-    <Button padx={"35px"}
-              pady={"15px"}
-              fontSize={"20px"}>
-    <Link to="/">Return to home page</Link>
-    </Button>
-  </section>
-);
-
-export default function Subscription() {
-  let [message, setMessage] = useState('');
-  let [success, setSuccess] = useState(false);
-  let [sessionId, setSessionId] = useState('');
-
-  useEffect(() => {
-    // Check to see if this is a redirect back from Checkout
-    const query = new URLSearchParams(window.location.search);
-
-    if (query.get('success')) {
-      setSuccess(true);
-      setSessionId(query.get('session_id'));
-    }
-
-    if (query.get('canceled')) {
-      setSuccess(false);
-      setMessage(
-        "Payment canceled -- continue to shop around and checkout when you're ready."
-      );
-    }
-  }, [sessionId]);
-
-  if (!success && message === '') {
-    return <Pricing />;
-  } else if (success && sessionId !== '') {
-    return <SuccessDisplay sessionId={sessionId} />;
-  } else {
-    return <Message message={message} />;
-  }
-}
 
 
