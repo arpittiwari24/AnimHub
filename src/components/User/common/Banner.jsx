@@ -28,11 +28,19 @@ const Banner = ({userInfo}) => {
             <h3 className="text-sm font-semibold text-white">User Rank</h3>
           </div>
           <div className="flex justify-center items-center flex-col ">
-            <h2 className="text-2xl font-bold text-white">230</h2>
+            <h2 className="text-2xl font-bold text-white">{userInfo !== undefined && userInfo?.followers !== undefined ? (
+              <p>{userInfo.points}</p>
+            ) : (
+              <p>0</p>
+            )}</h2>
             <h3 className="text-sm font-semibold text-white">Exp. Points</h3>
           </div>
           <div className="flex justify-center items-center flex-col ">
-            <h2 className="text-2xl font-bold text-white">100</h2>
+            <h2 className="text-2xl font-bold text-white">{userInfo !== undefined && userInfo?.followers !== undefined ? (
+              <span>{userInfo.followers.length}</span>
+            ): (
+             <span>1</span>
+            )}</h2>
             <h3 className="text-sm font-semibold text-white">Followers</h3>
           </div>
         </div>

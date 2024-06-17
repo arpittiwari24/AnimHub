@@ -100,7 +100,7 @@ const InfoAndStats = ({ userInfo }) => {
             </li>
             {auth?.currentUser?.email !== userInfo?.email ? (
               <li className="flex justify-center items-center">
-                {userData?.following.includes(userInfo?.id) || success === true ? (
+                {userData !== undefined && userData?.following.includes(userInfo?.id) || success === true ? (
                 <button onClick={unFollowUserName} className="bg-secondary border border-6 py-[10px] px-[20px] m-[0px] rounded-[5px] font-[600]">
                   Following
                 </button>
