@@ -26,3 +26,10 @@ export async function followUser(email, toBeFollowedEmail){
   console.log("fetched",response.data);
   return response.data;
 }
+
+export async function unFollowUser(email, toBeUnFollowedEmail){
+  console.log("Other Person Email", email, toBeUnFollowedEmail);
+  const response = await axiosDefaults.post("api/v1/user/unFollowUser",{email, toBeUnFollowedEmail});
+  console.log("fetched",response.data);
+  return response.data;
+}

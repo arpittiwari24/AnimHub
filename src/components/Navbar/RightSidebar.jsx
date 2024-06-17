@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import  { useState, useEffect, useRef, useContext } from "react";
 import { RxCross2 } from "react-icons/rx";
 import { FaCircleUser } from "react-icons/fa6";
 import {
@@ -13,12 +13,15 @@ import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { PiSignOutBold } from "react-icons/pi";
 import { Link } from "react-router-dom";
+import { useUserContext } from "../../context/UserContextProvider";
 
 const RightSidebar = ({ isRightSidebarOpen, setIsRightSidebarOpen }) => {
   const navigate = useNavigate();
   //   const [isOpen, setIsOpen] = useState(isRightSidebarOpen);
   const { isOpen, popupContent, openPopup, closePopup } = usePopupContext();
   const [auth1, setAuth] = useState(false);
+  const { userData } = useUserContext();
+
   const handleOpenPopup = (popup) => {
     const content = (
       <>
@@ -94,7 +97,7 @@ const RightSidebar = ({ isRightSidebarOpen, setIsRightSidebarOpen }) => {
                           to="/dashboard"
                           className="text-white text-xl font-bold"
                         >
-                          Username
+                          {userData?.username}
                         </Link>
                         <h3 className="text-white text-sm font-bold">
                           See your profile

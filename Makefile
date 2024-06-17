@@ -3,5 +3,5 @@ run:
 
 push: 
 	   git add .
-	   git commit -m "updates"
+	   git commit -m "added follow unfollow"
 	   git push -u origin dev-test

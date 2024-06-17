@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState, useEffect } from "react";
 import ComponentChart from "./ComponentChart";
 import {
@@ -10,9 +11,11 @@ import { usePopupContext } from "../../../context/PopupContextProvider";
 import { SharePopup } from "../../Popups";
 import { auth } from "../../../firebase/auth";
 import { useUserContext } from "../../../context/UserContextProvider";
+import { followUser, unFollowUser } from "../../../apis/user.api";
 
 const InfoAndStats = ({ userInfo }) => {
   console.log("fbdjfdf", userInfo);
+  const [success, setSuccess] = useState(false)
   const [info, setInfo] = useState(userInfo);
   const [activeTab, setActiveTab] = useState("home");
   const { isOpen, popupContent, openPopup, closePopup } = usePopupContext();
@@ -30,11 +33,32 @@ const InfoAndStats = ({ userInfo }) => {
 
   useEffect(() => {
     setInfo(userInfo);
-  }, [info, userInfo]);
+  }, [info, userInfo, success]);
 
   const followUserName = async () => {
     console.log("follow");
-    const followRequest = await followUser(userData.email, userInfo.email);
+    // eslint-disable-next-line react/prop-types
+    const followRequest = await followUser(userData.email, userInfo?.email);
+
+    if(followRequest.success === true) {
+      setSuccess(true)
+    } else {
+      setSuccess(false)
+    }
+  }
+
+  const unFollowUserName = async () => {
+    console.log("unFollow")
+
+    const unFollowRequest = await unFollowUser(userData.email, userInfo?.email)
+
+    console.log(unFollowRequest);
+
+    if(unFollowRequest.success === true) {
+      setSuccess(false)
+    } else {
+      setSuccess(true)
+    }
   }
 
   return (
@@ -76,9 +100,15 @@ const InfoAndStats = ({ userInfo }) => {
             </li>
             {auth?.currentUser?.email !== userInfo?.email ? (
               <li className="flex justify-center items-center">
-                <button className="bg-secondary border border-6 py-[10px] px-[20px] m-[0px] rounded-[5px] font-[600]">
+                {userData?.following.includes(userInfo?.id) || success === true ? (
+                <button onClick={unFollowUserName} className="bg-secondary border border-6 py-[10px] px-[20px] m-[0px] rounded-[5px] font-[600]">
+                  Following
+                </button>
+                ) : (
+                <button onClick={followUserName} className="bg-secondary border border-6 py-[10px] px-[20px] m-[0px] rounded-[5px] font-[600]">
                   Follow
                 </button>
+                )}
               </li>
             ) : (
               ""
