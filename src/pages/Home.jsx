@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useRef, useEffect, useState } from "react";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import ComponentCard from "../components/common/ComponentCard";

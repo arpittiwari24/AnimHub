@@ -17,7 +17,7 @@ const IsPremiumContextProvider = ({children}) => {
         useEffect(() => {
             const fetchPremium = async () => {
                 try {
-                const data = await axios.post("http://localhost:8000/api/v1/payments/get-customer",{
+                const data = await axios.post("https://api.animhub.dev/api/v1/payments/get-customer",{
                     email
                 },
                 {
@@ -27,7 +27,6 @@ const IsPremiumContextProvider = ({children}) => {
                 if(data.status === 200) {
                     console.log("PlanId: ",data)
                     setPlan(data.data.planId)
-                    console.log(plan)
                     setPremium(true)
                 } else {
                     setPremium(false)
@@ -37,7 +36,7 @@ const IsPremiumContextProvider = ({children}) => {
                 }
             }
     
-            const delay = 800; //  in milliseconds
+            const delay = 1000; //  in milliseconds
             const timeoutId = setTimeout(() => {
               fetchPremium();
             }, delay);

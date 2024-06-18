@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const axiosDefaults = axios.create({
-    baseURL: import.meta.env.VITE_REACT_APP_API_URL
+    baseURL: import.meta.env.VITE_REACT_APP_PROD_API_URL
 })
 
 
