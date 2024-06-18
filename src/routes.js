@@ -20,7 +20,7 @@ import NotFound from "./pages/NotFound";
 import Subscription from "./pages/Pricing";
 // import CustomRoute from "./CustomRoute"; // Import the CustomRoute component
 
-const launched = true;
+const launched = false;
 
 export const routesData = [
   {
