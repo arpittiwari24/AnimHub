@@ -2,6 +2,7 @@
 import axios from "axios"
 import { createContext, useContext, useEffect, useState } from "react"
 import { useUserContext } from "./UserContextProvider";
+import { axiosDefaults } from "../api";
 
 export const PremiumContext = createContext({});
 
@@ -18,7 +19,7 @@ const IsPremiumContextProvider = ({children}) => {
         useEffect(() => {
             const fetchPremium = async () => {
                 try {
-                const data = await axios.post("https://api.animhub.dev/api/v1/payments/get-customer",{
+                const data = await axiosDefaults.post("api/v1/payments/get-customer",{
                     email
                 },
                 {

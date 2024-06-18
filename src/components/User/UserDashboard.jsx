@@ -9,7 +9,7 @@ const UserDashboard = () => {
   console.log(userData);
   return (
     <>
-      <div className="flex justify-center items-center flex-col px-12">
+      <div className="flex justify-center items-center flex-col px-12 max-sm:px-2">
           <Banner userInfo={userData} />
            <InfoAndStats userInfo={userData} />
           <Components userInfo={userData} /> 

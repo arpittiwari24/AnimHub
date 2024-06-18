@@ -12,6 +12,7 @@ import { SharePopup } from "../../Popups";
 import { auth } from "../../../firebase/auth";
 import { useUserContext } from "../../../context/UserContextProvider";
 import { followUser, unFollowUser } from "../../../apis/user.api";
+import { AiOutlineShareAlt } from "react-icons/ai";
 
 const InfoAndStats = ({ userInfo }) => {
   console.log("fbdjfdf", userInfo);
@@ -64,48 +65,48 @@ const InfoAndStats = ({ userInfo }) => {
   return (
     <>
       <div className="w-full flex flex-col items-center justify-center">
-        <div className="w-full flex items-center justify-between py-2 ">
+        <div className="w-full flex items-center justify-between max-sm:justify-center py-2">
           <ul className="flex justify-center items-center gap-2">
             <li
-              className={`p-[10px] flex justify-center items-center cursor-pointer font-[600] ${activeTab === "home" ? "border-b-4 border-primary" : ""
+              className={`p-[10px] flex justify-center items-center cursor-pointer max-sm:text-md max-sm:font-[400] font-[600] ${activeTab === "home" ? "border-b-4 border-primary" : ""
                 }`}
               onClick={() => setActiveTab("home")}
             >
               Home
             </li>
             <li
-              className={`p-[10px] flex justify-center items-center cursor-pointer font-[600] ${activeTab === "stats" ? "border-b-4 border-primary" : ""
+              className={`p-[10px] flex justify-center items-center cursor-pointer max-sm:text-md max-sm:font-[400] font-[600] ${activeTab === "stats" ? "border-b-4 border-primary" : ""
                 }`}
               onClick={() => setActiveTab("stats")}
             >
               Stats
             </li>
             <li
-              className={`p-[10px] flex justify-center items-center cursor-pointer font-[600] ${activeTab === "else" ? "border-b-4 border-primary" : ""
+              className={`p-[10px] flex justify-center items-center cursor-pointer max-sm:text-md max-sm:font-[400] font-[600] ${activeTab === "else" ? "border-b-4 border-primary" : ""
                 }`}
               onClick={() => setActiveTab("else")}
             >
-              Anything Else
+              Else
             </li>
           </ul>
           <ul className="flex justify-center items-center gap-2">
             {/* <li className="flex justify-center items-center">idk</li> */}
-            <li className="flex justify-center items-center">
+            <li className="flex justify-center items-center max-sm:hidden">
               <button
-                className="bg-secondary border border-6 py-[10px] px-[20px] m-[0px] rounded-[5px] font-[600]"
+                className="bg-secondary border border-6 py-[10px] max-sm:py-[6px] px-[20px] max-sm:px-[15px] m-[0px] rounded-[5px] font-[600] max-sm:text-sm max-sm:font-[400]"
                 onClick={openSharePopup}
               >
-                Share
+                {/* <AiOutlineShareAlt /> */}Share
               </button>
             </li>
             {auth?.currentUser?.email !== userInfo?.email ? (
               <li className="flex justify-center items-center">
                 {userData !== undefined && userData?.following.includes(userInfo?.id) || success === true ? (
-                <button onClick={unFollowUserName} className="bg-secondary border border-6 py-[10px] px-[20px] m-[0px] rounded-[5px] font-[600]">
+                <button onClick={unFollowUserName} className="bg-secondary border border-6 py-[10px] max-sm:py-[6px] px-[20px] max-sm:px-[15px] m-[0px] rounded-[5px] max-sm:text-sm font-[600] max-sm:font-[400]">
                   Following
                 </button>
                 ) : (
-                <button onClick={followUserName} className="bg-secondary border border-6 py-[10px] px-[20px] m-[0px] rounded-[5px] font-[600]">
+                <button onClick={followUserName} className="bg-secondary border border-6 py-[10px] max-sm:py-[6px] px-[20px] max-sm:px-[15px] m-[0px] rounded-[5px] font-[600] max-sm:text-sm max-sm:font-[400]">
                   Follow
                 </button>
                 )}
@@ -115,19 +116,23 @@ const InfoAndStats = ({ userInfo }) => {
             )}
           </ul>
         </div>
-        <div className="w-full flex items-start justify-between px-6">
+        <div className="w-full flex items-start max-sm:items-center  justify-between px-6">
           {activeTab === "home" && (
             <div className="w-full flex flex-col items-start justify-center">
-              <h2 className="font-[700] mt-5 text-[20px]">
-                About {userInfo?.name}
-              </h2>
-              <p className="font-[400] my-2 text-opacity-50">{userInfo?.bio}</p>
+              {/* <h2 className="font-[700] text-center max-sm:font-[400] mt-5 text-[20px] max-sm:text-[15px]">
+                About
+              </h2> */}
+              <p className="font-[400] lg:font-[600] lg:text-lg my-2 text-opacity-50">{userInfo?.bio !== "" ? ( 
+                <span>{userInfo?.bio}</span> )
+              : (
+                <span>Writing ( default bio )</span>
+              )}</p>
             </div>
           )}
           {activeTab === "stats" && (
-            <div className="w-full flex flex-col items-start justify-center">
+            <div className="w-full flex flex-col items-start max-sm:items-center justify-center">
               <h2 className="font-[700] mt-5 text-[20px]">
-                This is Stats Component
+              <ComponentChart />
               </h2>
               <p className="font-[400] my-2 text-opacity-50">
                 {/* My bio My bio My bio My bio My bio My bio My bio My bio */}
@@ -163,9 +168,9 @@ const InfoAndStats = ({ userInfo }) => {
               </Link> */}
               </ul>
             }
-            <div>
+            {/* <div>
               <ComponentChart />
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

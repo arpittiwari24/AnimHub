@@ -91,7 +91,7 @@ const ComponentCard = ({ data, view = 123 }) => {
 
   return (
     <>
-      <div className="flex flex-col justify-center items-start">
+      <div className="flex flex-col justify-center items-start max-sm:items-center">
         <iframe
           // src="https://codesandbox.io/embed/empty-blueprint-forked-2qj2p?fontsize=14&hidenavigation=1&theme=dark"
           style={{
