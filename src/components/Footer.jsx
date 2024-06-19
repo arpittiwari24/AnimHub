@@ -27,9 +27,9 @@ const Footer = () => {
         just like Mickey Mouse!
       </p>
       <div className="h-auto w-full bg-[#151515] flex flex-col justify-center items-start py-0 px-[10vw]">
-        <div className="flex w-full justify-between py-8 flex-wrap">
+        <div className="flex w-full justify-between py-8 max-sm:flex-wrap ">
           <div className="flex flex-col">
-            <h3 className="text-[#969696] text-xl font-bold pb-4">
+            <h3 className="text-[#969696] text-xl max-sm:text-lg font-bold pb-4">
               Quick Links
             </h3>
             <ul className="flex flex-col gap-2">
@@ -39,7 +39,7 @@ const Footer = () => {
                     <li className="">
                       <Link
                         to={item.link}
-                        className="text-primary pb-2 font-normal "
+                        className="text-primary pb-2 font-normal max-sm:text-sm"
                       >
                         {item.name}
                       </Link>
@@ -49,8 +49,8 @@ const Footer = () => {
               })}
             </ul>
           </div>
-          <div className="flex flex-col">
-            <h3 className="text-[#969696] text-xl font-bold pb-4">Others</h3>
+          <div className="flex flex-col items-start">
+            <h3 className="text-[#969696] text-xl max-sm:text-lg font-bold pb-4">Others</h3>
             <ul className="flex flex-col gap-2">
               {otherStuff.map((item, key) => {
                 return (
@@ -58,7 +58,7 @@ const Footer = () => {
                     <li className="">
                       <Link
                         to={item.link}
-                        className="text-primary pb-2 font-normal "
+                        className="text-primary pb-2 font-normal max-sm:text-sm"
                       >
                         {item.name}
                       </Link>
@@ -69,7 +69,7 @@ const Footer = () => {
             </ul>
           </div>
           <div className="flex flex-col">
-            <h3 className="text-[#969696] text-xl font-bold pb-4">
+            <h3 className="text-[#969696] text-xl max-sm:text-lg font-bold pb-4">
               Open Source
             </h3>
             <ul className="flex flex-col gap-2">
@@ -79,7 +79,7 @@ const Footer = () => {
                     <li className="">
                       <Link
                         to={item.link}
-                        className="text-primary pb-2 font-normal "
+                        className="text-primary pb-2 max-sm:text-sm font-normal "
                       >
                         {item.name}
                       </Link>
@@ -89,16 +89,16 @@ const Footer = () => {
               })}
             </ul>
           </div>
-          <div className="flex flex-col">
-            <h3 className="text-[#969696] text-xl font-bold pb-4">Legal</h3>
-            <ul className="flex flex-col gap-2">
+          <div className="flex flex-col items-start">
+            <h3 className="text-[#969696] text-xl max-sm:text-lg font-bold pb-4">Legal</h3>
+            <ul className="flex flex-col items-start gap-2">
               {legal.map((item, key) => {
                 return (
                   <>
-                    <li className="">
+                    <li className="" key={key}>
                       <Link
                         to={item.link}
-                        className="text-primary pb-2 font-normal "
+                        className="text-primary pb-2 max-sm:text-sm font-normal "
                       >
                         {item.name}
                       </Link>
@@ -116,7 +116,7 @@ const Footer = () => {
           {social.map((item, key) => {
             return (
               <>
-                <div className="text-3xl">{<item.comp />}</div>
+                <a key={key} href={item.link} target="_blank" rel="noreferrer" className="text-3xl">{<item.comp />}</a>
               </>
             );
           })}

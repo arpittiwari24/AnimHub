@@ -78,7 +78,7 @@ const Navbar = () => {
     <>
       <div className="w-full flex flex-col ">
         <div className="flex justify-center items-center">
-          <ul className=" w-full flex justify-center items-center gap-4 max-sm:gap-2 py-1 bg-black flex-wrap">
+          <ul className=" w-full flex justify-center items-center gap-4 max-sm:gap-2 py-1 bg-black flex-wrap max-sm:hidden">
             {subNavLinks.map((link) => (
               <li className=" text-[#969696] max-sm:text-xs">
                 <Link to={link.path}>{link.name}</Link>
@@ -87,7 +87,7 @@ const Navbar = () => {
           </ul>
         </div>
 
-        <div className="px-12 max-sm:px-1 py-1 flex justify-between max-sm:justify-center max-sm:gap-1 items-center bg-[#0e0e0e]">
+        <div className="px-12 max-sm:px-1 py-2 flex justify-between max-sm:justify-center max-sm:gap-1 items-center bg-[#0e0e0e]">
           <div className=" w-[70%] flex justify-center items-center ">
             <div className="flex flex-row justify-center items-center gap-4 max-sm:gap-2">
               <LeftSidebar
@@ -158,7 +158,7 @@ const Navbar = () => {
   </ul>
 </div>
 
-        <div className="flex flex-row gap-1 max-sm:gap-0 py-1 justify-center bg-[#1b1b1b] max-sm:text-center">
+        <div className="flex flex-row gap-1 max-sm:gap-0 py-1 justify-center bg-[#1b1b1b] max-sm:hidden">
           <PiWarningCircleFill className="text-[#c6c6c6] text-2xl" />
           <p className="max-sm:text-sm">
             If you have anything for us or want to email us{" "}

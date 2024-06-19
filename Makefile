@@ -3,5 +3,5 @@ run:
 
 push: 
 	   git add .
-	   git commit -m "responsive done for navbar"
+	   git commit -m "tag based filtering done for homepage"
 	   git push -u origin dev-test
