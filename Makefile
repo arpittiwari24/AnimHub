@@ -3,5 +3,5 @@ run:
 
 push: 
 	   git add .
-	   git commit -m "responsive done for public and user profiles"
+	   git commit -m "responsive done for navbar"
 	   git push -u origin dev-test

@@ -94,7 +94,7 @@ const Home = () => {
     <>
       <div className="w-full flex flex-col justify-start items-start px-12 max-sm:px-2">
         <div className="w-full auto flex flex-col justify-start items-start ">
-          <h1 className="text-xl font-bold max-sm:text-lg max-sm:text-center">
+          <h1 className="text-xl font-bold max-sm:text-lg max-sm:font-medium max-sm:text-center">
             Explore all the components GA Page Added
           </h1>
           <div
@@ -124,7 +124,7 @@ const Home = () => {
               {Array.from({ length: 30 }, (_, index) => (
                 <li
                   key={index}
-                  className="bg-[#151515] hover:bg-[#2b2b2b] border-2 border-[#212121] px-6 max-sm:px-0 py-2 rounded-full"
+                  className="bg-[#151515] max-sm:text-sm hover:bg-[#2b2b2b] border-2 border-[#212121] px-6 max-sm:px-0 py-2 rounded-full"
                 >
                   Tags{index + 1}
                 </li>
