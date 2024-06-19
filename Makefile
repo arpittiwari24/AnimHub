@@ -4,4 +4,4 @@ run:
 push: 
 	   git add .
 	   git commit -m "tag based filtering done for homepage"
-	   git push -u origin dev-test
+	   git push -u origin main
