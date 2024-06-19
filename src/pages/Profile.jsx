@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import  {useEffect, useState} from "react";
 import UserProfile from "../components/User/UserProfile";
 import { useParams } from "react-router-dom";
 import { getProfileData } from "../apis/user.api";

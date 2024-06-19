@@ -36,7 +36,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         <li
           className={`${
             currentPage === 1 ? "" : "bg-primary hborderover:bg-[#"
-          } bg-[#0e0e0e] text-[#2f2f2f] text-xl font-bold rounded-md px-8 py-3 flex justify-center items-center mx-2`}
+          } bg-[#0e0e0e] text-[#2f2f2f] text-xl max-sm:text-sm font-bold rounded-md px-8 max-sm:px-3 py-3 max-sm:py-2 flex justify-center items-center mx-2`}
           onClick={() => {
             if (currentPage !== 1) {
               onPageChange(currentPage - 1);
@@ -47,7 +47,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         </li>
         {startPage > 1 && (
           <li
-            className="bg-[#0e0e0e] text-[#fff] font-bold text-xl rounded-sm h-12 w-12 flex justify-center items-center mx-2 cursor-pointer"
+            className="bg-[#0e0e0e] text-[#fff] font-bold max-sm:font-normal text-xl max-sm:text-sm rounded-sm h-12 w-12 max-sm:w-6 max-sm:h-2 flex justify-center items-center mx-2 cursor-pointer"
             onClick={() => onPageChange(1)}
           >
             1
@@ -85,7 +85,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
         <li
           className={`${
             currentPage === totalPages ? "" : "bg-primary hborderover:bg-[#"
-          } bg-[#0e0e0e]  text-[#2f2f2f] text-xl font-bold rounded-md px-8 py-3 flex justify-center items-center mx-2`}
+          } bg-[#0e0e0e]  text-[#2f2f2f] text-xl max-sm:text-sm font-bold rounded-md px-8 max-sm:px-3 py-3 max-sm:py-2 flex justify-center items-center mx-2`}
           onClick={() => {
             if (currentPage !== totalPages) {
               onPageChange(currentPage + 1);

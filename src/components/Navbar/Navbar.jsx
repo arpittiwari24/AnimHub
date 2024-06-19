@@ -78,29 +78,29 @@ const Navbar = () => {
     <>
       <div className="w-full flex flex-col ">
         <div className="flex justify-center items-center">
-          <ul className=" w-full flex justify-center items-center gap-4 max-sm:gap-3 py-1 bg-black flex-wrap">
+          <ul className=" w-full flex justify-center items-center gap-4 max-sm:gap-2 py-1 bg-black flex-wrap">
             {subNavLinks.map((link) => (
-              <li className=" text-[#969696]">
+              <li className=" text-[#969696] max-sm:text-xs">
                 <Link to={link.path}>{link.name}</Link>
               </li>
             ))}
           </ul>
         </div>
 
-        <div className="px-12 max-sm:px-6 py-1 flex justify-between items-center bg-[#0e0e0e]">
+        <div className="px-12 max-sm:px-1 py-1 flex justify-between max-sm:justify-center max-sm:gap-1 items-center bg-[#0e0e0e]">
           <div className=" w-[70%] flex justify-center items-center ">
-            <div className="flex justify-center items-center gap-4">
+            <div className="flex flex-row justify-center items-center gap-4 max-sm:gap-2">
               <LeftSidebar
                 isLeftSidebarOpen={isLeftSidebarOpen}
                 setIsLeftSidebarOpen={setIsLeftSidebarOpen}
               />
-              <Link to={"/"} className="">
+              <Link to={"/"} className="max-sm:w-2 max-sm:h-12">
                 <DarkLogo width="180px" />
               </Link>
             </div>
           
             <div className="w-full flex justify-center items-center gap-2">
-             <div className="w-full  lg:hidden">
+             <div className="lg:hidden pl-40">
               <SearchModal />
             </div>   
             <button className=" w-[70%] flex justify-center items-center bg-[#252525] px-4 py-[0.4rem] rounded-full max-sm:hidden" id="search-modal" onClick={handleClick}>
@@ -112,55 +112,55 @@ const Navbar = () => {
                   placeholder="Search Animated Components"
                 />
               </button>
-              <button className="null">
+              <button className="null max-sm:hidden">
                 <BsPlusCircleFill
-                  className="text-[#c6c6c6] text-3xl"
+                  className="text-[#c6c6c6] text-3xl max-sm:text-xl"
                   onClick={handleOpenPopup}
                 />
               </button>
-              <button className="">
+              <button className="max-sm:hidden">
                 <PiYoutubeLogoFill className="text-[#c4302b] text-4xl" />
               </button>
             </div>
           </div>
-          <div className="">
+          <div className="max-sm:pl-4">
             <RightSidebar
               isRightSidebarOpen={isRightSidebarOpen}
               setIsRightSidebarOpen={setIsRightSidebarOpen}
             />
           </div>
         </div>
+        <div className="px-12 max-sm:px-2 py-2 pb-3 flex justify-between items-center bg-[#0e0e0e] max-sm:text-sm">
+  <ul className="grid lg:grid-cols-8 max-sm:flex max-sm:flex-row max-sm:gap-3 max-sm:items-center justify-items-center w-full h-full items-center mx-auto overflow-x-auto max-sm:whitespace-nowrap">
+    {navLinks.map((link) => (
+      <li className="lg:group grid w-full h-auto text-[#fff] font-bold max-sm:font-normal cursor-pointer">
+        <a className="group-hover:bg-[#333333] group-hover:border-[#363636] border-[1px] border-[transparent] transition duration-30">
+          <span className="flex flex-col justify-center items-center">
+            <Link
+              to={`${link.path ? link.path : ""}`}
+              className="inline-block text-center align-top"
+            >
+              {link.name}{" "}
+              {link.content && (
+                <IoMdArrowDropdown className="inline-block text-[#fff] text-2xl" />
+              )}
+            </Link>
+            <span className="w-full h-[1.5px] mx-auto bg-yellow-600 group-hover:block group-hover:opacity-100 opacity-0 relative top-0 transition duration-30"></span>
+          </span>
+        </a>
+        {link.content && (
+          <div className="absolute top-[126px] left-0 w-full h-auto bg-[#000] text-white hidden group-hover:flex flex-col shadow-md z-50 border-x-0 border-y-[0.05px] border-[#606060] animate-fadeIn transition duration-30">
+            {<link.content />}
+          </div>
+        )}
+      </li>
+    ))}
+  </ul>
+</div>
 
-        <div className="px-12 py-1 pb-0 flex justify-between items-center bg-[#0e0e0e]">
-          <ul className="grid lg:grid-cols-8 max-sm:flex max-sm:flex-wrap justify-items-center w-full h-full items-center mx-auto">
-            {navLinks.map((link) => (
-              <li className="lg:group grid w-full h-auto  text-[#fff] font-bold cursor-pointer">
-                <a className="group-hover:bg-[#333333] group-hover:border-[#363636] border-[1px] border-[transparent] transition duration-30">
-                  <span className="flex flex-col justify-center items-center">
-                    <Link
-                      to={`${link.path ? link.path : ""}`}
-                      className="inline-block text-center align-top"
-                    >
-                      {link.name}{" "}
-                      {link.content && (
-                        <IoMdArrowDropdown className="inline-block text-[#fff] text-2xl" />
-                      )}
-                    </Link>
-                    <span className="w-full h-[1.5px] mx-auto bg-yellow-600 group-hover:block group-hover:opacity-100 opacity-0 relative top-0 transition duration-30"></span>
-                  </span>
-                </a>
-                {link.content && (
-                  <div className="absolute top-[126px] left-0 w-full h-auto bg-[#000] text-white hidden group-hover:flex flex-col shadow-md z-50 border-x-0 border-y-[0.05px] border-[#606060] animate-fadeIn transition duration-30">
-                    {<link.content />}
-                  </div>
-                )}
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="flex gap-1 max-sm:gap-0 py-1 justify-center items-center bg-[#1b1b1b] max-sm:text-center">
+        <div className="flex flex-row gap-1 max-sm:gap-0 py-1 justify-center bg-[#1b1b1b] max-sm:text-center">
           <PiWarningCircleFill className="text-[#c6c6c6] text-2xl" />
-          <p className="">
+          <p className="max-sm:text-sm">
             If you have anything for us or want to email us{" "}
             <a
               className=" 

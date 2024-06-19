@@ -7,7 +7,7 @@ const UserProfile = ({profile}) => {
   // Empty dependency array to run once on mount
   return (
     <>
-      <div className="flex justify-center items-center flex-col px-12">
+      <div className="flex justify-center items-center flex-col lg:px-12 max-sm:px-2">
         <Banner userInfo={profile} />
         <InfoAndStats userInfo={profile} />
         <Components userInfo={profile} />

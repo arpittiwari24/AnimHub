@@ -45,11 +45,11 @@ const SearchModal = () => {
   };
   return (
   <>
-      <button onClick={toggleModal} className=" px-4 py-2 rounded">
-           <BiSearch className="text-[#fff] text-2xl" />
+      <button onClick={toggleModal} className="px-4 py-2 rounded">
+           <BiSearch className="text-[#fff] text-2xl max-sm:text-xl" />
       </button>
       {isOpen && (
-        <div className="fixed z-10 inset-0 overflow-y-auto bg-gray-900 bg-opacity-75 p-4">
+        <div className="fixed z-10 inset-0 overflow-y-auto bg-black bg-opacity-100 p-4">
           <div className="relative mx-auto px-8 py-4 rounded-md bg-white shadow-lg">
             <button
               onClick={toggleModal}
