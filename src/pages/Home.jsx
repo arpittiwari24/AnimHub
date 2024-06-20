@@ -27,13 +27,19 @@ const Home = () => {
   const handleData = async () => {
     const data = await getVerifiedComponents();
     setComponentsData(data);
+    console.log(data[0].category);
     const uniqueTags = new Set();
 
     data.forEach((component) => {
+      uniqueTags.add(component.category.toLowerCase())
       component.tags.forEach((tag) => {
-        uniqueTags.add(tag);
+        if(!uniqueTags.has(tag.toLowerCase()) ) {
+          uniqueTags.add(tag);
+        }
       });
     });
+
+    console.log(uniqueTags);
 
     setTags([...uniqueTags]);
 

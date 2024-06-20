@@ -116,13 +116,13 @@ const Footer = () => {
           {social.map((item, key) => {
             return (
               <>
-                <a key={key} href={item.link} target="_blank" rel="noreferrer" className="text-3xl">{<item.comp />}</a>
+                <a key={key} href={item.link} target="_blank" rel="noreferrer" className="text-3xl max-sm:text-2xl">{<item.comp />}</a>
               </>
             );
           })}
         </div>
         <div className="">
-          <h2 className="text-[#969696]">&copy; {new Date().getFullYear()} . Animhub.dev</h2>
+          <h2 className="text-[#969696] max-sm:text-md">&copy; {new Date().getFullYear()} . Animhub.dev</h2>
         </div>
       </div>
     </footer>

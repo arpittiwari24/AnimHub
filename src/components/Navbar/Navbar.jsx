@@ -39,7 +39,7 @@ const Navbar = () => {
   console.log(searchValue);
   const handleOpenPopup = () => {
     const content = user ? (
-      <div className="fixed flex justify-center items-center top-0 left-0 h-screen w-screen bg-[#00000070] z-20 p-6">
+      <div className="fixed flex justify-center items-center top-0 max-sm:top-10 left-0 h-screen w-screen bg-[#00000070] z-20 p-6">
         <div className="relative flex justify-center items-center bg-[#151515]  h-auto w-auto flex-col gap-4 rounded-md">
           <LanguagePopup closePopup={closePopup} />
         </div>

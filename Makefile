@@ -3,5 +3,5 @@ run:
 
 push: 
 	   git add .
-	   git commit -m "tag based filtering done for homepage"
-	   git push -u origin main
+	   git commit -m "more tags added for home page . About section completely dynamic and responsive. Create modal responsive too ."
+	   git push -u origin new-changes
