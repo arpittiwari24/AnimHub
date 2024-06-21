@@ -3,5 +3,5 @@ run:
 
 push: 
 	   git add .
-	   git commit -m "more tags added for home page . About section completely dynamic and responsive. Create modal responsive too ."
+	   git commit -m "Did some changes"
 	   git push -u origin new-changes

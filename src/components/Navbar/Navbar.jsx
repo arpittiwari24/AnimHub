@@ -118,9 +118,9 @@ const Navbar = () => {
                   onClick={handleOpenPopup}
                 />
               </button>
-              <button className="max-sm:hidden">
+              <a href="https://www.youtube.com/@_animhub" target="_blank" className="max-sm:hidden">
                 <PiYoutubeLogoFill className="text-[#c4302b] text-4xl" />
-              </button>
+              </a>
             </div>
           </div>
           <div className="max-sm:pl-4">
@@ -149,7 +149,7 @@ const Navbar = () => {
           </span>
         </a>
         {link.content && (
-          <div className="absolute top-[126px] left-0 w-full h-auto bg-[#000] text-white hidden group-hover:flex flex-col shadow-md z-50 border-x-0 border-y-[0.05px] border-[#606060] animate-fadeIn transition duration-30">
+          <div className="absolute top-[126px] left-0 w-full h-auto bg-[#000] hidden text-white  group-hover:flex flex-col shadow-md z-50 border-x-0 border-y-[0.05px] border-[#606060] animate-fadeIn transition duration-30">
             {<link.content />}
           </div>
         )}
@@ -172,7 +172,7 @@ const Navbar = () => {
             </a>
           </p>
         </div>
-        <PromoStrip />
+        {/* <PromoStrip /> */}
       </div>
     </>
   );

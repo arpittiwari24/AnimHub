@@ -10,7 +10,7 @@ import {
 
 const Footer = () => {
   return (
-    <footer className="h-auto w-full flex flex-col justify-center items-start mt-[28rem] max-sm:mt-[2rem]">
+    <footer className="h-auto w-full flex flex-col justify-center items-start mt-[2rem]">
       <p className="text-center text-[12px] text-[#969696] leading-4 px-28 max-sm:px-4 mb-12">
         At Animhub, our team is always busy, tinkering away like mad scientists,
         crafting and animating the wildest components for your web adventures.
@@ -36,7 +36,7 @@ const Footer = () => {
               {quickLinks.map((item, key) => {
                 return (
                   <>
-                    <li className="">
+                    <li className="" key={key}>
                       <Link
                         to={item.link}
                         className="text-primary pb-2 font-normal max-sm:text-sm"

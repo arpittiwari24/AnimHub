@@ -135,8 +135,8 @@ const Home = () => {
   return (
     <>
       <div className="w-full flex flex-col justify-start items-start px-12 max-sm:px-2">
-        <div className="w-full auto flex flex-col justify-start items-start ">
-          <h1 className="text-xl font-bold max-sm:text-lg max-sm:font-medium max-sm:hidden">
+        <div className="w-full auto flex flex-col justify-start items-center">
+          <h1 className="text-xl font-bold max-sm:text-lg max-sm:font-medium hidden">
             Explore all the components GA Page Added
           </h1>
           <div
