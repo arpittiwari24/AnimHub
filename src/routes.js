@@ -21,7 +21,7 @@ import Subscription from "./pages/Pricing";
 import Reels from "./pages/Reels";
 // import CustomRoute from "./CustomRoute"; // Import the CustomRoute component
 
-const launched = true;
+const launched = false;
 
 export const routesData = [
   {

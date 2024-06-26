@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "env-cmd -f .env.local vite",
     "start": "vite",
-    "build": "env-cmd -f .env vite build",
+    "build":"vite build",
+    "build2": "env-cmd -f .env vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
